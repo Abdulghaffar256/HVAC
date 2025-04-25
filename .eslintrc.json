@@ -1,0 +1,8 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-unused-vars": "off",         // Disables no-unused-vars globally
+    "react/prop-types": "off",       // Disables prop-types requirement
+    "react/react-in-jsx-scope": "off" // Not needed in Next.js
+  }
+}

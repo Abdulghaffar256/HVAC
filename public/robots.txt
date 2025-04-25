@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.epicssolution.com
+
+# Sitemaps
+Sitemap: https://www.epicssolution.com/sitemap.xml
