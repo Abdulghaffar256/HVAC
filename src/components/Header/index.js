@@ -122,7 +122,7 @@ const Header = () => {
                     HVAC CONTROL
                   </Link>
                   <Link href="/Revit" className="block hover:text-pink-500">
-                    HVAC CONTROL
+                    Revit 
                   </Link>
                 </div>
               )}
