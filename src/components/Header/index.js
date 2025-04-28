@@ -34,7 +34,7 @@ const Header = () => {
     if (e.key === "Enter" && searchQuery.trim() !== "") {
       try {
         const results = await client.fetch(
-          `*[_type in ["AI", "Eng", "equipment", "development", "dev", "energy", "waste","leed"] && title match $query]{
+          `*[_type in ["AI", "Eng", "equipment", "development", "dev"] && title match $query]{
             _id,
             title,
             "slug": slug.current
@@ -98,24 +98,9 @@ const Header = () => {
               {isOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-56 z-50 space-y-1">
                   <Link href="/dev" className="block hover:text-pink-500">
-                    Development
+                    HVAC Blogs
                   </Link>
-                  <Link href="/equipment" className="block hover:text-pink-500">
-                    Equipment
-                  </Link>
-                  <Link href="/ai" className="block hover:text-pink-500">
-                    Artificial Intelligence
-                  </Link>
-                  <Link href="/eng" className="block hover:text-pink-500">
-                    Designing
-                  </Link>
-                 
-                  <Link href="/energy" className="block hover:text-pink-500">
-                   Energy
-                  </Link>
-                  <Link href="/waste" className="block hover:text-pink-500">
-                    Waste
-                  </Link>
+               
                 </div>
               )}
             </div>
@@ -130,15 +115,21 @@ const Header = () => {
               </button>
               {certOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-44 z-50 space-y-1">
-                  <Link href="/mep" className="block hover:text-pink-500">
-                    Revit MEP
+                  <Link href="/designing" className="block hover:text-pink-500">
+                    HVAC Designing
                   </Link>
-                  <Link href="/Leed" className="block hover:text-pink-500">
-                    LEED
+                  <Link href="/control" className="block hover:text-pink-500">
+                    HVAC CONTROL
+                  </Link>
+                  <Link href="/Revit" className="block hover:text-pink-500">
+                    HVAC CONTROL
                   </Link>
                 </div>
               )}
             </div>
+                <Link href="/Tools" className="hover:text-pink-600 transition">
+              HVAC Tools
+            </Link> 
 
             <Link href="/about" className="hover:text-pink-600 transition">
               About
