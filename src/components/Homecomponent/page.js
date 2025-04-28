@@ -5,10 +5,10 @@ import Image from "next/image";
 
 const HomeComponent = () => {
   const imageSets = {
-    epic: ["/https://www.ecodelogic.com/wp-content/uploads/2021/06/build-own-app.jpg"],
-    build: ["/images/mockup4.png"],
-    sell: ["/images/mockup6.png"],
-    scale: ["/images/mockup7.png"],
+    epic: ["/images/mockup1.png"],
+    build: ["/images/mockup2.png"],
+    sell: ["/images/mockup3.png"],
+    scale: ["/images/mockup4.png"],
   };
 
   const tabContent = {
