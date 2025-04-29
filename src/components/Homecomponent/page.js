@@ -12,12 +12,12 @@ const HomeComponent = () => {
   };
 
   const tabContent = {
-    HVAC Designing: {
+     Designing: {
       title: "Learn Complete HVAC Desining with us ",
       description:
         "We provide end-to-end solutions tailored for your business. From consulting to development, EPIC covers it all.",
     },
-    HVAC Tools: {
+     Tools: {
       title: "Build Future-Ready Solutions",
       description:
         "With cutting-edge technology and agile development, we build scalable and robust applications for your needs.",
@@ -27,7 +27,7 @@ const HomeComponent = () => {
       description:
         "Our marketing and e-commerce expertise helps you reach customers effectively and increase conversions.",
     },
-    HVAC Controls: {
+     Controls: {
       title: "Scale Your Business With Confidence",
       description:
         "We help you grow with smart infrastructure, automation, and long-term strategic planning.",
