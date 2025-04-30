@@ -15,28 +15,28 @@ const HomeComponent = () => {
   };
 
   // Define tab content with corresponding keys
-  const tabContent = {
-    Designing: {
-      title: "Energy-Efficient HVAC System Design ",
-      description:
-        "In an era where energy conservation and environmental responsibility are paramount, mastering the art of energy-efficient HVAC (Heating, Ventilation, and Air Conditioning) system design is essential. This free, comprehensive online course empowers students to create HVAC systems that ensure optimal indoor comfort while minimizing energy consumption and environmental impact.",
-    },
-    Tools: {
-      title: "HVAC tools help to design efficient hvac system",
-      description:
-        "With cutting-edge technology and agile development, we build scalable and robust applications for your needs.",
-    },
-    Revit: {
-      title: "Revit is best 3d hvac Designing tools",
-      description:
-        "Our marketing and e-commerce expertise helps you reach customers effectively and increase conversions.",
-    },
-    controls: {
-      title: "Scale Your Business With Confidence",
-      description:
-        "We help you grow with smart infrastructure, automation, and long-term strategic planning.",
-    },
-  };
+const tabContent = {
+  Designing: {
+    title: "Energy-Efficient HVAC System Design",
+    description:
+      "Master energy-efficient HVAC design in our free course. Learn to create systems that maximize comfort and minimize environmental impact.",
+  },
+  Tools: {
+    title: "HVAC Tools for Efficient System Design",
+    description:
+      "Leverage cutting-edge HVAC design tools for efficiency and sustainability. Streamline your process with accurate calculations and intuitive interfaces.",
+  },
+  Revit: {
+    title: "Revit: Premier 3D HVAC Design Tool",
+    description:
+      "Discover why Revit is a top choice for 3D HVAC design. Our free course teaches you to harness its power for superior system modeling.",
+  },
+  Controls: {
+    title: "HVAC Controls for Enhanced Energy Efficiency",
+    description:
+      "Optimize HVAC performance with advanced control systems. Our course covers strategies to enhance energy efficiency and system responsiveness.",
+  },
+};
 
   // Mapping between tab names (UI) and data keys
   const tabMapping = {
