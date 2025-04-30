@@ -70,7 +70,7 @@ const HomeComponent = () => {
 
           {/* Tabs */}
           <div className="flex flex-wrap gap-4 text-sm">
-            {["epic", "build", "sell", "scale"].map((tab) => (
+            {["Designing", "Tools", "Revit", "controls"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
