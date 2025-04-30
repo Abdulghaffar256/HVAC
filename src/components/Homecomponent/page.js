@@ -6,6 +6,7 @@ import { FaCalculator } from "react-icons/fa"; // Importing the calculator icon
 import Link from "next/link"; // Importing Link for navigation
 
 const HomeComponent = () => {
+  // Define image sets with their respective keys
   const imageSets = {
     Designing: ["/images/mockup1.png"],
     Tools: ["/images/mockup4.png"],
@@ -13,6 +14,7 @@ const HomeComponent = () => {
     controls: ["/images/mockup7.png"],
   };
 
+  // Define tab content with corresponding keys
   const tabContent = {
     Designing: {
       title: "Empowering Digital Innovation ",
@@ -36,17 +38,27 @@ const HomeComponent = () => {
     },
   };
 
-  // Ensure activeTab starts as a valid key from tabContent
+  // Mapping between tab names (UI) and data keys
+  const tabMapping = {
+    epic: "Designing",
+    build: "Tools",
+    sell: "Revit",
+    scale: "controls",
+  };
+
+  // Initialize activeTab with a valid tab name
   const [activeTab, setActiveTab] = useState("epic");
 
-  // Check if activeTab exists in tabContent, else fallback to 'epic'
-  const currentTabContent = tabContent[activeTab] || tabContent["epic"];
-  const currentImage = imageSets[activeTab] ? imageSets[activeTab][0] : imageSets["epic"][0];
+  // Get the corresponding key from the mapping, defaulting to "Designing" if invalid
+  const currentKey = tabMapping[activeTab] || "Designing";
+
+  // Access image and content using the mapped key
+  const currentImage = imageSets[currentKey][0];
+  const currentTabContent = tabContent[currentKey];
 
   return (
     <section className="bg-[#F9FAFB] text-[#2E2E2E] min-h-[90vh] flex items-center justify-center px-4 md:px-12 py-10">
       <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-7xl w-full">
-        
         {/* Text Content */}
         <div className="flex-1">
           <h1 className="text-3xl md:text-5xl font-bold text-[#1F3B4D] leading-tight mb-4">
@@ -101,4 +113,3 @@ const HomeComponent = () => {
 };
 
 export default HomeComponent;
-
