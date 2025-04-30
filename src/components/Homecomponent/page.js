@@ -14,22 +14,22 @@ const HomeComponent = () => {
   };
 
   const tabContent = {
-    epic: {
-      title: "Empowering Digital Innovation with EPIC",
+    Designing: {
+      title: "Empowering Digital Innovation ",
       description:
         "We provide end-to-end solutions tailored for your business. From consulting to development, EPIC covers it all.",
     },
-    build: {
+    Tools: {
       title: "Build Future-Ready Solutions",
       description:
         "With cutting-edge technology and agile development, we build scalable and robust applications for your needs.",
     },
-    sell: {
+    Revit: {
       title: "Strategies to Help You Sell Better",
       description:
         "Our marketing and e-commerce expertise helps you reach customers effectively and increase conversions.",
     },
-    scale: {
+    controls: {
       title: "Scale Your Business With Confidence",
       description:
         "We help you grow with smart infrastructure, automation, and long-term strategic planning.",
