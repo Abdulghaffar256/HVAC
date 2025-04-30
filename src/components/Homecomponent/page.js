@@ -17,17 +17,17 @@ const HomeComponent = () => {
   // Define tab content with corresponding keys
   const tabContent = {
     Designing: {
-      title: "Empowering Digital Innovation ",
+      title: "Energy-Efficient HVAC System Design ",
       description:
-        "We provide end-to-end solutions tailored for your business. From consulting to development, EPIC covers it all.",
+        "In an era where energy conservation and environmental responsibility are paramount, mastering the art of energy-efficient HVAC (Heating, Ventilation, and Air Conditioning) system design is essential. This free, comprehensive online course empowers students to create HVAC systems that ensure optimal indoor comfort while minimizing energy consumption and environmental impact.",
     },
     Tools: {
-      title: "Build Future-Ready Solutions",
+      title: "HVAC tools help to design efficient hvac system",
       description:
         "With cutting-edge technology and agile development, we build scalable and robust applications for your needs.",
     },
     Revit: {
-      title: "Strategies to Help You Sell Better",
+      title: "Revit is best 3d hvac Designing tools",
       description:
         "Our marketing and e-commerce expertise helps you reach customers effectively and increase conversions.",
     },
