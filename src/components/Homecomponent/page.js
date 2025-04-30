@@ -7,10 +7,10 @@ import Link from "next/link"; // Importing Link for navigation
 
 const HomeComponent = () => {
   const imageSets = {
-    epic: ["/images/mockup1.png"],
-    build: ["/images/mockup4.png"],
-    sell: ["/images/mockup6.png"],
-    scale: ["/images/mockup7.png"],
+    Designing: ["/images/mockup1.png"],
+    Tools: ["/images/mockup4.png"],
+    Revit: ["/images/mockup6.png"],
+    controls: ["/images/mockup7.png"],
   };
 
   const tabContent = {
