@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity';
 
 export const engType = defineType({
   name: 'Eng',
-  title: 'Eng',
+  title: 'hvac control',
   type: 'document',
   fields: [
     defineField({
