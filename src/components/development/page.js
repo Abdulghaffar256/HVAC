@@ -191,16 +191,22 @@ const Development = () => {
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/mep"
+                    href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit MEP
+                    Revit 
                   </Link>
                   <Link
-                    href="/Leed"
+                    href="/designing"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    LEED
+                    Designing
+                  </Link>
+                       <Link
+                    href="/control"
+                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                  >
+                    Control
                   </Link>
                 </div>
               </div>
