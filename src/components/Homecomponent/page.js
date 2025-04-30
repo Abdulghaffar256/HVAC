@@ -40,10 +40,10 @@ const HomeComponent = () => {
 
   // Mapping between tab names (UI) and data keys
   const tabMapping = {
-    epic: "Designing",
-    build: "Tools",
-    sell: "Revit",
-    scale: "controls",
+    Designing: "Designing",
+    Tools: "Tools",
+    Revit: "Revit",
+    controls: "controls",
   };
 
   // Initialize activeTab with a valid tab name
