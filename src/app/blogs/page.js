@@ -7,7 +7,7 @@ export default function Developmentf() {
     <>
       {/* Adding the Head component for Open Graph and Twitter meta tags */}
       <Head>
-        <title> web Development using Next Js</title>
+        <title> HVAC Blogs </title>
         <meta property="og:title" content="  web Development using Next Js" />
         <meta
           property="og:description"
