@@ -63,10 +63,10 @@ const Development = () => {
   return (
     <>
       <Head>
-        <title>Next js Blogs | Epics Solution</title>
+        <title>HVAC Blogs | HVAC DESIGNING </title>
         <meta
           name="description"
-          content="Explore the latest development blogs and insights."
+          content="Explore the latest HVAC blogs and insights."
         />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
@@ -176,41 +176,12 @@ const Development = () => {
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/dev"
+                    href="/blogs"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Development
+                    Blogs
                   </Link>
-                  <Link
-                    href="/equipment"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Equipment
-                  </Link>
-                  <Link
-                    href="/ai"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Artificial Intelligence
-                  </Link>
-                  <Link
-                    href="/eng"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Designing
-                  </Link>
-                  <Link
-                    href="/energy"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Energy
-                  </Link>
-                  <Link
-                    href="/waste"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Waste
-                  </Link>
+                  
                 </div>
               </div>
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
