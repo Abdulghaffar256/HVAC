@@ -1,4 +1,6 @@
 
+
+  
 "use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -34,7 +36,7 @@ const Engineering = () => {
     return <div className="text-center mt-16">Loading...</div>;
   }
 
-  const sidebarPosts = posts.slice(2, 6);
+  const sidebarPosts = posts.slice(6, 10);
 
   const schemas = posts.map((post) => ({
     "@context": "https://schema.org",
@@ -63,10 +65,10 @@ const Engineering = () => {
   return (
     <>
       <Head>
-        <title>Energy Blogs | Epics Solution</title>
+        <title>HVAC Blogs | HVAC Controls </title>
         <meta
           name="description"
-          content="Explore the latest Energy blogs and insights."
+          content="Best online courses related to hvac control in this course you learn about hvac controls this is free "
         />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
@@ -124,7 +126,7 @@ const Engineering = () => {
             ))}
             {posts.length > displayCount && (
               <div className="text-center mt-8">
-               <button
+                <button
   onClick={() => setDisplayCount(displayCount + 6)}
   className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
 >
@@ -134,7 +136,7 @@ const Engineering = () => {
               </div>
             )}
           </div>
-          <div className="w-full md:w-1/4 md:sticky md:top-0">
+          <div className="w-full md:w-1/4 md:sticky fixed md:top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
                 Latest Blogs
@@ -170,47 +172,18 @@ const Engineering = () => {
                   </div>
                 </div>
               ))}
-              <div className="mt-8">
+              <div className="mt-8  ">
                 <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
                   Categories
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/dev"
+                    href="/blogs"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Development
+                    Blogs
                   </Link>
-                  <Link
-                    href="/equipment"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Equipment
-                  </Link>
-                  <Link
-                    href="/ai"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Artificial Intelligence
-                  </Link>
-                  <Link
-                    href="/eng"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Designing
-                  </Link>
-                  <Link
-                    href="/energy"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Energy
-                  </Link>
-                  <Link
-                    href="/waste"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Waste
-                  </Link>
+                  
                 </div>
               </div>
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
@@ -220,16 +193,22 @@ const Engineering = () => {
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/mep"
+                    href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit MEP
+                    Revit 
                   </Link>
                   <Link
-                    href="/Leed"
+                    href="/designing"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    LEED
+                    Designing
+                  </Link>
+                       <Link
+                    href="/control"
+                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                  >
+                    Control
                   </Link>
                 </div>
               </div>
