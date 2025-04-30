@@ -87,7 +87,7 @@ const HomeComponent = () => {
 
       {/* Calculator Button */}
       <div className="fixed bottom-10 right-10">
-        <Link href="/loadcalculator">
+        <Link href="/Load Calculator">
           <button
             className="bg-[#FF6F61] p-4 rounded-full shadow-lg flex items-center justify-center text-white hover:bg-[#F95D4B] transition"
             aria-label="Open Load Calculator"
