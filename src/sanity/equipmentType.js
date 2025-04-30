@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 export const equipmentType = defineType({
   name: 'equipment',
-  title: 'equipment',
+  title: 'HVAC Designing',
   type: 'document',
   fields: [
     defineField({
