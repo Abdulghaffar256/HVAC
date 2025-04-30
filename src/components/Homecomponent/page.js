@@ -6,47 +6,52 @@ import Image from "next/image";
 const HomeComponent = () => {
   const imageSets = {
     epic: ["/images/mockup1.png"],
-    build: ["/images/mockup2.png"],
-    sell: ["/images/mockup3.png"],
-    scale: ["/images/mockup4.png"],
+    build: ["/images/mockup4.png"],
+    sell: ["/images/mockup6.png"],
+    scale: ["/images/mockup7.png"],
   };
 
   const tabContent = {
-     Designing: {
-      title: "Learn Complete HVAC Desining with us ",
+    epic: {
+      title: "Empowering Digital Innovation with EPIC",
       description:
         "We provide end-to-end solutions tailored for your business. From consulting to development, EPIC covers it all.",
     },
-     Tools: {
+    build: {
       title: "Build Future-Ready Solutions",
       description:
         "With cutting-edge technology and agile development, we build scalable and robust applications for your needs.",
     },
-    Revit: {
+    sell: {
       title: "Strategies to Help You Sell Better",
       description:
         "Our marketing and e-commerce expertise helps you reach customers effectively and increase conversions.",
     },
-     Controls: {
+    scale: {
       title: "Scale Your Business With Confidence",
       description:
         "We help you grow with smart infrastructure, automation, and long-term strategic planning.",
     },
   };
 
+  // Ensure activeTab starts as a valid key from tabContent
   const [activeTab, setActiveTab] = useState("epic");
 
+  // Check if activeTab exists in tabContent, else fallback to 'epic'
+  const currentTabContent = tabContent[activeTab] || tabContent["epic"];
+  const currentImage = imageSets[activeTab] ? imageSets[activeTab][0] : imageSets["epic"][0];
+
   return (
-    <section className="bg-white text-black min-h-[90vh] flex items-center justify-center px-4 md:px-12 py-10">
+    <section className="bg-[#F9FAFB] text-[#2E2E2E] min-h-[90vh] flex items-center justify-center px-4 md:px-12 py-10">
       <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-7xl w-full">
         
-        {/* Text Content on Left */}
+        {/* Text Content */}
         <div className="flex-1">
-          <h1 className="text-3xl md:text-5xl font-bold text-red-600 leading-tight mb-4">
-            {tabContent[activeTab].title}
+          <h1 className="text-3xl md:text-5xl font-bold text-[#1F3B4D] leading-tight mb-4">
+            {currentTabContent?.title || "Title Not Available"}
           </h1>
-          <p className="text-lg md:text-xl text-black/80 mb-6">
-            {tabContent[activeTab].description}
+          <p className="text-lg md:text-xl text-[#2E2E2E]/80 mb-6">
+            {currentTabContent?.description || "Description Not Available"}
           </p>
 
           {/* Tabs */}
@@ -57,8 +62,8 @@ const HomeComponent = () => {
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-2 rounded-full border transition ${
                   activeTab === tab
-                    ? "bg-red-600 text-white font-semibold"
-                    : "bg-gray-100 text-black hover:bg-gray-200"
+                    ? "bg-[#FF6F61] text-white font-semibold"
+                    : "bg-[#A2D5F2] text-[#1F3B4D] hover:bg-[#10B981] hover:text-white"
                 }`}
               >
                 ● {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -67,10 +72,10 @@ const HomeComponent = () => {
           </div>
         </div>
 
-        {/* Image on Right */}
+        {/* Image */}
         <div className="flex-1 relative w-full max-w-md h-[300px] md:h-[400px]">
           <Image
-            src={imageSets[activeTab][0]}
+            src={currentImage}
             alt={`${activeTab}-mockup`}
             fill
             className="object-contain rounded-xl shadow-md"
@@ -82,3 +87,4 @@ const HomeComponent = () => {
 };
 
 export default HomeComponent;
+
