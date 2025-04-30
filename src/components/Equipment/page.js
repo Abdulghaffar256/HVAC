@@ -1,4 +1,7 @@
 
+
+
+  
 "use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -63,10 +66,10 @@ const Equipment = () => {
   return (
     <>
       <Head>
-        <title>HVAC Equipment Blogs | Epics Solution</title>
+        <title>HVAC Designing </title>
         <meta
           name="description"
-          content="Explore the latest development blogs and insights."
+          content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now! "
         />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
@@ -134,7 +137,7 @@ const Equipment = () => {
               </div>
             )}
           </div>
-          <div className="w-full md:w-1/4 md:sticky md:top-0">
+          <div className="w-full md:w-1/4 md:sticky fixed md:top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
                 Latest Blogs
@@ -170,47 +173,18 @@ const Equipment = () => {
                   </div>
                 </div>
               ))}
-              <div className="mt-8">
+              <div className="mt-8  ">
                 <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
                   Categories
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/dev"
+                    href="/blogs"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Development
+                    Blogs
                   </Link>
-                  <Link
-                    href="/equipment"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Equipment
-                  </Link>
-                  <Link
-                    href="/ai"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Artificial Intelligence
-                  </Link>
-                  <Link
-                    href="/eng"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Designing
-                  </Link>
-                  <Link
-                    href="/energy"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Energy
-                  </Link>
-                  <Link
-                    href="/waste"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Waste
-                  </Link>
+                  
                 </div>
               </div>
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
@@ -220,16 +194,22 @@ const Equipment = () => {
                 </h2>
                 <div className="space-y-2">
                   <Link
-                    href="/mep"
+                    href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit MEP
+                    Revit 
                   </Link>
                   <Link
-                    href="/Leed"
+                    href="/designing"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    LEED
+                    Designing
+                  </Link>
+                       <Link
+                    href="/control"
+                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                  >
+                    Control
                   </Link>
                 </div>
               </div>
