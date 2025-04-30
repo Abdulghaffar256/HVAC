@@ -7,11 +7,11 @@ export default function Eng() {
     <>
       {/* Adding the Head component for Open Graph and Twitter meta tags */}
       <Head>
-        <title>HVAC Designing </title>
-        <meta property="og:title" content="Best online courses & Blogs related to HVAC optimization" />
+        <title>HVAC Control </title>
+        <meta property="og:title" content="Best online courses related to hvac control in this course you learn about hvac controls this is free  " />
         <meta
           property="og:description"
-          content="HVAC Designing calculations, theory  and articles on  how to increase Energy Effiency in HVAC "
+          content="Best online courses related to hvac control in this course you learn about hvac controls this is free  "
         />
         <meta property="og:image" content="https://www.epicssolution.com/social-banner.png" />
         <meta property="og:url" content="https://www.epicssolution.com/" />
@@ -19,10 +19,10 @@ export default function Eng() {
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="HVAC Designing calculations, theory  and articles on  how to increase Energy Effiency in HVAC" />
+        <meta name="twitter:title" content="Best online courses related to hvac control in this course you learn about hvac controls this is free " />
         <meta
           name="twitter:description"
-          content="HVAC Designing calculations, theory  and articles on  how to increase Energy Effiency in HVAC"
+          content="Best online courses related to hvac control in this course you learn about hvac controls this is free "
         />
         <meta name="twitter:image" content="https://www.epicssolution.com/social-banner.png" />
       </Head>
@@ -30,7 +30,7 @@ export default function Eng() {
       <div className="mt-8">
         {/* Second component */}
         <div className="flex justify-center align-middle font-semibold text-2xl border-[1px] border-solid border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]" >
-             <h1>       HVAC Designing Blogs & Courses  </h1>
+             <h1>       HVAC controls   </h1>
  
 
         </div>
