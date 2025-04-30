@@ -15,46 +15,35 @@ const HomeComponent = () => {
   };
 
   // Define tab content with corresponding keys
-const tabContent = {
-  Designing: {
-    title: "Energy-Efficient HVAC System Design",
-    description:
-      "Master energy-efficient HVAC design in our free course. Learn to create systems that maximize comfort and minimize environmental impact.",
-  },
-  Tools: {
-    title: "HVAC Tools for Efficient System Design",
-    description:
-      "Leverage cutting-edge HVAC design tools for efficiency and sustainability. Streamline your process with accurate calculations and intuitive interfaces.",
-  },
-  Revit: {
-    title: "Revit: Premier 3D HVAC Design Tool",
-    description:
-      "Discover why Revit is a top choice for 3D HVAC design. Our free course teaches you to harness its power for superior system modeling.",
-  },
-  Controls: {
-    title: "HVAC Controls for Enhanced Energy Efficiency",
-    description:
-      "Optimize HVAC performance with advanced control systems. Our course covers strategies to enhance energy efficiency and system responsiveness.",
-  },
-};
-
-  // Mapping between tab names (UI) and data keys
-  const tabMapping = {
-    Designing: "Designing",
-    Tools: "Tools",
-    Revit: "Revit",
-    controls: "controls",
+  const tabContent = {
+    Designing: {
+      title: "Energy-Efficient HVAC System Design",
+      description:
+        "Master energy-efficient HVAC design in our free course. Learn to create systems that maximize comfort and minimize environmental impact.",
+    },
+    Tools: {
+      title: "HVAC Tools for Efficient System Design",
+      description:
+        "Leverage cutting-edge HVAC design tools for efficiency and sustainability. Streamline your process with accurate calculations and intuitive interfaces.",
+    },
+    Revit: {
+      title: "Revit: Premier 3D HVAC Design Tool",
+      description:
+        "Discover why Revit is a top choice for 3D HVAC design. Our free course teaches you to harness its power for superior system modeling.",
+    },
+    controls: {
+      title: "HVAC Controls for Enhanced Energy Efficiency",
+      description:
+        "Optimize HVAC performance with advanced control systems. Our course covers strategies to enhance energy efficiency and system responsiveness.",
+    },
   };
 
   // Initialize activeTab with a valid tab name
-  const [activeTab, setActiveTab] = useState("epic");
+  const [activeTab, setActiveTab] = useState("Designing");
 
-  // Get the corresponding key from the mapping, defaulting to "Designing" if invalid
-  const currentKey = tabMapping[activeTab] || "Designing";
-
-  // Access image and content using the mapped key
-  const currentImage = imageSets[currentKey][0];
-  const currentTabContent = tabContent[currentKey];
+  // Access image and content directly using activeTab
+  const currentImage = imageSets[activeTab][0];
+  const currentTabContent = tabContent[activeTab];
 
   return (
     <section className="bg-[#F9FAFB] text-[#2E2E2E] min-h-[90vh] flex items-center justify-center px-4 md:px-12 py-10">
