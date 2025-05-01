@@ -8,7 +8,6 @@ import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 
-
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
   { id: "HeatTransferThroughRoof3", component: HeatTransferThroughRoof3, label: "Roof" },
@@ -22,38 +21,31 @@ const CombinedHeatCalculators = () => {
   const [heatValues, setHeatValues] = useState(
     Object.fromEntries(calculators.map(({ id }) => [id, 0]))
   );
+  const [updateKey, setUpdateKey] = useState(0);
 
-  const [updateKey, setUpdateKey] = useState(0); // Dummy state to force re-render
-
-  // Function to update heat values
   const updateHeatValue = (key, value) => {
     setHeatValues((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
   };
 
-  // Compute total heat dynamically
   const totalCombinedHeat = Object.values(heatValues).reduce((acc, val) => acc + val, 0);
   const convertToTons = (btu) => (btu / 12000).toFixed(2);
   const totalAmount = totalCombinedHeat.toFixed(2);
 
-  // Get result message
   const getResultMessage = () => {
     if (totalCombinedHeat < 24000) return "Low heat load. No additional cooling required.";
-    if (totalCombinedHeat >= 24000 && totalCombinedHeat <= 60000) return "Moderate heat load. Consider efficient HVAC.";
+    if (totalCombinedHeat <= 60000) return "Moderate heat load. Consider efficient HVAC.";
     return "High heat load! Upgraded HVAC system recommended.";
   };
 
-  // **Fix for Reset Values**
   const resetValues = () => {
     setHeatValues(Object.fromEntries(calculators.map(({ id }) => [id, 0])));
-    setUpdateKey((prev) => prev + 1); // Force re-render
+    setUpdateKey((prev) => prev + 1);
   };
 
-  // **Fix for Recalculate Values**
   const recalculateValues = () => {
-    setUpdateKey((prev) => prev + 1); // Force re-render
+    setUpdateKey((prev) => prev + 1);
   };
 
-  // Download Report Function
   const downloadReport = () => {
     const reportContent = `
       HVAC Load Calculation Report
@@ -79,13 +71,11 @@ const CombinedHeatCalculators = () => {
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
-      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold text-blue-700">HVAC Load Calculator</h1>
         <p className="text-lg text-gray-600 mt-2">Calculate total heat loads efficiently.</p>
       </div>
 
-      {/* Total Heat Load */}
       <div className="bg-blue-600 text-white p-6 rounded-xl shadow-lg text-center mb-8">
         <h2 className="text-3xl font-bold">Total Heat Load</h2>
         <p className="text-2xl mt-2 font-semibold">{totalAmount} BTU/h</p>
@@ -94,7 +84,6 @@ const CombinedHeatCalculators = () => {
         </p>
       </div>
 
-      {/* Calculator Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {calculators.map(({ id, component: Component, label }) => (
           <div key={id} className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl">
@@ -104,7 +93,6 @@ const CombinedHeatCalculators = () => {
         ))}
       </div>
 
-      {/* Breakdown & Result */}
       <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Detailed Breakdown</h2>
 
@@ -116,15 +104,35 @@ const CombinedHeatCalculators = () => {
           ))}
         </ul>
 
-        {/* Result */}
         <div className="mt-4 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
           <h3 className="text-xl font-semibold text-green-700">Result</h3>
           <p className="text-lg font-medium text-gray-700">{getResultMessage()}</p>
         </div>
 
-        {/* Total Amount at Bottom */}
         <div className="mt-6 text-center text-2xl font-bold text-blue-700">
           Total Heat Load: {totalAmount} BTU/h
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-center gap-6 mt-8">
+          <button
+            onClick={resetValues}
+            className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 transition"
+          >
+            Reset
+          </button>
+          <button
+            onClick={recalculateValues}
+            className="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition"
+          >
+            Recalculate
+          </button>
+          <button
+            onClick={downloadReport}
+            className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition"
+          >
+            Download Report
+          </button>
         </div>
       </div>
     </div>
@@ -132,4 +140,3 @@ const CombinedHeatCalculators = () => {
 };
 
 export default CombinedHeatCalculators;
-
