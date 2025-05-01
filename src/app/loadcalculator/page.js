@@ -15,7 +15,6 @@ const calculators = [
   { id: "HeatTransferCalculator2", component: HeatTransferCalculator2, label: "Glass" },
   { id: "HeatTransferCalculator7", component: HeatTransferCalculator7, label: "Interior Wall" },
   { id: "HeatGeneratedByLighting4", component: HeatGeneratedByLighting4, label: "Lighting" },
-  { id: "HeatCalculator5", component: HeatCalculator5, label: "People" },
   { id: "HeatDissipationCalculator6", component: HeatDissipationCalculator6, label: "Electrical Equipment" },
 ];
 
