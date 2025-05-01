@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import HeatDissipationCalculator6 from "@/components/LoadCalculator/ele/page";
-import HeatTransferCalculator1 from "@/components/LoadCalculator/exwall/page";
-import HeatTransferCalculator2 from "@/components/LoadCalculator/exglass/page";
-import HeatTransferThroughRoof3 from "@/components/LoadCalculator/exroof/page";
-import HeatTransferCalculator7 from "@/components/LoadCalculator/intwall/page";
-import HeatGeneratedByLighting4 from "@/components/LoadCalculator/light/page";
-import HeatCalculator5 from "@/components/LoadCalculator/people/HeatCalculator5";
+import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
+import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
+import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
+import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
+import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
+import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
+
 
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
