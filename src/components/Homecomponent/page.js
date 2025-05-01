@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaCalculator } from "react-icons/fa"; // Importing the calculator icon
-import Link from "next/link"; // Importing Link for navigation
 
 const HomeComponent = () => {
-  // Define image sets with their respective keys
   const imageSets = {
     Designing: ["/images/mockup1.png"],
     Tools: ["/images/mockup4.png"],
@@ -14,7 +11,6 @@ const HomeComponent = () => {
     controls: ["/images/mockup7.png"],
   };
 
-  // Define tab content with corresponding keys
   const tabContent = {
     Designing: {
       title: "Energy-Efficient HVAC System Design",
@@ -38,10 +34,7 @@ const HomeComponent = () => {
     },
   };
 
-  // Initialize activeTab with a valid tab name
   const [activeTab, setActiveTab] = useState("Designing");
-
-  // Access image and content directly using activeTab
   const currentImage = imageSets[activeTab][0];
   const currentTabContent = tabContent[activeTab];
 
@@ -85,20 +78,9 @@ const HomeComponent = () => {
           />
         </div>
       </div>
-
-      {/* Calculator Button */}
-      <div className="fixed bottom-10 right-10">
-        <Link href="/Load Calculator">
-          <button
-            className="bg-[#FF6F61] p-4 rounded-full shadow-lg flex items-center justify-center text-white hover:bg-[#F95D4B] transition"
-            aria-label="Open Load Calculator"
-          >
-            <FaCalculator size={24} />
-          </button>
-        </Link>
-      </div>
     </section>
   );
 };
 
 export default HomeComponent;
+
