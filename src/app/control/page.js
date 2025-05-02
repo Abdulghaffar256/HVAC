@@ -13,8 +13,8 @@ export default function Eng() {
           property="og:description"
           content="Best online courses related to hvac control in this course you learn about hvac controls this is free  "
         />
-        <meta property="og:image" content="https://www.epicssolution.com/social-banner.png" />
-        <meta property="og:url" content="https://www.epicssolution.com/" />
+        <meta property="og:image" content="https://www./www.hvacdesigning.com/social-banner.png" />
+        <meta property="og:url" content="https://www.hvacdesigning.com/" />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card Meta Tags */}
@@ -24,7 +24,7 @@ export default function Eng() {
           name="twitter:description"
           content="Best online courses related to hvac control in this course you learn about hvac controls this is free "
         />
-        <meta name="twitter:image" content="https://www.epicssolution.com/social-banner.png" />
+        <meta name="twitter:image" content="https://www./www.hvacdesigning.com/social-banner.png" />
       </Head>
       
       <div className="mt-8">
