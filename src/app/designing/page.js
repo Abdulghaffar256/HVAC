@@ -14,8 +14,9 @@ export default function equipment() {
           property="og:description"
           content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now!"
         />
-        <meta property="og:image" content="https://www.epicssolution.com/social-banner.png" />
-        <meta property="og:url" content="https://www.epicssolution.com/" />
+        <meta property="og:image" content="https://www.hvacdesigning.com
+/social-banner.png" />
+        <meta property="og:url" content="https://www.hvacdesigning.com/" />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card Meta Tags */}
@@ -25,7 +26,7 @@ export default function equipment() {
           name="twitter:description"
           content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now!"
         />
-        <meta name="twitter:image" content="https://www.epicssolution.com/social-banner.png" />
+        <meta name="twitter:image" content="https://www./www.hvacdesigning.com/social-banner.png" />
       </Head>
       
       <div className="mt-8">
