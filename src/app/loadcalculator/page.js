@@ -77,10 +77,16 @@ const downloadReport = () => {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
 
-  // Explicitly set file type for Excel
-  XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx", { bookType: 'xlsx', type: 'binary' });
-};
+  // Use array type for exporting and ensuring proper file handling
+  const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
+  // Create a Blob and trigger the download with proper MIME type
+  const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'HVAC_Load_Report.xlsx';  // Ensure the correct file extension
+  link.click();
+};
 
 
   return (
