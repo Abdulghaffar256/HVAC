@@ -13,8 +13,8 @@ export default function Mar() {
           property="og:description"
           content="Best Online courses, tuotorials  and Blogs related to Revit MEP  "
         />
-        <meta property="og:image" content="https://your-site-url.com/social-banner.png" />
-        <meta property="og:url" content="https://your-site-url.com" />
+        <meta property="og:image" content="https://www.hvacdesigning.com/social-banner.png" />
+        <meta property="og:url" content="https://www.hvacdesigning.com" />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card Meta Tags */}
@@ -24,7 +24,7 @@ export default function Mar() {
           name="twitter:description"
           content="Best Online courses, tuotorials  and Blogs related to Revit MEP 2025  ."
         />
-        <meta name="twitter:image" content="https://your-site-url.com/social-banner.png" />
+        <meta name="twitter:image" content="https://www.hvacdesigning.com/social-banner.png" />
       </Head>
       
       <div className="mt-8">
