@@ -47,8 +47,7 @@ const CombinedHeatCalculators = () => {
     setUpdateKey((prev) => prev + 1);
   };
 
- const downloadReport = () => {
-  console.log("Download Report triggered!");
+const downloadReport = () => {
   const data = [
     ["HVAC Load Report"],
     [],
@@ -78,7 +77,8 @@ const CombinedHeatCalculators = () => {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
 
-  XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx");
+  // Explicitly set file type for Excel
+  XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx", { bookType: 'xlsx', type: 'binary' });
 };
 
 
