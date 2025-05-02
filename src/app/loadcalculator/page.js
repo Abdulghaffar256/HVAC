@@ -79,12 +79,7 @@ const CombinedHeatCalculators = () => {
 
   XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx");
 };
-    const blob = new Blob([reportContent], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "HVAC_Load_Report.txt";
-    link.click();
-  };
+
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
