@@ -121,13 +121,6 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
         >
           Calculate Heat Transfer
         </button>
-
-        <button
-          onClick={calculateHeatDissipation}
-          className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition duration-300"
-        >
-          Calculate Heat Dissipation
-        </button>
       </div>
 
       <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
