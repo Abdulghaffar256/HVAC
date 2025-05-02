@@ -64,11 +64,6 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
     }
   };
 
-  // Placeholder for dissipation calculation
-  const calculateHeatDissipation = () => {
-    alert("Heat Dissipation calculation not yet implemented.");
-  };
-
   return (
     <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
@@ -114,7 +109,8 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+      {/* Calculate Button Only */}
+      <div className="flex justify-center">
         <button
           onClick={calculateHeatTransfer}
           className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
@@ -123,6 +119,7 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
         </button>
       </div>
 
+      {/* Result */}
       <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-blue-600">Results</h2>
         {result > 0 ? (
@@ -138,5 +135,3 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
 };
 
 export default HeatTransferCalculator2;
-
-
