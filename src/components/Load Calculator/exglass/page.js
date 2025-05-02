@@ -59,11 +59,14 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
     const heatTransfer = selectedSHGF * area * selectedSC * selectedCLF;
     setResult(heatTransfer.toFixed(2));
 
-    // 🔥 Send calculated value to parent component
     if (onCalculate) {
-      console.log("Sending Heat Transfer Value:", heatTransfer); // Debugging log
       onCalculate(heatTransfer);
     }
+  };
+
+  // Placeholder for dissipation calculation
+  const calculateHeatDissipation = () => {
+    alert("Heat Dissipation calculation not yet implemented.");
   };
 
   return (
@@ -111,9 +114,19 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
         </div>
       </div>
 
-      <div className="flex justify-center">
-        <button onClick={calculateHeatTransfer} className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+        <button
+          onClick={calculateHeatTransfer}
+          className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
+        >
           Calculate Heat Transfer
+        </button>
+
+        <button
+          onClick={calculateHeatDissipation}
+          className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition duration-300"
+        >
+          Calculate Heat Dissipation
         </button>
       </div>
 
