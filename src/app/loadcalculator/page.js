@@ -7,6 +7,7 @@ import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
+import * as XLSX from "xlsx";
 
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
@@ -47,21 +48,37 @@ const CombinedHeatCalculators = () => {
   };
 
   const downloadReport = () => {
-    const reportContent = `
-      HVAC Load Calculation Report
+  const data = [
+    ["HVAC Load Report"],
+    [],
+    ["Component", "Heat Load (BTU/h)"],
+    ...calculators.map(({ id, label }) => [
+      label,
+      parseFloat(heatValues[id]).toFixed(2),
+    ]),
+    [],
+    ["Total Heat Load", totalAmount],
+    ["Tons of Refrigeration", convertToTons(totalCombinedHeat)],
+    ["Recommendation", getResultMessage()],
+  ];
 
-      Total Heat Load: ${totalAmount} BTU/h
-      Equivalent Tons of Refrigeration: ${convertToTons(totalCombinedHeat)} Tons
+  const worksheet = XLSX.utils.aoa_to_sheet(data);
+  const maxLabelLength = Math.max(
+    ...calculators.map(({ label }) => label.length),
+    "Component".length,
+    "Tons of Refrigeration".length,
+    "Recommendation".length
+  );
+  worksheet["!cols"] = [
+    { wch: maxLabelLength + 5 },
+    { wch: 20 },
+  ];
 
-      Detailed Breakdown:
-      ${calculators
-        .map(({ id, label }) => `${label}: ${heatValues[id].toFixed(2)} BTU/h`)
-        .join("\n")}
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
 
-      Recommendation:
-      ${getResultMessage()}
-    `;
-
+  XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx");
+};
     const blob = new Blob([reportContent], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
