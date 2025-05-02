@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Material options
 const materials = [
@@ -36,14 +34,14 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
     setInputs((prev) => ({ ...prev, uValue: selectedMaterial?.uValue || 0 }));
   };
 
-  // Calculate heat transfer dynamically
-  useEffect(() => {
+  // Manual calculation
+  const calculateHeatTransfer = () => {
     const { length, height, tempDifference, uValue } = inputs;
     const area = length * height;
     const heatTransfer = uValue * area * tempDifference;
     setResult(heatTransfer);
-    onCalculate(heatTransfer); // Send result to parent
-  }, [inputs, onCalculate]);
+    if (onCalculate) onCalculate(heatTransfer);
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -98,6 +96,16 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
         />
       </div>
 
+      {/* Calculate Button */}
+      <div className="flex justify-center mb-6">
+        <button
+          onClick={calculateHeatTransfer}
+          className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
+        >
+          Calculate Heat Transfer
+        </button>
+      </div>
+
       {/* Result */}
       <div className="bg-gray-100 p-4 rounded-lg mt-4">
         <h3 className="text-lg font-semibold">Heat Transfer:</h3>
@@ -108,4 +116,5 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
 };
 
 export default HeatTransferCalculator1;
+
 
