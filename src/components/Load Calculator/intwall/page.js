@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Material options with U-values
 const materials = [
@@ -24,17 +24,23 @@ const HeatTransferCalculator = ({ onCalculate }) => {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: value === "" ? "" : Math.max(0, parseFloat(value) || 0) }));
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value === "" ? "" : Math.max(0, parseFloat(value) || 0),
+    }));
   };
 
   // Handle material selection
   const handleMaterialChange = (e) => {
     const selectedMaterial = materials.find((mat) => mat.label === e.target.value);
-    setInputs((prev) => ({ ...prev, uValue: selectedMaterial?.uValue || 0 }));
+    setInputs((prev) => ({
+      ...prev,
+      uValue: selectedMaterial?.uValue || 0,
+    }));
   };
 
-  // Auto-calculate heat transfer when inputs change
-  useEffect(() => {
+  // Manual calculation
+  const calculateHeatTransfer = () => {
     const { length, height, tempDifference, uValue } = inputs;
 
     if (length && height && tempDifference && uValue) {
@@ -51,7 +57,7 @@ const HeatTransferCalculator = ({ onCalculate }) => {
         onCalculate(0);
       }
     }
-  }, [inputs, onCalculate]);
+  };
 
   return (
     <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
@@ -116,6 +122,16 @@ const HeatTransferCalculator = ({ onCalculate }) => {
             min="0"
           />
         </div>
+
+        {/* Calculate Button */}
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={calculateHeatTransfer}
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Calculate Heat Transfer
+          </button>
+        </div>
       </div>
 
       {/* Result */}
@@ -126,7 +142,7 @@ const HeatTransferCalculator = ({ onCalculate }) => {
             Heat Transfer Through Wall: <strong>{heatTransfer.toFixed(2)} BTU/hr</strong>
           </p>
         ) : (
-          <p className="text-gray-600">Enter values to calculate heat transfer.</p>
+          <p className="text-gray-600">Enter values and click the button to calculate heat transfer.</p>
         )}
       </div>
     </div>
@@ -134,4 +150,5 @@ const HeatTransferCalculator = ({ onCalculate }) => {
 };
 
 export default HeatTransferCalculator;
+
 
