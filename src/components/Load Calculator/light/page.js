@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const HeatCalculatorLighting = ({ onCalculate }) => {
   const [wattage, setWattage] = useState("");
-
   const [heatGenerated, setHeatGenerated] = useState(0);
 
   // Handle input change
@@ -13,8 +12,8 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
     setWattage(value === "" ? "" : Math.max(0, parseFloat(value) || 0)); // Prevent negative values
   };
 
-  // Calculate heat whenever wattage changes
-  useEffect(() => {
+  // Manual calculation handler
+  const calculateHeat = () => {
     if (wattage === "" || wattage <= 0) {
       setHeatGenerated(0);
       if (typeof onCalculate === "function") {
@@ -23,13 +22,13 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
       return;
     }
 
-    const calculatedHeat = 3.4 * wattage * 0.8; // Formula: Q = 3.4 × WATT × 0.8
+    const calculatedHeat = 3.4 * wattage * 0.8; // Q = 3.4 × WATT × 0.8
     setHeatGenerated(calculatedHeat);
 
     if (typeof onCalculate === "function") {
       onCalculate(calculatedHeat);
     }
-  }, [wattage, onCalculate]);
+  };
 
   return (
     <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
@@ -52,6 +51,16 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
             min="0"
           />
         </div>
+
+        {/* Calculate Button */}
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={calculateHeat}
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Calculate Heat
+          </button>
+        </div>
       </div>
 
       {/* Result */}
@@ -62,7 +71,7 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
             Heat Generated: <strong>{heatGenerated.toFixed(2)} BTU/hr</strong>
           </p>
         ) : (
-          <p className="text-gray-600">Enter a valid wattage to calculate heat.</p>
+          <p className="text-gray-600">Enter a valid wattage and click the button to calculate heat.</p>
         )}
       </div>
     </div>
@@ -70,4 +79,5 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
 };
 
 export default HeatCalculatorLighting;
+
 
