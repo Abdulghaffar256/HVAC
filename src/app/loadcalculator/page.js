@@ -47,7 +47,8 @@ const CombinedHeatCalculators = () => {
     setUpdateKey((prev) => prev + 1);
   };
 
-  const downloadReport = () => {
+ const downloadReport = () => {
+  console.log("Download Report triggered!");
   const data = [
     ["HVAC Load Report"],
     [],
@@ -79,6 +80,7 @@ const CombinedHeatCalculators = () => {
 
   XLSX.writeFile(workbook, "HVAC_Load_Report.xlsx");
 };
+
 
 
   return (
