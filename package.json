@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "vercel build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -27,7 +26,7 @@
     "lucide-react": "^0.503.0",
     "mongoose": "^8.7.0",
     "next": "^14.2.13",
-    "next-sanity": "^9.10.2",
+    "next-sanity": "^9.5.0",
     "next-sitemap": "^4.2.3",
     "npmlog": "^7.0.1",
     "react": "^18.3.1",
@@ -42,8 +41,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13",
     "swiper": "^11.2.6",
-    "uuid": "^10.0.0",
-    "xlsx": "^0.18.5"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "^8",
