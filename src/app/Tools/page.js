@@ -10,36 +10,7 @@ const tools = [
     link: "/loadcalculator",
     description: "Calculate heating and cooling loads with ease and accuracy.",
   },
-  {
-    name: "Duct Sizer",
-    image: "/images/ductsizer.jpg",
-    link: "/tools/duct-sizer",
-    description: "Quickly size ducts for optimal air distribution.",
-  },
-  {
-    name: "Revit Families",
-    image: "/images/revit.jpg",
-    link: "/revit",
-    description: "Download BIM-ready HVAC components for Revit.",
-  },
-  {
-    name: "Control Systems",
-    image: "/images/controls.jpg",
-    link: "/controls",
-    description: "Learn how to integrate HVAC control systems.",
-  },
-  {
-    name: "Cooling Coil Calculator",
-    image: "/images/coolingcoil.jpg",
-    link: "/tools/cooling-coil",
-    description: "Estimate cooling coil capacity requirements.",
-  },
-  {
-    name: "Psychrometric Tool",
-    image: "/images/psychrometric.jpg",
-    link: "/tools/psychrometric",
-    description: "Analyze air properties and visualize HVAC processes.",
-  },
+
 ];
 
 export default function HvacToolsPage() {
