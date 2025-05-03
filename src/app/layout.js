@@ -1,10 +1,11 @@
 import "./globals.css";
 import { cx } from "@/utils";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Manrope } from "next/font/google"; // Ensure Next.js version supports this
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import siteMetadata from "@/utils/siteMetaData";
 
+// Define fonts with proper configuration
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -17,6 +18,7 @@ const manrope = Manrope({
   variable: "--font-mr",
 });
 
+// Metadata configuration
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
@@ -56,13 +58,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link
-          rel="sitemap"
-          type="application/xml"
-          href="https://www.epicssolution.com/sitemap.xml"
-        />
-        <link rel="icon" href="https://www.epicssolution.com/favicon.ico" />
-        <link rel="preload" href="/css/main.css" as="style" />
+        {/* Use relative paths or siteMetadata for dynamic URLs */}
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="icon" href="/favicon.ico" />
+        {/* Only include preload for custom font if verified */}
         <link
           rel="preload"
           href="/fonts/CustomFont.woff2"
@@ -71,9 +70,12 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </head>
-
       <body
-        className={cx(inter.variable, manrope.variable, "font-mr bg-light dark:bg-dark")}
+        className={cx(
+          inter.variable,
+          manrope.variable,
+          "font-mr bg-light dark:bg-dark"
+        )}
       >
         <Header />
         <main>{children}</main>
