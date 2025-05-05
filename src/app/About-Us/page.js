@@ -1,83 +1,105 @@
 "use client";
-import Head from 'next/head';
-import Link from 'next/link';
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutUs() {
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-light dark:bg-dark text-black dark:text-light transition-all border-solid border-dark dark:border-light">
+    <div className="bg-white text-gray-800 dark:bg-gray-900 dark:text-white">
       <Head>
         <title>About Us | HVAC Designing</title>
         <link rel="canonical" href="https://www.hvacdesigning.com/about-us" />
       </Head>
-      <main className="p-6 max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6">About Us</h1>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Welcome to HVAC Designing</h2>
-          <p>Welcome to HVAC Designing! We are a team of experienced HVAC professionals dedicated to providing top-notch education and resources in HVAC design.</p>
-        </section>
+      {/* Intro Section */}
+      <section className="max-w-6xl mx-auto px-6 py-12 text-center">
+        <h1 className="text-4xl font-bold mb-4">About Us</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          HVAC Designing’s company and culture are as unique as our services. We’re
+          crafted, not cobbled, for a delightful learning experience.
+        </p>
+        <div className="mt-6">
+          <Image
+            src="/about/team-photo.jpg" // Replace with your image
+            alt="HVAC Team"
+            width={600}
+            height={350}
+            className="mx-auto rounded-lg shadow"
+          />
+        </div>
+      </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Our Team</h2>
-          <p>Our team consists of seasoned HVAC engineers and designers with years of experience in the industry. We bring a wealth of knowledge and practical expertise to our courses and resources.</p>
-        </section>
+      {/* Mission and Story */}
+      <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <Image
+            src="/about/grow-better.jpg" // Replace with your image
+            alt="Grow Better"
+            width={500}
+            height={350}
+            className="rounded-lg shadow"
+          />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <p>
+            We exist to help HVAC engineers grow by improving their skills and staying
+            updated with the latest in HVAC tech. When our learners grow, the whole
+            industry benefits.
+          </p>
+        </div>
+      </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">What We Offer</h2>
-          <p>At HVAC Designing, we offer comprehensive online courses, certifications, and access to cutting-edge HVAC software solutions. Our content is designed to be accessible and informative, helping you to master HVAC design principles and practices. Our software tools are designed to help you streamline your design processes, improve efficiency, and achieve optimal results in your HVAC projects.</p>
-        </section>
+      {/* Our Story */}
+      <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Our Story</h2>
+          <p>
+            Founded by a team of HVAC professionals and educators, HVAC Designing was
+            born from a passion to simplify complex concepts and offer accessible,
+            high-quality training to students and professionals worldwide.
+          </p>
+        </div>
+        <div>
+          <Image
+            src="/about/our-story.jpg" // Replace with your image
+            alt="Our Story"
+            width={500}
+            height={350}
+            className="rounded-lg shadow"
+          />
+        </div>
+      </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-          <p>Our goal is to empower HVAC professionals, students, and enthusiasts by providing them with the knowledge and tools they need to excel in the field of HVAC design. We are committed to making high-quality HVAC education accessible to everyone.</p>
-        </section>
+      {/* Stats Section */}
+      <section className="bg-gray-50 dark:bg-gray-800 py-16">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-10">HVAC Designing by the Numbers</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+              <h3 className="text-2xl font-semibold mb-2">12+ Global Offices</h3>
+              <p><Link href="/locations" className="text-blue-600 hover:underline">Learn more</Link></p>
+            </div>
+            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+              <h3 className="text-2xl font-semibold mb-2">7,600+ Learners</h3>
+              <p><Link href="/courses" className="text-blue-600 hover:underline">Explore courses</Link></p>
+            </div>
+            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
+              <h3 className="text-2xl font-semibold mb-2">205,000+ Projects Supported</h3>
+              <p><Link href="/projects" className="text-blue-600 hover:underline">See success stories</Link></p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
-          <p>At HVAC Designing, we value:</p>
-          <ul className="list-disc list-inside">
-            <li><strong>Excellence:</strong> We strive to provide the highest quality education and resources.</li>
-            <li><strong>Accessibility:</strong> We believe that everyone should have access to learning opportunities.</li>
-            <li><strong>Innovation:</strong> We stay up-to-date with the latest trends and technologies in HVAC design.</li>
-            <li><strong>Community:</strong> We foster a supportive community of learners and professionals.</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Who We Serve</h2>
-          <p>Our resources are designed for:</p>
-          <ul className="list-disc list-inside">
-            <li>HVAC professionals looking to enhance their skills</li>
-            <li>Students pursuing careers in HVAC design</li>
-            <li>Enthusiasts interested in learning about HVAC systems</li>
-            <li>Companies seeking to train their employees in HVAC design</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Transparency and Policies</h2>
-          <p>We are committed to transparency and accountability. You can find our:</p>
-          <ul className="list-disc list-inside">
-            <li><Link href="/privacy" className="text-blue-500 hover:underline">Privacy Policy</Link></li>
-            <li><Link href="/terms" className="text-blue-500 hover:underline">Terms of Service</Link></li>
-            <li><Link href="/disclaimer" className="text-blue-500 hover:underline">Disclaimer</Link></li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-          <p>If you have any questions or concerns, please don’t hesitate to contact us at <Link href="/contact" className="text-blue-500 hover:underline">our contact page</Link>.</p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Join Us</h2>
-          <p>With HVAC Designing, you can enhance your HVAC design skills, stay updated with the latest industry trends, and advance your career. Join us on this journey of learning and discover the world of HVAC design!</p>
-        </section>
-
-        <section className="mb-8">
-          <p>By using our website, you agree to our Terms of Service and Privacy Policy. We reserve the right to modify our policies at any time, and your continued use of our website will be deemed acceptance of those changes.</p>
-        </section>
-      </main>
+      {/* Final Section */}
+      <section className="max-w-6xl mx-auto px-6 py-16 text-center">
+        <h2 className="text-2xl font-bold mb-4">Ready to Join Us?</h2>
+        <p className="mb-6">Join our growing HVAC community and elevate your design career today!</p>
+        <Link href="/signup" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          Get Started
+        </Link>
+      </section>
     </div>
   );
 }
