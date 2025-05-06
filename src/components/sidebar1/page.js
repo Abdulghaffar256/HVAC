@@ -7,16 +7,15 @@ import { client } from "@/sanity/lib/client";
 export default function Sidebar1() {
   const [universities, setUniversities] = useState([]);
 
-  // Improved function to extract tutorial number from title
   const getTutorialNumber = (title) => {
-    const match = title.match(/Tutorial[-\s]?(\d+)/i); // Matches "Tutorial-1" or "Tutorial 1"
-    return match ? parseInt(match[1], 10) : Infinity; // Base 10 parsing
+    const match = title.match(/Tutorial[-\s]?(\d+)/i);
+    return match ? parseInt(match[1], 10) : Infinity;
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const query = `
-    *[ _type in ["AI", "Eng", "equipment", "development", "dev"] && slug.current == $slug][0]{
+        *[_type in ["AI", "Eng", "equipment", "development", "dev"]]{
           title,
           "slug": slug.current,
           description,
@@ -30,18 +29,10 @@ export default function Sidebar1() {
           publishedAt
         }
       `;
-
       try {
         const result = await client.fetch(query);
-        
-        // Proper numerical sorting
-        const sortedUniversities = result.sort((a, b) => {
-          const numA = getTutorialNumber(a.title);
-          const numB = getTutorialNumber(b.title);
-          return numA - numB;
-        });
-
-        setUniversities(sortedUniversities);
+        const sorted = result.sort((a, b) => getTutorialNumber(a.title) - getTutorialNumber(b.title));
+        setUniversities(sorted);
       } catch (error) {
         console.error("Error fetching data from Sanity:", error);
       }
@@ -51,7 +42,7 @@ export default function Sidebar1() {
   }, []);
 
   return (
-    <div className="w-full md:w-60 bg-black text-white p-6 transition-all duration-300">
+    <div className="w-full md:w-60 bg-black text-white p-6">
       <h2 className="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">
         LEED Certification 
       </h2>
@@ -69,3 +60,4 @@ export default function Sidebar1() {
     </div>
   );
 }
+
