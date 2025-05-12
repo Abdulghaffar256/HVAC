@@ -1,1 +1,78 @@
+"use client";
+import React, { useState } from "react";
+
+const energyUnits = ["J", "kJ", "kWh", "Btu"];
+
+const convertEnergy = (value, from, to) => {
+  let joules;
+
+  // Convert to joules first
+  switch (from) {
+    case "J":
+      joules = value;
+      break;
+    case "kJ":
+      joules = value * 1000;
+      break;
+    case "kWh":
+      joules = value * 3600000;
+      break;
+    case "Btu":
+      joules = value * 1055.055;
+      break;
+    default:
+      return value;
+  }
+
+  // Convert from joules to target unit
+  switch (to) {
+    case "J":
+      return joules;
+    case "kJ":
+      return joules / 1000;
+    case "kWh":
+      return joules / 3600000;
+    case "Btu":
+      return joules / 1055.055;
+    default:
+      return value;
+  }
+};
+
+const EnergyConverter = () => {
+  const [input, setInput] = useState(0);
+  const [from, setFrom] = useState("J");
+  const [to, setTo] = useState("kWh");
+
+  const result = convertEnergy(parseFloat(input), from, to);
+
+  return (
+    <div className="space-y-4">
+      <input
+        type="number"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        className="border px-3 py-2 rounded w-full"
+        placeholder="Enter value"
+      />
+      <div className="flex justify-between gap-4">
+        <select value={from} onChange={(e) => setFrom(e.target.value)} className="border p-2 rounded w-1/2">
+          {energyUnits.map((unit) => (
+            <option key={unit}>{unit}</option>
+          ))}
+        </select>
+        <select value={to} onChange={(e) => setTo(e.target.value)} className="border p-2 rounded w-1/2">
+          {energyUnits.map((unit) => (
+            <option key={unit}>{unit}</option>
+          ))}
+        </select>
+      </div>
+      <div className="font-semibold text-purple-700">
+        Result: {isNaN(result) ? "Invalid Input" : result.toFixed(4)} {to}
+      </div>
+    </div>
+  );
+};
+
+export default EnergyConverter;
 
