@@ -7,6 +7,7 @@ export default function TemperatureConverter() {
 
   const convert = () => {
     const c = parseFloat(celsius);
+    if (isNaN(c)) return;
     setResult({
       fahrenheit: (c * 9/5 + 32).toFixed(2),
       kelvin: (c + 273.15).toFixed(2),
@@ -20,7 +21,7 @@ export default function TemperatureConverter() {
         type="number"
         value={celsius}
         onChange={(e) => setCelsius(e.target.value)}
-        placeholder="Celsius"
+        placeholder="Enter °C"
       />
       <button onClick={convert}>Convert</button>
       <p>Fahrenheit: {result.fahrenheit} °F</p>
@@ -28,4 +29,5 @@ export default function TemperatureConverter() {
     </div>
   );
 }
+
 
