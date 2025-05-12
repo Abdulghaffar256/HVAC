@@ -10,7 +10,12 @@ const tools = [
     link: "/loadcalculator",
     description: "Calculate heating and cooling loads with ease and accuracy.",
   },
-
+  {
+    name: "Unit Converter",
+    image: "/images/unitconverter.jpg", // Replace with your actual image path
+    link: "/unitconverter", // Make sure this is the correct link for the unit converter page
+    description: "Convert HVAC-related units for temperature, pressure, and more.",
+  },
 ];
 
 export default function HvacToolsPage() {
