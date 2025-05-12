@@ -123,47 +123,7 @@ const HomeComponent = () => {
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center bg-blue-50 dark:bg-gray-800">
-        <div>
-          <h2 className="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">Our Story</h2>
-          <p>
-            Founded by a team of HVAC professionals and educators, HVAC Designing was
-            born from a passion to simplify complex concepts and offer accessible,
-            high-quality training to students and professionals worldwide.
-          </p>
-        </div>
-        <div>
-          <Image
-            src="/about/our-story.jpg"
-            alt="Our Story"
-            width={500}
-            height={350}
-            className="rounded-lg shadow border-4 border-blue-100 dark:border-blue-500"
-          />
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="bg-white dark:bg-gray-900 py-16">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-10">HVAC Designing by the Numbers</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow border-t-4 border-blue-500">
-              <h3 className="text-2xl font-semibold text-blue-900 dark:text-white mb-2">12+ Global Offices</h3>
-              <p><Link href="/locations" className="text-blue-600 hover:underline">Learn more</Link></p>
-            </div>
-            <div className="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow border-t-4 border-blue-500">
-              <h3 className="text-2xl font-semibold text-blue-900 dark:text-white mb-2">7,600+ Learners</h3>
-              <p><Link href="/courses" className="text-blue-600 hover:underline">Explore courses</Link></p>
-            </div>
-            <div className="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow border-t-4 border-blue-500">
-              <h3 className="text-2xl font-semibold text-blue-900 dark:text-white mb-2">205,000+ Projects Supported</h3>
-              <p><Link href="/projects" className="text-blue-600 hover:underline">See success stories</Link></p>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Call to Action */}
       <section className="max-w-6xl mx-auto px-6 py-16 text-center bg-blue-100 dark:bg-gray-800">
