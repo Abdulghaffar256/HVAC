@@ -1,1 +1,31 @@
 
+'use client';
+import { useState } from 'react';
+
+export default function EnergyConverter() {
+  const [joules, setJoules] = useState('');
+  const [result, setResult] = useState({ kWh: '', BTU: '' });
+
+  const convert = () => {
+    const j = parseFloat(joules);
+    setResult({
+      kWh: (j / 3.6e6).toFixed(6),
+      BTU: (j * 0.000947817).toFixed(3),
+    });
+  };
+
+  return (
+    <div>
+      <h2>Energy Converter (J → kWh / BTU)</h2>
+      <input
+        type="number"
+        value={joules}
+        onChange={(e) => setJoules(e.target.value)}
+        placeholder="Joules"
+      />
+      <button onClick={convert}>Convert</button>
+      <p>kWh: {result.kWh}</p>
+      <p>BTU: {result.BTU}</p>
+    </div>
+  );
+}
