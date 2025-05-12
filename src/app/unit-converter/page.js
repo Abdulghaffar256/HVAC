@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import * as XLSX from "xlsx";
+
+// Import all converter components
 import TemperatureConverter from "@/components/UnitConverter/TemperatureConverter";
 import PressureConverter from "@/components/UnitConverter/PressureConverter";
 import EnergyConverter from "@/components/UnitConverter/EnergyConverter";
@@ -23,9 +26,40 @@ const converters = [
 
 const UnitConverter = () => {
   const [updateKey, setUpdateKey] = useState(0);
+  const refs = useRef({});
 
   const resetAll = () => {
     setUpdateKey((prev) => prev + 1);
+  };
+
+  const recalculateAll = () => {
+    setUpdateKey((prev) => prev + 1); // Triggers all converters to re-evaluate
+  };
+
+  const downloadReport = () => {
+    const data = [["HVAC Unit Conversion Report"], [], ["Unit Type", "Input", "From Unit", "Output", "To Unit"]];
+
+    for (const { id, label } of converters) {
+      const converterRef = refs.current[id];
+      if (converterRef && converterRef.getData) {
+        const { input = "", fromUnit = "", result = "", toUnit = "" } = converterRef.getData();
+        data.push([label, input, fromUnit, result, toUnit]);
+      }
+    }
+
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Unit Report");
+
+    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([wbout], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "HVAC_Unit_Converter_Report.xlsx";
+    link.click();
   };
 
   return (
@@ -42,17 +76,32 @@ const UnitConverter = () => {
             className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl"
           >
             <h2 className="text-xl font-semibold mb-4 text-gray-800">{label}</h2>
-            <Component key={updateKey} />
+            <Component
+              key={updateKey}
+              ref={(ref) => (refs.current[id] = ref)}
+            />
           </div>
         ))}
       </div>
 
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex justify-center gap-6">
         <button
           onClick={resetAll}
           className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 transition"
         >
           Reset All
+        </button>
+        <button
+          onClick={recalculateAll}
+          className="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition"
+        >
+          Recalculate
+        </button>
+        <button
+          onClick={downloadReport}
+          className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition"
+        >
+          Download Report
         </button>
       </div>
     </div>
@@ -60,3 +109,4 @@ const UnitConverter = () => {
 };
 
 export default UnitConverter;
+
