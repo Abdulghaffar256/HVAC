@@ -118,9 +118,7 @@ const HomeComponent = () => {
         <div>
           <h2 className="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">Our Mission</h2>
           <p>
-            We exist to help HVAC engineers grow by improving their skills and staying
-            updated with the latest in HVAC tech. When our learners grow, the whole
-            industry benefits.
+          Our mission is to revolutionize HVAC design with AI-driven tools that create energy-efficient HVAC systems. We aim to provide students with advanced HVAC design courses and certifications, offering practical learning experiences to enhance their skills. By developing cutting-edge tools and systems, we strive to empower the next generation of HVAC professionals to create sustainable, high-performance designs.
           </p>
         </div>
       </section>
