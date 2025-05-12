@@ -87,10 +87,11 @@ const HomeComponent = () => {
      
       {/* Intro Section */}
       <section className="max-w-6xl mx-auto px-6 py-12 text-center bg-blue-50 dark:bg-gray-800">
-        <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300 mb-4">About Us</h1>
+        <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300 mb-4">Our Story
+
+</h1>
         <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-          HVAC Designing’s company and culture are as unique as our services. We’re
-          crafted, not cobbled, for a delightful learning experience.
+        At the heart of our platform lies a commitment to sharing knowledge and expertise in HVAC design. We believe that learning should be an engaging and enriching experience. Our unique approach to HVAC education is designed to offer you not only the technical skills needed but also an understanding of the intricacies of Revit MEP HVAC systems and beyond. Crafted with care, our content is tailored to inspire both professionals and newcomers alike. Join us and dive into a world of practical and informative HVAC insights.
         </p>
         <div className="mt-6">
           <Image
