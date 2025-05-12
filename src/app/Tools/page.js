@@ -13,7 +13,7 @@ const tools = [
   {
     name: "Unit Converter",
     image: "/images/unitconverter.jpg", // Replace with your actual image path
-    link: "/unitconverter", // Make sure this is the correct link for the unit converter page
+    link: "/unit-converter", // Make sure this is the correct link for the unit converter page
     description: "Convert HVAC-related units for temperature, pressure, and more.",
   },
 ];
