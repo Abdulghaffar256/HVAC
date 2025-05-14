@@ -6,15 +6,18 @@ export default function FlowRateConverter() {
   const [from, setFrom] = useState('m³/s');
   const [to, setTo] = useState('CFM');
   const [result, setResult] = useState('');
+  const [error, setError] = useState('');
 
-  const flowUnits = ['m³/s', 'm³/h', 'L/s', 'CFM'];
+  const flowUnits = ['m³/s', 'm³/h', 'L/s', 'CFM', 'GPM'];
 
   const convertFlowRate = () => {
     const value = parseFloat(input);
-    if (isNaN(value)) {
-      setResult('Invalid input');
+    if (isNaN(value) || value < 0) {
+      setError('Please enter a valid non-negative number.');
+      setResult('');
       return;
     }
+    setError('');
 
     let m3ps;
 
@@ -30,13 +33,16 @@ export default function FlowRateConverter() {
         m3ps = value / 1000;
         break;
       case 'CFM':
-        m3ps = value / 2119;
+        m3ps = value / 2118.88;
+        break;
+      case 'GPM':
+        m3ps = value * 0.0000630902;
         break;
       default:
         m3ps = value;
     }
 
-    // Convert to target unit
+    // Convert from m³/s to desired unit
     let converted;
     switch (to) {
       case 'm³/s':
@@ -49,7 +55,10 @@ export default function FlowRateConverter() {
         converted = m3ps * 1000;
         break;
       case 'CFM':
-        converted = m3ps * 2119;
+        converted = m3ps * 2118.88;
+        break;
+      case 'GPM':
+        converted = m3ps / 0.0000630902;
         break;
       default:
         converted = m3ps;
@@ -59,38 +68,61 @@ export default function FlowRateConverter() {
   };
 
   return (
-    <div>
-      <h2>Flow Rate Converter</h2>
-      <input
-        type="number"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter value"
-      />
+    <div className="max-w-md mx-auto p-4 border border-gray-300 rounded-lg shadow-md bg-white dark:bg-gray-900 dark:text-white">
+      <h2 className="text-xl font-semibold mb-4 text-center">Flow Rate Converter</h2>
 
-      <div>
-        <label>From:</label>
-        <select value={from} onChange={(e) => setFrom(e.target.value)}>
-          {flowUnits.map((unit) => (
-            <option key={unit}>{unit}</option>
-          ))}
-        </select>
+      <div className="mb-4">
+        <label className="block mb-1 font-medium">Value</label>
+        <input
+          type="number"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter flow rate"
+          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
-      <div>
-        <label>To:</label>
-        <select value={to} onChange={(e) => setTo(e.target.value)}>
-          {flowUnits.map((unit) => (
-            <option key={unit}>{unit}</option>
-          ))}
-        </select>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block mb-1 font-medium">From</label>
+          <select
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md"
+          >
+            {flowUnits.map((unit) => (
+              <option key={unit} value={unit}>{unit}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">To</label>
+          <select
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md"
+          >
+            {flowUnits.map((unit) => (
+              <option key={unit} value={unit}>{unit}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <button onClick={convertFlowRate}>Convert</button>
+      <button
+        onClick={convertFlowRate}
+        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+      >
+        Convert
+      </button>
 
-      <div>
-        <strong>Result:</strong> {result}
-      </div>
+      {error && <p className="text-red-600 mt-2">{error}</p>}
+
+      {result && (
+        <div className="mt-6 p-4 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-800">
+          <strong>Result:</strong> {result}
+        </div>
+      )}
     </div>
   );
 }
