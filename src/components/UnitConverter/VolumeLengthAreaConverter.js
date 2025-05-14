@@ -38,20 +38,22 @@ export default function VolumeLengthAreaConverter() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Volume, Length & Area Converter</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 border-2 border-blue-500 dark:border-blue-400 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 text-center text-blue-700 dark:text-blue-300 border-b pb-2 border-blue-300 dark:border-blue-600">
+        Volume, Length & Area Converter
+      </h2>
 
       {/* Volume Section */}
-      <div className="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
-        <h4 className="text-lg font-semibold mb-2">Volume (m³)</h4>
+      <div className="mb-6 p-5 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+        <h4 className="text-xl font-semibold mb-3 text-blue-600 dark:text-blue-300 border-b pb-1 border-gray-400 dark:border-gray-600">Volume (m³)</h4>
         <input
           type="number"
           value={volume}
           onChange={(e) => setVolume(e.target.value)}
           placeholder="Enter volume in m³"
-          className="w-full mb-4 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <ul className="space-y-1">
+        <ul className="space-y-1 text-gray-800 dark:text-gray-200">
           <li><strong>Liters:</strong> {results.liter}</li>
           <li><strong>ft³:</strong> {results.cubicFeet}</li>
           <li><strong>in³:</strong> {results.cubicInch}</li>
@@ -60,16 +62,16 @@ export default function VolumeLengthAreaConverter() {
       </div>
 
       {/* Length Section */}
-      <div className="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
-        <h4 className="text-lg font-semibold mb-2">Length (meters)</h4>
+      <div className="mb-6 p-5 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+        <h4 className="text-xl font-semibold mb-3 text-blue-600 dark:text-blue-300 border-b pb-1 border-gray-400 dark:border-gray-600">Length (meters)</h4>
         <input
           type="number"
           value={length}
           onChange={(e) => setLength(e.target.value)}
           placeholder="Enter length in meters"
-          className="w-full mb-4 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <ul className="space-y-1">
+        <ul className="space-y-1 text-gray-800 dark:text-gray-200">
           <li><strong>Centimeters:</strong> {results.cm} cm</li>
           <li><strong>Inches:</strong> {results.inch} in</li>
           <li><strong>Feet:</strong> {results.foot} ft</li>
@@ -78,16 +80,16 @@ export default function VolumeLengthAreaConverter() {
       </div>
 
       {/* Area Section */}
-      <div className="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
-        <h4 className="text-lg font-semibold mb-2">Area (m²)</h4>
+      <div className="mb-6 p-5 border border-gray-300 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+        <h4 className="text-xl font-semibold mb-3 text-blue-600 dark:text-blue-300 border-b pb-1 border-gray-400 dark:border-gray-600">Area (m²)</h4>
         <input
           type="number"
           value={area}
           onChange={(e) => setArea(e.target.value)}
           placeholder="Enter area in m²"
-          className="w-full mb-4 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <ul className="space-y-1">
+        <ul className="space-y-1 text-gray-800 dark:text-gray-200">
           <li><strong>ft²:</strong> {results.squareFeet}</li>
           <li><strong>in²:</strong> {results.squareInch}</li>
           <li><strong>cm²:</strong> {results.squareCm}</li>
@@ -97,10 +99,11 @@ export default function VolumeLengthAreaConverter() {
 
       <button
         onClick={convert}
-        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+        className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-colors font-semibold text-lg"
       >
         Convert All
       </button>
     </div>
   );
 }
+
