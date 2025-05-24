@@ -12,9 +12,15 @@ const tools = [
   },
   {
     name: "Unit Converter",
-    image: "/images/unitconverter.jpg", // Replace with your actual image path
-    link: "/unit-converter", // Make sure this is the correct link for the unit converter page
+    image: "/images/unitconverter.jpg",
+    link: "/unit-converter",
     description: "Convert HVAC-related units for temperature, pressure, and more.",
+  },
+  {
+    name: "Duct Sizer",
+    image: "/images/ductsizer.jpg", // Replace with actual image in your public/images folder
+    link: "/ductsizer",
+    description: "Determine duct sizes based on airflow and velocity requirements.",
   },
 ];
 
@@ -48,7 +54,9 @@ export default function HvacToolsPage() {
 
             {/* Description on Hover */}
             <div className="absolute inset-0 flex items-center justify-center text-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-              <p className="text-orange-700 text-sm drop-shadow-sm">{tool.description}</p>
+              <p className="text-orange-700 text-sm drop-shadow-sm">
+                {tool.description}
+              </p>
             </div>
           </Link>
         ))}
