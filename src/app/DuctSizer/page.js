@@ -1,4 +1,4 @@
-import DuctSizerCalculator from '@/components/DuctSizerCalculator';
+import DuctSizerCalculator from '@/components/DuctSizerCalculator.js';
 
 export default function DuctSizerPage() {
   return (
