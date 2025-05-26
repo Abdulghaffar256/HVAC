@@ -19,7 +19,6 @@ const tools = [
   {
     name: "Duct Sizer",
     image: "/images/ductsizer.jpg", // Replace with actual image in your public/images folder
-    link: "/DuctSizer",
     description: "Determine duct sizes based on airflow and velocity requirements.",
   },
 ];
