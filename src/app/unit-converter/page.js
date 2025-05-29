@@ -9,16 +9,89 @@ import {
   RefreshCw,
 } from 'lucide-react';
 
-// Example color classes per converter
+import TemperatureConverter from '@/components/UnitConverter/TemperatureConverter';
+import PressureConverter from '@/components/UnitConverter/PressureConverter';
+import EnergyConverter from '@/components/UnitConverter/EnergyConverter';
+import FlowRateConverter from '@/components/UnitConverter/FlowRateConverter';
+import AirVelocityConverter from '@/components/UnitConverter/AirVelocityConverter';
+import VolumeLengthAreaConverter from '@/components/UnitConverter/VolumeLengthAreaConverter';
+import MassFlowConverter from '@/components/UnitConverter/MassFlowConverter';
+import DensityConverter from '@/components/UnitConverter/DensityConverter';
+
+
 const converters = [
-  { id: "temperature", label: "Temperature", component: TemperatureConverter, color: "blue" },
-  { id: "pressure", label: "Pressure", component: PressureConverter, color: "red" },
-  { id: "energy", label: "Energy", component: EnergyConverter, color: "green" },
-  { id: "flow", label: "Volumetric Flow", component: FlowRateConverter, color: "purple" },
-  { id: "velocity", label: "Air Velocity", component: AirVelocityConverter, color: "orange" },
-  { id: "volumeLength", label: "Volume, Length, Area", component: VolumeLengthAreaConverter, color: "teal" },
-  { id: "massFlow", label: "Mass Flow", component: MassFlowConverter, color: "rose" },
-  { id: "density", label: "Density", component: DensityConverter, color: "indigo" },
+  {
+    id: "temperature",
+    label: "Temperature",
+    component: TemperatureConverter,
+    colorClasses: {
+      bg: "bg-blue-100",
+      border: "border-blue-500"
+    }
+  },
+  {
+    id: "pressure",
+    label: "Pressure",
+    component: PressureConverter,
+    colorClasses: {
+      bg: "bg-red-100",
+      border: "border-red-500"
+    }
+  },
+  {
+    id: "energy",
+    label: "Energy",
+    component: EnergyConverter,
+    colorClasses: {
+      bg: "bg-green-100",
+      border: "border-green-500"
+    }
+  },
+  {
+    id: "flow",
+    label: "Volumetric Flow",
+    component: FlowRateConverter,
+    colorClasses: {
+      bg: "bg-purple-100",
+      border: "border-purple-500"
+    }
+  },
+  {
+    id: "velocity",
+    label: "Air Velocity",
+    component: AirVelocityConverter,
+    colorClasses: {
+      bg: "bg-orange-100",
+      border: "border-orange-500"
+    }
+  },
+  {
+    id: "volumeLength",
+    label: "Volume, Length, Area",
+    component: VolumeLengthAreaConverter,
+    colorClasses: {
+      bg: "bg-teal-100",
+      border: "border-teal-500"
+    }
+  },
+  {
+    id: "massFlow",
+    label: "Mass Flow",
+    component: MassFlowConverter,
+    colorClasses: {
+      bg: "bg-rose-100",
+      border: "border-rose-500"
+    }
+  },
+  {
+    id: "density",
+    label: "Density",
+    component: DensityConverter,
+    colorClasses: {
+      bg: "bg-indigo-100",
+      border: "border-indigo-500"
+    }
+  }
 ];
 
 const UnitConverter = () => {
@@ -66,11 +139,11 @@ const UnitConverter = () => {
       </div>
 
       <div className="space-y-6">
-        {converters.map(({ id, label, component: Component, color }) => (
-          <div key={id} className={`border-l-4 border-${color}-500 bg-white shadow-lg rounded-lg transition`}>
+        {converters.map(({ id, label, component: Component, colorClasses }) => (
+          <div key={id} className={`border-l-4 ${colorClasses.border} bg-white shadow-lg rounded-lg transition`}>
             <div
               onClick={() => toggleExpand(id)}
-              className={`flex items-center justify-between px-6 py-4 cursor-pointer bg-${color}-100 rounded-t-lg`}
+              className={`flex items-center justify-between px-6 py-4 cursor-pointer ${colorClasses.bg} rounded-t-lg`}
             >
               <h2 className="text-lg font-bold text-gray-800">{label}</h2>
               {expanded[id] ? <ChevronUp /> : <ChevronDown />}
@@ -85,7 +158,7 @@ const UnitConverter = () => {
         ))}
       </div>
 
-      <div className="mt-12 flex justify-center gap-6">
+      <div className="mt-12 flex justify-center gap-6 flex-wrap">
         <button
           onClick={resetAll}
           className="flex items-center gap-2 bg-red-600 text-white px-5 py-2 rounded-lg shadow hover:bg-red-700"
@@ -112,4 +185,3 @@ const UnitConverter = () => {
 };
 
 export default UnitConverter;
-
