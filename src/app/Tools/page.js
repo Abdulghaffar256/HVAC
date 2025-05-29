@@ -16,6 +16,12 @@ const tools = [
     link: "/unit-converter",
     description: "Convert HVAC-related units for temperature, pressure, and more.",
   },
+  {
+    name: "Duct Sizer",
+    image: "/images/ductsizer.jpg", // Make sure this image exists in your public/images folder
+    link: "/duct-sizer", // Adjust this link based on your actual route
+    description: "Determine optimal duct sizes based on airflow and velocity.",
+  },
 ];
 
 export default function HvacToolsPage() {
