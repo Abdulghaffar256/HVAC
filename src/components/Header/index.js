@@ -8,7 +8,7 @@ import { useThemeSwitch } from "../Hooks/useThemeSwitch";
 import { useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { useRouter } from "next/navigation";
-import { Menu, X, Mic } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [mode] = useThemeSwitch();
@@ -69,7 +69,6 @@ const Header = () => {
 
       <header className="w-full bg-white text-black shadow-md sticky top-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
-          {/* Logo and mobile toggle */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <Logo />
             <button
@@ -81,9 +80,10 @@ const Header = () => {
             </button>
           </div>
 
-          {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-6 text-sm">
-            <Link href="/" className="hover:text-pink-600 transition">Home</Link>
+            <Link href="/" className="hover:text-pink-600 transition">
+              Home
+            </Link>
 
             <div className="relative">
               <button
@@ -112,22 +112,36 @@ const Header = () => {
               </button>
               {certOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-44 z-50 space-y-1">
-                  <Link href="/designing" className="block hover:text-pink-500">HVAC Designing</Link>
-                  <Link href="/control" className="block hover:text-pink-500">HVAC CONTROL</Link>
-                  <Link href="/Revit" className="block hover:text-pink-500">Revit</Link>
+                  <Link href="/designing" className="block hover:text-pink-500">
+                    HVAC Designing
+                  </Link>
+                  <Link href="/control" className="block hover:text-pink-500">
+                    HVAC CONTROL
+                  </Link>
+                  <Link href="/Revit" className="block hover:text-pink-500">
+                    Revit
+                  </Link>
                 </div>
               )}
             </div>
 
-            <Link href="/Tools" className="hover:text-pink-600 transition">HVAC Tools</Link>
-            <Link href="/text-to-speech" className="hover:text-pink-600 transition flex items-center gap-1">
-              <Mic size={16} /> TTS Converter
+            <Link href="/Tools" className="hover:text-pink-600 transition">
+              HVAC Tools
             </Link>
-            <Link href="/about" className="hover:text-pink-600 transition">About</Link>
-            <Link href="/contact" className="hover:text-pink-600 transition">Contact</Link>
+
+            {/* ✅ Text Editor link added here */}
+            <Link href="/editor" className="hover:text-pink-600 transition">
+              Text Editor
+            </Link>
+
+            <Link href="/about" className="hover:text-pink-600 transition">
+              About
+            </Link>
+            <Link href="/contact" className="hover:text-pink-600 transition">
+              Contact
+            </Link>
           </nav>
 
-          {/* Search bar (Desktop only) */}
           <div className="hidden md:flex items-center relative w-64">
             <input
               type="text"
@@ -141,10 +155,11 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white px-4 pb-6 pt-2 space-y-4 text-sm border-t">
-            <Link href="/" className="block hover:text-pink-600">Home</Link>
+            <Link href="/" className="block hover:text-pink-600">
+              Home
+            </Link>
 
             <div>
               <button
@@ -155,12 +170,24 @@ const Header = () => {
               </button>
               {mobileCatOpen && (
                 <div className="space-y-1 pl-4">
-                  <Link href="/dev" className="block hover:text-pink-500">Development</Link>
-                  <Link href="/equipment" className="block hover:text-pink-500">Equipment</Link>
-                  <Link href="/ai" className="block hover:text-pink-500">Artificial Intelligence</Link>
-                  <Link href="/eng" className="block hover:text-pink-500">Designing</Link>
-                  <Link href="/energy" className="block hover:text-pink-500">Energy</Link>
-                  <Link href="/waste" className="block hover:text-pink-500">Waste</Link>
+                  <Link href="/dev" className="block hover:text-pink-500">
+                    Development
+                  </Link>
+                  <Link href="/equipment" className="block hover:text-pink-500">
+                    Equipment
+                  </Link>
+                  <Link href="/ai" className="block hover:text-pink-500">
+                    Artificial Intelligence
+                  </Link>
+                  <Link href="/eng" className="block hover:text-pink-500">
+                    Designing
+                  </Link>
+                  <Link href="/energy" className="block hover:text-pink-500">
+                    Energy
+                  </Link>
+                  <Link href="/waste" className="block hover:text-pink-500">
+                    Waste
+                  </Link>
                 </div>
               )}
             </div>
@@ -174,17 +201,27 @@ const Header = () => {
               </button>
               {mobileCertOpen && (
                 <div className="space-y-1 pl-4">
-                  <Link href="/mep" className="block">Revit MEP</Link>
-                  <Link href="/Leed" className="block">LEED</Link>
+                  <Link href="/mep" className="block">
+                    Revit MEP
+                  </Link>
+                  <Link href="/Leed" className="block">
+                    LEED
+                  </Link>
                 </div>
               )}
             </div>
 
-            <Link href="/text-to-speech" className="block hover:text-pink-600">
-              <div className="flex items-center gap-1"><Mic size={16} /> TTS Converter</div>
+            {/* ✅ Text Editor link added here */}
+            <Link href="/editor" className="block hover:text-pink-600">
+              Text Editor
             </Link>
-            <Link href="/about" className="block hover:text-pink-600">About</Link>
-            <Link href="/contact" className="block hover:text-pink-600">Contact</Link>
+
+            <Link href="/about" className="block hover:text-pink-600">
+              About
+            </Link>
+            <Link href="/contact" className="block hover:text-pink-600">
+              Contact
+            </Link>
 
             <div className="relative mt-2">
               <input
