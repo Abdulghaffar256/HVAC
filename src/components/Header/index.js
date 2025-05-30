@@ -130,7 +130,7 @@ const Header = () => {
             </Link>
 
             {/* ✅ Text Editor link added here */}
-            <Link href="/editor" className="hover:text-pink-600 transition">
+            <Link href="/text-to-speech" className="hover:text-pink-600 transition">
               Text Editor
             </Link>
 
