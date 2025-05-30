@@ -136,6 +136,16 @@ const HomeComponent = () => {
           Get Started
         </Link>
       </section>
+            {/* Floating Text-to-Voice Button */}
+<Link
+  href="/text-to-speech"
+  className="fixed bottom-6 right-6 z-50 bg-pink-600 hover:bg-pink-700 text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-2 transition"
+  aria-label="Go to Text-to-Voice"
+>
+  <span role="img" aria-label="speaker">🔊</span>
+  <span className="hidden sm:inline">Text to Voice</span>
+</Link>
+
     </div>
   );
 };
