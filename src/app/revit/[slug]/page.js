@@ -1,4 +1,3 @@
-
 import BlogDetails from "@/components/blogdetail/page";
 import siteMetadata from "@/utils/siteMetaData";
 import { client } from "@/sanity/lib/client";
@@ -7,10 +6,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import VisitCourseButton from "@/components/buttons/page";
 import { PortableText } from "next-sanity";
-import Sidebar1 from "@/components/sidebar/page";
+import Sidebar from "@/components/sidebar/page";
 import portableTextComponents from "@/components/yt/page";
 
-// Utility to escape JSON-LD values
 function escapeJsonLd(value) {
   if (!value) return "";
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
@@ -32,12 +30,10 @@ export async function generateMetadata({ params }) {
   const blog = await client.fetch(query, { slug });
 
   if (!blog) {
-    return null; // Let Next.js handle notFound in the page component
+    return null;
   }
 
-  const imageUrl = blog.image
-    ? urlFor(blog.image).url()
-    : siteMetadata.socialBanner || "https://www.epicssolution.com/default-banner.jpg";
+  const imageUrl = blog.image ? urlFor(blog.image).url() : siteMetadata.socialBanner || "https://www.epicssolution.com/default-banner.jpg";
 
   return {
     title: blog.title,
@@ -103,7 +99,6 @@ export default async function BlogPage({ params }) {
     return null;
   }
 
-  // Dynamically extract headings from blog.content
   const headings = [];
   if (Array.isArray(blog.content)) {
     blog.content.forEach((block, index) => {
@@ -138,14 +133,12 @@ export default async function BlogPage({ params }) {
       </div>
 
       <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
-        {/* Sidebar - Table of Contents */}
         <div className="col-span-12 lg:col-span-4 hidden lg:block">
           <div className="border border-gray-300 rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-auto bg-gray-100">
             <Sidebar headings={headings} />
           </div>
         </div>
 
-        {/* Blog Content */}
         <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
           {blog.content ? (
@@ -155,25 +148,27 @@ export default async function BlogPage({ params }) {
                 ...portableTextComponents,
                 types: {
                   ...portableTextComponents.types,
-                  image: ({ value }) => (
-                    <div className="my-4">
-                      <Image
-                        src={urlFor(value).url()}
-                        alt={value.alt || blog.title}
-                        width={800}
-                        height={400}
-                        className="w-full h-auto rounded"
-                        sizes="(max-width: 768px) 100vw, 800px"
-                      />
-                    </div>
-                  ),
+                  image: ({ value }) =>
+                    value ? (
+                      <div className="my-4">
+                        <Image
+                          src={urlFor(value).url()}
+                          alt={value.alt || blog.title}
+                          width={800}
+                          height={400}
+                          className="w-full h-auto rounded"
+                          sizes="(max-width: 768px) 100vw, 800px"
+                        />
+                      </div>
+                    ) : null,
                   youtubeEmbed: ({ value }) => {
                     if (!value?.videoUrl) return null;
-                    const videoId = new URL(value.videoUrl).searchParams.get('v');
+                    const videoId = new URL(value.videoUrl).searchParams.get("v");
                     if (!videoId) return null;
                     return (
                       <div className="my-4">
                         <iframe
+                          title="YouTube video"
                           width={value.videoWidth || 800}
                           height={value.videoHeight || 450}
                           src={`https://www.youtube.com/embed/${videoId}`}
@@ -221,7 +216,7 @@ export default async function BlogPage({ params }) {
           ) : (
             <p>No content available</p>
           )}
-          {/* FAQ Section */}
+
           {blog.faq && blog.faq.length > 0 && (
             <section className="mt-8">
               <h2 className="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
