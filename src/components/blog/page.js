@@ -33,12 +33,11 @@ const BlogSection  = () => {
     return <div className="text-center mt-16">Loading...</div>;
   }
 
-
   const schemas = posts.map((post) => ({
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    image: [urlFor(post.image).url()],
+    image: post.image ? [urlFor(post.image).url()] : [],
     datePublished: post.publishedAt,
     description: post.description,
     url: `https://www.epicssolution.com/dev/${post.slug}`,
@@ -72,12 +71,12 @@ const BlogSection  = () => {
           </script>
         ))}
       </Head>
-       
-  <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
-  <div className="flex justify-center">
-  <h1 className="text-4xl font-bold mb-8 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">All blogs</h1>
-</div>  
-       <div className="flex flex-col md:flex-row gap-8">
+
+      <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
+        <div className="flex justify-center">
+          <h1 className="text-4xl font-bold mb-8 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">All blogs</h1>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:flex-1">
             {posts.slice(0, displayCount).map((post) => (
               <div key={post.slug} className="mb-12">
@@ -90,13 +89,15 @@ const BlogSection  = () => {
                   <div className="md:w-1/3">
                     <Link href={`/${post.slug}`}>
                       <div className="relative w-full pt-[75%]">
-                        <Image
-                          src={urlFor(post.image).url()}
-                          alt={post.title}
-                          fill
-                          style={{ objectFit: "cover" }}
-                          className="rounded-lg shadow-md"
-                        />
+                        {post.image && (
+                          <Image
+                            src={urlFor(post.image).url()}
+                            alt={post.title}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="rounded-lg shadow-md"
+                          />
+                        )}
                       </div>
                     </Link>
                   </div>
@@ -126,19 +127,18 @@ const BlogSection  = () => {
             ))}
             {posts.length > displayCount && (
               <div className="text-center mt-8">
-         <button
-  onClick={() => setDisplayCount(displayCount + 6)}
-  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
->
-  Load More
-  <span>&gt;</span>
-</button>
+                <button
+                  onClick={() => setDisplayCount(displayCount + 6)}
+                  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
+                >
+                  Load More
+                  <span>&gt;</span>
+                </button>
               </div>
             )}
           </div>
           <div className="w-full md:w-1/4 md:sticky md:top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
-             
               <div className="mt-8">
                 <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
                   Categories
