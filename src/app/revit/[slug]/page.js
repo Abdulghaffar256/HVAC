@@ -7,7 +7,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import VisitCourseButton from "@/components/buttons/page";
 import { PortableText } from "next-sanity";
-import Sidebar1 from "@/components/sidebar1/page";
+import Sidebar1 from "@/components/sidebar/page";
 import portableTextComponents from "@/components/yt/page";
 
 // Utility to escape JSON-LD values
@@ -141,7 +141,7 @@ export default async function BlogPage({ params }) {
         {/* Sidebar - Table of Contents */}
         <div className="col-span-12 lg:col-span-4 hidden lg:block">
           <div className="border border-gray-300 rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-auto bg-gray-100">
-            <Sidebar1 headings={headings} />
+            <Sidebar headings={headings} />
           </div>
         </div>
 
