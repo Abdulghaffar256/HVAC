@@ -30,7 +30,7 @@ export default function Mar() {
       <div className="mt-8">
         {/* Second component */}
         <div className="flex justify-center items-center font-semibold text-2xl border-[1px] border-solid border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
-               <h1> REVIT MEP Tutorials   </h1> 
+               <h1> REVIT Architecture Tutorials   </h1> 
 
         </div>
         
