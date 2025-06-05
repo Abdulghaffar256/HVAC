@@ -7,8 +7,8 @@ import { client } from "@/sanity/lib/client";
 export default function Sidebar() {
   const [universities, setUniversities] = useState([]);
 
-  const getTutorialNumber = (title) => {
-    const match = title.match(/Tutorial[-\s]?(\d+)/i);
+  const getStartingNumber = (title) => {
+    const match = title.trim().match(/^(\d+)/); // Match number at the start
     return match ? parseInt(match[1], 10) : Infinity;
   };
 
@@ -31,7 +31,7 @@ export default function Sidebar() {
       `;
       try {
         const result = await client.fetch(query);
-        const sorted = result.sort((a, b) => getTutorialNumber(a.title) - getTutorialNumber(b.title));
+        const sorted = result.sort((a, b) => getStartingNumber(a.title) - getStartingNumber(b.title));
         setUniversities(sorted);
       } catch (error) {
         console.error("Error fetching data from Sanity:", error);
@@ -44,7 +44,7 @@ export default function Sidebar() {
   return (
     <div className="w-full md:w-60 bg-black text-white p-6">
       <h2 className="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">
-        Revit MEP Certification 
+        Revit Architecture Certification 
       </h2>
       <ul className="space-y-3">
         {universities.map((uni) => (
