@@ -1,6 +1,6 @@
 import "./globals.css";
 import { cx } from "@/utils";
-import { Inter, Manrope } from "next/font/google"; // Ensure Next.js version supports this
+import { Inter, Manrope } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import siteMetadata from "@/utils/siteMetaData";
@@ -57,20 +57,33 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-    
       <head>
-       <title>{siteMetadata.title}</title>
-      <meta name="description" content={siteMetadata.description} />
-       {/* Use relative paths or siteMetadata for dynamic URLs */}
+        <title>{siteMetadata.title}</title>
+        <meta name="description" content={siteMetadata.description} />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Only include preload for custom font if verified */}
         <link
           rel="preload"
           href="/fonts/CustomFont.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
+        />
+
+        {/* Google Analytics (replace G-XXXXXXX with your real ID) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XXXXXXX');
+            `,
+          }}
         />
       </head>
       <body
@@ -81,9 +94,7 @@ export default function RootLayout({ children }) {
         )}
       >
         <Header />
-        <main role="main">
-          {children}
-        </main>
+        <main role="main">{children}</main>
         <Footer />
       </body>
     </html>
