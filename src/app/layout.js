@@ -57,8 +57,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+    
       <head>
-        {/* Use relative paths or siteMetadata for dynamic URLs */}
+       <title>{siteMetadata.title}</title>
+      <meta name="description" content={siteMetadata.description} />
+       {/* Use relative paths or siteMetadata for dynamic URLs */}
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="icon" href="/favicon.ico" />
         {/* Only include preload for custom font if verified */}
@@ -78,7 +81,9 @@ export default function RootLayout({ children }) {
         )}
       >
         <Header />
-        <main>{children}</main>
+        <main role="main">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
