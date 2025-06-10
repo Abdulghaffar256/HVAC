@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
             At HVAC Designing, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you interact with our website and services.
           </p>
 
-          ### Introduction
+          {/* Introduction */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Introduction</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Data Collection
+          {/* Data Collection */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Data Collection</h2>
             <p className="text-gray-600 leading-relaxed mb-2">
@@ -39,7 +39,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Use of Personal Information
+          {/* Use of Personal Information */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Use of Personal Information</h2>
             <p className="text-gray-600 leading-relaxed mb-2">
@@ -57,7 +57,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Cookies and Tracking Technologies
+          {/* Cookies */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Cookies and Tracking Technologies</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -65,7 +65,21 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Data Protection and Security
+          {/* NEW: Google AdSense */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Google AdSense & Third-Party Advertising</h2>
+            <p className="text-gray-600 leading-relaxed mb-2">
+              We use Google AdSense and other third-party vendors to serve ads on our website. These vendors may use cookies, web beacons, or similar technologies to display personalized ads based on your visits to our site and others.
+            </p>
+            <p className="text-gray-600 leading-relaxed mb-2">
+              Google's use of advertising cookies enables it and its partners to serve ads based on your browsing history. You can opt out of personalized advertising by visiting the <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google Ad Settings page</a>. You may also visit <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.aboutads.info</a> to opt out of third-party cookie tracking.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              We do not share personally identifiable information with advertisers without your consent.
+            </p>
+          </section>
+
+          {/* Data Protection */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Data Protection and Security</h2>
             <p className="text-gray-600 leading-relaxed mb-2">
@@ -81,7 +95,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Your Rights
+          {/* Your Rights */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Your Rights</h2>
             <p className="text-gray-600 leading-relaxed mb-2">
@@ -99,7 +113,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### International Data Transfers
+          {/* International Transfers */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">International Data Transfers</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -107,7 +121,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Compliance with Regulations
+          {/* Compliance */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Compliance with Regulations</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -115,7 +129,15 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Changes to This Policy
+          {/* NEW: Children's Privacy */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Children’s Privacy</h2>
+            <p className="text-gray-600 leading-relaxed">
+              Our website and services are not intended for children under the age of 13. We do not knowingly collect personal data from children. If we become aware that a child under 13 has submitted personal information, we will take steps to delete it promptly.
+            </p>
+          </section>
+
+          {/* Changes */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Changes to This Policy</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -123,7 +145,7 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          ### Contact Us
+          {/* Contact */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Contact Us</h2>
             <p className="text-gray-600 leading-relaxed">
