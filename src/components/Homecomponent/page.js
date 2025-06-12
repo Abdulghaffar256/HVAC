@@ -9,7 +9,7 @@ const HomeComponent = () => {
     Designing: ["/images/mockup1.png"],
     Tools: ["/images/mockup4.png"],
     Revit: ["/revit.webp"],
-    controls: ["/images/mockup7.png"],
+    controls: ["/control.webp"],
   };
 
   const tabContent = {
