@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HomeComponent = () => {
   const imageSets = {
-    Designing: ["/images/mockup1.png"],
+    Designing: ["/hvac.webp"],
     Tools: ["/tools.webp"],
     Revit: ["/revit.webp"],
     controls: ["/control.webp"],
