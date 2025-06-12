@@ -8,7 +8,7 @@ const HomeComponent = () => {
   const imageSets = {
     Designing: ["/images/mockup1.png"],
     Tools: ["/images/mockup4.png"],
-    Revit: ["../../images/revit.webp"],
+    Revit: ["/revit.webp"],
     controls: ["/images/mockup7.png"],
   };
 
