@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import siteMetadata from "@/utils/siteMetaData";
 
-// Define fonts with proper configuration
+// Define fonts
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>{siteMetadata.title}</title>
         <meta name="description" content={siteMetadata.description} />
+        <meta name="google-site-verification" content="isxs4KD5kyGRSUtKJdLnv4P5uLyId4vVwG4u7LzzSOU" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="icon" href="/favicon.ico" />
         <link
@@ -70,7 +71,14 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
 
-        {/* Google Analytics (replace G-XXXXXXX with your real ID) */}
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6106733128223559"
+          crossOrigin="anonymous"
+        ></script>
+
+        {/* Google Analytics */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
