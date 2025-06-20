@@ -166,12 +166,12 @@ export default function AdvancedTextToSpeech() {
           onClick={downloadAudio}
           className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg shadow transition"
         >
-          ⬇ Download MP3
+          💾Download MP3
         </button>
       </div>
 
       <div className="text-center pt-4 text-sm text-gray-600 dark:text-gray-400">
-        Supports English voice only. Use the download button to save MP3 via ElevenLabs.
+        Supports English voice only🌟.
       </div>
     </div>
   );
