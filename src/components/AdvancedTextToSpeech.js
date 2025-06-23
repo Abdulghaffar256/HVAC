@@ -12,7 +12,6 @@ export default function AdvancedTextToSpeech() {
 
   const utteranceRef = useRef(null);
 
-  // Load English-only voices
   useEffect(() => {
     const loadVoices = () => {
       const voicesList = speechSynthesis.getVoices();
@@ -29,7 +28,6 @@ export default function AdvancedTextToSpeech() {
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
 
-  // Speak using Web Speech API
   const speak = () => {
     if (isSpeaking || !text.trim()) return;
 
@@ -59,29 +57,22 @@ export default function AdvancedTextToSpeech() {
     setIsSpeaking(false);
   };
 
-  // ✅ Corrected: Download MP3 via API
   const downloadAudio = async () => {
-    const res = await fetch(`/api/elevenlabs?text=${encodeURIComponent(text)}`, {
-      cache: "no-store",
-    });
-
+    const res = await fetch(`/api/ttsmp3?text=${encodeURIComponent(text)}`);
     if (!res.ok) {
-      alert(await res.text()); // Display error (like auth issue)
+      alert("Failed to generate MP3.");
       return;
     }
 
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
     a.download = "tts-voice.mp3";
-    a.style.display = "none";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000); // free memory
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -98,7 +89,6 @@ export default function AdvancedTextToSpeech() {
         className="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      {/* Voice Selector */}
       <div>
         <label className="block mb-1 font-medium text-sm text-gray-700 dark:text-gray-300">
           Voice
@@ -116,7 +106,6 @@ export default function AdvancedTextToSpeech() {
         </select>
       </div>
 
-      {/* Controls */}
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="block mb-1 font-medium text-sm text-gray-700 dark:text-gray-300">
@@ -148,7 +137,6 @@ export default function AdvancedTextToSpeech() {
         </div>
       </div>
 
-      {/* Buttons */}
       <div className="flex flex-wrap gap-3 justify-center pt-4">
         <button
           onClick={speak}
