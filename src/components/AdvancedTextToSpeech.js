@@ -16,7 +16,7 @@ export default function AdvancedTextToSpeech() {
   useEffect(() => {
     const loadVoices = () => {
       const voicesList = speechSynthesis.getVoices();
-      const englishVoices = voicesList.filter(v =>
+      const englishVoices = voicesList.filter((v) =>
         v.lang.toLowerCase().startsWith("en")
       );
       setVoices(englishVoices);
@@ -59,16 +59,29 @@ export default function AdvancedTextToSpeech() {
     setIsSpeaking(false);
   };
 
-  // 🔽 Download voice using ElevenLabs
+  // ✅ Corrected: Download MP3 via API
   const downloadAudio = async () => {
-    const response = await fetch(`/api/elevenlabs?text=${encodeURIComponent(text)}`);
-    const blob = await response.blob();
+    const res = await fetch(`/api/elevenlabs?text=${encodeURIComponent(text)}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      alert(await res.text()); // Display error (like auth issue)
+      return;
+    }
+
+    const blob = await res.blob();
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
     a.download = "tts-voice.mp3";
+    a.style.display = "none";
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000); // free memory
   };
 
   return (
@@ -135,7 +148,7 @@ export default function AdvancedTextToSpeech() {
         </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* Buttons */}
       <div className="flex flex-wrap gap-3 justify-center pt-4">
         <button
           onClick={speak}
@@ -166,12 +179,12 @@ export default function AdvancedTextToSpeech() {
           onClick={downloadAudio}
           className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg shadow transition"
         >
-          💾Download MP3
+          💾 Download MP3
         </button>
       </div>
 
       <div className="text-center pt-4 text-sm text-gray-600 dark:text-gray-400">
-        Supports English voice only🌟.
+        Supports English voice only 🌟.
       </div>
     </div>
   );
