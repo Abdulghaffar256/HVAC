@@ -95,8 +95,23 @@ const Header = () => {
               </button>
               {isOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-56 z-50 space-y-1">
-                  <Link href="/blogs" className="block hover:text-pink-500">
-                    HVAC Blogs
+                  <Link href="/dev" className="block hover:text-pink-500">
+                    Development
+                  </Link>
+                  <Link href="/equipment" className="block hover:text-pink-500">
+                    Equipment
+                  </Link>
+                  <Link href="/ai" className="block hover:text-pink-500">
+                    Artificial Intelligence
+                  </Link>
+                  <Link href="/eng" className="block hover:text-pink-500">
+                    Designing
+                  </Link>
+                  <Link href="/energy" className="block hover:text-pink-500">
+                    Energy
+                  </Link>
+                  <Link href="/waste" className="block hover:text-pink-500">
+                    Waste
                   </Link>
                 </div>
               )}
@@ -111,35 +126,16 @@ const Header = () => {
                 <span className="text-xs">▾</span>
               </button>
               {certOpen && (
-                <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-44 z-50 space-y-1">
-                  <Link href="/designing" className="block hover:text-pink-500">
-                    HVAC Designing
+                <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-56 z-50 space-y-1">
+                  <Link href="/mep" className="block hover:text-pink-500">
+                    Revit MEP
                   </Link>
-                  <Link href="/control" className="block hover:text-pink-500">
-                    HVAC CONTROL
-                  </Link>
-                  <Link href="/Revit" className="block hover:text-pink-500">
-                    Revit
+                  <Link href="/Leed" className="block hover:text-pink-500">
+                    LEED
                   </Link>
                 </div>
               )}
             </div>
-
-            <Link href="/Tools" className="hover:text-pink-600 transition">
-              HVAC Tools
-            </Link>
-
-            {/* ✅ Text Editor link added here */}
-            <Link href="/text-to-speech" className="hover:text-pink-600 transition">
-              Text Editor
-            </Link>
-
-            <Link href="/about" className="hover:text-pink-600 transition">
-              About
-            </Link>
-            <Link href="/contact" className="hover:text-pink-600 transition">
-              Contact
-            </Link>
           </nav>
 
           <div className="hidden md:flex items-center relative w-64">
@@ -201,22 +197,17 @@ const Header = () => {
               </button>
               {mobileCertOpen && (
                 <div className="space-y-1 pl-4">
-                  <Link href="/mep" className="block">
+                  <Link href="/mep" className="block hover:text-pink-500">
                     Revit MEP
                   </Link>
-                  <Link href="/Leed" className="block">
+                  <Link href="/Leed" className="block hover:text-pink-500">
                     LEED
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* ✅ Text Editor link added here */}
-            <Link href="/editor" className="block hover:text-pink-600">
-              Text Editor
-            </Link>
-
-            <Link href="/about" className="block hover:text-pink-600">
+            <Link href="/About-Us" className="block hover:text-pink-600">
               About
             </Link>
             <Link href="/contact" className="block hover:text-pink-600">
