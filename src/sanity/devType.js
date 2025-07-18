@@ -68,80 +68,114 @@ export const devType = defineType({
       type: 'text',
       validation: (Rule) => Rule.required().max(200),
     }),
-    defineField({
-      title: 'Main Content',
-      name: 'content',
-      type: 'array',
-      description: 'Add the main content of the post here—paragraphs, headings, images, whatever works!',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'Heading 1', value: 'h1' },
-            { title: 'Heading 2', value: 'h2' },
-            { title: 'Heading 3', value: 'h3' },
-            { title: 'Heading 4', value: 'h4' },
-            { title: 'Heading 5', value: 'h5' },
-            { title: 'Heading 6', value: 'h6' },
-          ],
-          lists: [
-            { title: 'Bullet', value: 'bullet' },
-            { title: 'Numbered', value: 'number' },
-          ],
-          marks: {
-            decorators: [
-              { title: 'Bold', value: 'strong' },
-              { title: 'Italic', value: 'em' },
-              { title: 'Underline', value: 'underline' },
-            ],
-            annotations: [
-              {
-                title: 'URL',
-                name: 'link',
-                type: 'object',
-                fields: [
-                  { title: 'URL', name: 'href', type: 'url' },
-                  { title: 'Open in New Tab', name: 'blank', type: 'boolean' },
-                ],
-              },
+   defineField({
+  title: 'Main Content',
+  name: 'content',
+  type: 'array',
+  description: 'Add the main content of the post here—paragraphs, headings, images, whatever works!',
+  of: [
+    {
+      type: 'block',
+      styles: [
+        { title: 'Normal', value: 'normal' },
+        { title: 'Heading 1', value: 'h1' },
+        { title: 'Heading 2', value: 'h2' },
+        { title: 'Heading 3', value: 'h3' },
+        { title: 'Heading 4', value: 'h4' },
+        { title: 'Heading 5', value: 'h5' },
+        { title: 'Heading 6', value: 'h6' },
+      ],
+      lists: [
+        { title: 'Bullet', value: 'bullet' },
+        { title: 'Numbered', value: 'number' },
+      ],
+      marks: {
+        decorators: [
+          { title: 'Bold', value: 'strong' },
+          { title: 'Italic', value: 'em' },
+          { title: 'Underline', value: 'underline' },
+        ],
+        annotations: [
+          {
+            title: 'URL',
+            name: 'link',
+            type: 'object',
+            fields: [
+              { title: 'URL', name: 'href', type: 'url' },
+              { title: 'Open in New Tab', name: 'blank', type: 'boolean' },
             ],
           },
+        ],
+      },
+    },
+    {
+      type: 'image',
+      options: { hotspot: true },
+      fields: [
+        { title: 'Caption', name: 'caption', type: 'string', options: { isHighlighted: true } },
+        {
+          title: 'Alt Text',
+          name: 'alt',
+          type: 'string',
+          validation: (Rule) => Rule.required().warning('Alt text is key for accessibility.'),
+        },
+        { title: 'Image Width', name: 'width', type: 'number' },
+        { title: 'Image Height', name: 'height', type: 'number' },
+        { title: 'Lazy Load', name: 'lazyLoad', type: 'boolean', initialValue: true },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'customEmbed',
+      title: 'Custom Embed',
+      fields: [{ title: 'Embed URL', name: 'embedUrl', type: 'url' }],
+      preview: {
+        select: { title: 'embedUrl' },
+        prepare(selection) {
+          const { title } = selection;
+          return { title: title ? `Embed: ${title}` : 'Embed: No URL Set' };
+        },
+      },
+    },
+    // New YouTube Embed Field
+    {
+      type: 'object',
+      name: 'youtubeEmbed',
+      title: 'YouTube Video Embed',
+      fields: [
+        {
+          title: 'YouTube Video URL',
+          name: 'videoUrl',
+          type: 'url',
+          validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }).required().warning('Enter a valid YouTube video URL!'),
         },
         {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [
-            { title: 'Caption', name: 'caption', type: 'string', options: { isHighlighted: true } },
-            {
-              title: 'Alt Text',
-              name: 'alt',
-              type: 'string',
-              validation: (Rule) => Rule.required().warning('Alt text is key for accessibility.'),
-            },
-            { title: 'Image Width', name: 'width', type: 'number' },
-            { title: 'Image Height', name: 'height', type: 'number' },
-            { title: 'Lazy Load', name: 'lazyLoad', type: 'boolean', initialValue: true },
-          ],
+          title: 'Video Height',
+          name: 'videoHeight',
+          type: 'number',
+          initialValue: 500, // Default height value
         },
         {
-          type: 'object',
-          name: 'customEmbed',
-          title: 'Custom Embed',
-          fields: [
-            { title: 'Embed URL', name: 'embedUrl', type: 'url' },
-            { title: 'Embed Height', name: 'embedHeight', type: 'number', initialValue: 500 },  // Added height field
-          ],
-          preview: {
-            select: { title: 'embedUrl' },
-            prepare(selection) {
-              const { title } = selection;
-              return { title: title ? `Embed: ${title}` : 'Embed: No URL Set' };
-            },
-          },
+          title: 'Video Width',
+          name: 'videoWidth',
+          name: 'videoWidth',
+          type: 'number',
+          initialValue: 800, // Default width value
         },
       ],
-    }),
+      preview: {
+        select: {
+          title: 'videoUrl',
+        },
+        prepare(selection) {
+          const { title } = selection;
+          return { title: title ? `YouTube Video: ${title}` : 'YouTube Video: No URL Set' };
+        },
+      },
+    },
+  ],
+}),
+
     // New FAQ Field Starts Here
     defineField({
       name: 'faq',
