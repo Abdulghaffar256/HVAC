@@ -4,7 +4,7 @@ export const devType = defineType({
   name: 'development',
   title: 'HVAC Blogs',
   type: 'document',
-  fields: [
+    fields: [
     defineField({
       name: 'title',
       type: 'string',
