@@ -95,24 +95,11 @@ const Header = () => {
               </button>
               {isOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-56 z-50 space-y-1">
-                  <Link href="/dev" className="block hover:text-pink-500">
-                    Development
+                  <Link href="/blogs" className="block hover:text-pink-500">
+                    HVAC Blogs
                   </Link>
-                  <Link href="/equipment" className="block hover:text-pink-500">
-                    Equipment
-                  </Link>
-                  <Link href="/ai" className="block hover:text-pink-500">
-                    Artificial Intelligence
-                  </Link>
-                  <Link href="/eng" className="block hover:text-pink-500">
-                    Designing
-                  </Link>
-                  <Link href="/energy" className="block hover:text-pink-500">
-                    Energy
-                  </Link>
-                  <Link href="/waste" className="block hover:text-pink-500">
-                    Waste
-                  </Link>
+                  
+                 
                 </div>
               )}
             </div>
@@ -127,11 +114,14 @@ const Header = () => {
               </button>
               {certOpen && (
                 <div className="absolute left-0 mt-2 bg-white border rounded-md shadow-md p-2 w-56 z-50 space-y-1">
-                  <Link href="/mep" className="block hover:text-pink-500">
-                    Revit MEP
+                   <Link href="/Revit" className="block hover:text-pink-500">
+                    Revit
                   </Link>
-                  <Link href="/Leed" className="block hover:text-pink-500">
-                    LEED
+                  <Link href="/control" className="block hover:text-pink-500">
+                    HVAC Control 
+                  </Link>
+                  <Link href="/designing" className="block hover:text-pink-500">
+                    HVAC Designing
                   </Link>
                 </div>
               )}
@@ -166,23 +156,8 @@ const Header = () => {
               </button>
               {mobileCatOpen && (
                 <div className="space-y-1 pl-4">
-                  <Link href="/dev" className="block hover:text-pink-500">
-                    Development
-                  </Link>
-                  <Link href="/equipment" className="block hover:text-pink-500">
-                    Equipment
-                  </Link>
-                  <Link href="/ai" className="block hover:text-pink-500">
-                    Artificial Intelligence
-                  </Link>
-                  <Link href="/eng" className="block hover:text-pink-500">
-                    Designing
-                  </Link>
-                  <Link href="/energy" className="block hover:text-pink-500">
-                    Energy
-                  </Link>
-                  <Link href="/waste" className="block hover:text-pink-500">
-                    Waste
+                 <Link href="/blogs" className="block hover:text-pink-500">
+                    HVAC Blogs
                   </Link>
                 </div>
               )}
@@ -197,12 +172,16 @@ const Header = () => {
               </button>
               {mobileCertOpen && (
                 <div className="space-y-1 pl-4">
-                  <Link href="/mep" className="block hover:text-pink-500">
-                    Revit MEP
+                  <Link href="/Revit" className="block hover:text-pink-500">
+                    Revit
                   </Link>
-                  <Link href="/Leed" className="block hover:text-pink-500">
-                    LEED
+                  <Link href="/control" className="block hover:text-pink-500">
+                    HVAC Control 
                   </Link>
+                  <Link href="/designing" className="block hover:text-pink-500">
+                    HVAC Designing
+                  </Link>
+
                 </div>
               )}
             </div>
