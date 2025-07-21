@@ -192,6 +192,8 @@ const Header = () => {
             <Link href="/contact" className="block hover:text-pink-600">
               Contact
             </Link>
+              <link href="/Tools" className="block hover:text-pink-600">
+              Tools
 
             <div className="relative mt-2">
               <input
