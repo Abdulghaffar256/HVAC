@@ -84,6 +84,10 @@ const Header = () => {
             <Link href="/" className="hover:text-pink-600 transition">
               Home
             </Link>
+                <Link href="/Tools" className="block hover:text-pink-600">
+  Tools
+</Link>
+
 
             <div className="relative">
               <button
