@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 const tools = [
@@ -12,14 +11,14 @@ const tools = [
   },
   {
     name: "Unit Converter",
-    image: "/unitconverter.jpg",
+    image: "/img/unitconverter.jpg", // ✅ Make sure this file exists
     link: "/unit-converter",
     description: "Convert HVAC-related units for temperature, pressure, and more.",
   },
   {
     name: "Duct Sizer",
-    image: "/ductsizer.jpg", // Make sure this image exists in your public/images folder
-    link: "/duct-sizer", // Adjust this link based on your actual route
+    image: "/img/ductsizer.jpg", // ✅ Make sure this file exists
+    link: "/duct-sizer",
     description: "Determine optimal duct sizes based on airflow and velocity.",
   },
 ];
@@ -37,15 +36,15 @@ export default function HvacToolsPage() {
             href={tool.link}
             className="relative group h-64 rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition duration-300 border-2 border-transparent hover:border-blue-600 hover:ring-2 hover:ring-blue-500"
           >
-            <Image
+            {/* ✅ Use native <img> for debug */}
+            <img
               src={tool.image}
               alt={tool.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500 rounded-2xl"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-2xl"
             />
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-red-400 group-hover:bg-white backdrop-blur-sm transition-all duration-300 rounded-2xl" />
+            {/* ✅ Transparent overlay for hover effect */}
+            <div className="absolute inset-0 bg-black/30 group-hover:bg-white/20 backdrop-blur-sm transition-all duration-300 rounded-2xl" />
 
             {/* Tool Title */}
             <div className="absolute bottom-4 left-4 text-white text-lg font-semibold z-10 drop-shadow-md">
@@ -64,4 +63,3 @@ export default function HvacToolsPage() {
     </main>
   );
 }
-
