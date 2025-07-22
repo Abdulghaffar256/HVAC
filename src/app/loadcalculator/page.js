@@ -7,6 +7,7 @@ import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
+import HeatCalculator5 from "@/components/LoadCalculator/people/page";
 import * as XLSX from "xlsx";
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
@@ -14,6 +15,7 @@ const calculators = [
   { id: "HeatTransferCalculator2", component: HeatTransferCalculator2, label: "Glass" },
   { id: "HeatTransferCalculator7", component: HeatTransferCalculator7, label: "Interior Wall" },
   { id: "HeatGeneratedByLighting4", component: HeatGeneratedByLighting4, label: "Lighting" },
+    { id: "HeatCalculator5", component: HeatCalculator5, label: "People" },
   { id: "HeatDissipationCalculator6", component: HeatDissipationCalculator6, label: "Electrical Equipment" },
 ];
 
