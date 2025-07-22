@@ -6,7 +6,7 @@ import Link from "next/link";
 const tools = [
   {
     name: "Load Calculator",
-    image: "/images/loadcalc.jpg",
+    image: "/loadcalc.jpg",
     link: "/loadcalculator",
     description: "Calculate heating and cooling loads with ease and accuracy.",
   },
