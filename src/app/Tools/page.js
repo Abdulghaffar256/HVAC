@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const tools = [
   {
-    name: "Load Calculator",
+    name: "HVAC Load Calculator",
     image: "/img/loadcalc.jpg", // ✅ Ensure high resolution (e.g. 1000x600)
-    link: "/hvac-load-aclculator",
+    link: "/hvac-load-calculator",
     description: "Calculate heating and cooling loads with ease and accuracy.",
   },
   {
