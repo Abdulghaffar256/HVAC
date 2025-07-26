@@ -7,7 +7,7 @@ const tools = [
   {
     name: "Load Calculator",
     image: "/img/loadcalc.jpg", // ✅ Ensure high resolution (e.g. 1000x600)
-    link: "/HVAC-Load-Calculator",
+    link: "/hvac-load-aclculator",
     description: "Calculate heating and cooling loads with ease and accuracy.",
   },
   {
