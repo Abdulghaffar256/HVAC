@@ -153,6 +153,9 @@ const Header = () => {
             <Link href="/" className="block hover:text-pink-600">
               Home
             </Link>
+           <Link href="/project" className="hover:text-pink-600 transition">
+              Projects
+            </Link>
 
             <div>
               <button
