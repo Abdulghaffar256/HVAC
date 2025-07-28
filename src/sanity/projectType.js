@@ -137,6 +137,45 @@ export const projectType = defineType({
             },
           },
         },
+        // Add YouTube Video Schema Here
+        defineField({
+          name: 'youtubeVideo',
+          title: 'YouTube Video',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'videoUrl',
+              title: 'Video URL',
+              type: 'url',
+              validation: (Rule) => Rule.uri({ scheme: ['https'] }).required().warning('Enter a valid YouTube URL'),
+            }),
+            defineField({
+              name: 'videoTitle',
+              title: 'Video Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'videoDescription',
+              title: 'Video Description',
+              type: 'text',
+              validation: (Rule) => Rule.max(500).warning('Video description can be up to 500 characters.'),
+            }),
+            defineField({
+              name: 'thumbnailImage',
+              title: 'Video Thumbnail',
+              type: 'image',
+              options: { hotspot: true },
+              validation: (Rule) => Rule.required().warning('A thumbnail image is recommended for YouTube videos.'),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'videoTitle',
+              media: 'thumbnailImage',
+            },
+          },
+        }),
       ],
     }),
     defineField({
