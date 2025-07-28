@@ -139,7 +139,6 @@ export const ProjectType = defineType({
         },
       ],
     }),
-    // New FAQ Field Starts Here
     defineField({
       name: 'faq',
       title: 'FAQs',
@@ -161,7 +160,7 @@ export const ProjectType = defineType({
               name: 'answer',
               title: 'Answer',
               type: 'array',
-              of: [{ type: 'block' }], // Rich text for answers
+              of: [{ type: 'block' }],
               validation: (Rule) => Rule.required().warning('Every question needs an answer!'),
             }),
           ],
@@ -179,7 +178,6 @@ export const ProjectType = defineType({
         },
       ],
     }),
-    // End of FAQ Field
     defineField({
       name: 'tags',
       type: 'array',
@@ -203,7 +201,6 @@ export const ProjectType = defineType({
       title: 'Published At',
       initialValue: () => new Date().toISOString(),
     }),
-    // New Field for Document Upload
     defineField({
       name: 'documents',
       title: 'Documents',
@@ -213,7 +210,7 @@ export const ProjectType = defineType({
         {
           type: 'file',
           options: {
-            accept: '.pdf,.doc,.docx,.txt', // Specify allowed document types
+            accept: '.pdf,.doc,.docx,.txt',
           },
           fields: [
             defineField({
@@ -232,7 +229,6 @@ export const ProjectType = defineType({
         },
       ],
     }),
-    // New Field for RAR File Upload
     defineField({
       name: 'rarFiles',
       title: 'RAR Files',
@@ -242,7 +238,7 @@ export const ProjectType = defineType({
         {
           type: 'file',
           options: {
-            accept: '.rar', // Specify RAR file type
+            accept: '.rar',
           },
           fields: [
             defineField({
