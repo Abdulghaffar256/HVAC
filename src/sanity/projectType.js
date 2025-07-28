@@ -176,6 +176,50 @@ export const projectType = defineType({
             },
           },
         }),
+        {
+          type: 'file',
+          name: 'document',
+          title: 'Document',
+          options: {
+            accept: '.pdf,.doc,.docx,.txt',
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              type: 'string',
+              title: 'Document Title',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              type: 'text',
+              title: 'Document Description',
+              validation: (Rule) => Rule.max(200),
+            }),
+          ],
+        },
+        {
+          type: 'file',
+          name: 'rarFile',
+          title: 'RAR File',
+          options: {
+            accept: '.rar',
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              type: 'string',
+              title: 'RAR File Title',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              type: 'text',
+              title: 'RAR File Description',
+              validation: (Rule) => Rule.max(200),
+            }),
+          ],
+        },
       ],
     }),
     defineField({
