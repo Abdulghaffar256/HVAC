@@ -34,7 +34,7 @@ const Header = () => {
     if (e.key === "Enter" && searchQuery.trim() !== "") {
       try {
         const results = await client.fetch(
-          `*[_type in ["AI", "Eng", "equipment", "development", "dev"] && title match $query]{
+          `*[_type in ["AI", "Eng", "equipment", "development", "dev","project"] && title match $query]{
             _id,
             title,
             "slug": slug.current
