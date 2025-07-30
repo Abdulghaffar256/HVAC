@@ -10,7 +10,7 @@ import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
 
-const Equipment = () => {
+const Project = () => {
   const [posts, setPosts] = useState([]);
   const [displayCount, setDisplayCount] = useState(5);
   const [loading, setLoading] = useState(true);
@@ -221,4 +221,4 @@ const Equipment = () => {
   );
 };
 
-export default Equipment;
+export default Project;
