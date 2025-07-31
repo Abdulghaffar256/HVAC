@@ -4,7 +4,69 @@ export const projectType = defineType({
   name: 'Project',
   title: 'Project Management Post',
   type: 'document',
-  fields: [
+  fields: [ defineField({
+      name: 'title',
+      type: 'string',
+      title: 'Post Title',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'heading1',
+      type: 'string',
+      title: 'Heading 1',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'heading2',
+      type: 'string',
+      title: 'Heading 2',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'heading3',
+      type: 'string',
+      title: 'Heading 3',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'heading4',
+      type: 'string',
+      title: 'Heading 4',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required().warning('An image is a must for this post!'),
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          validation: (Rule) => Rule.required().warning('Alt text helps with accessibility.'),
+        }),
+      ],
+    }),
+    defineField({
+      title: 'Description',
+      name: 'description',
+      type: 'text',
+      validation: (Rule) => Rule.required().max(200),
+    }),
     defineField({
       name: 'title',
       type: 'string',
