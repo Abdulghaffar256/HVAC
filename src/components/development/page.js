@@ -43,13 +43,13 @@ const Development = () => {
     image: [urlFor(post.image).url()],
     datePublished: post.publishedAt,
     description: post.description,
-    url: `https://www.epicssolution.com/dev/${post.slug}`,
+    url: `https://www.hvacdesigning.com/dev/${post.slug}`,
     publisher: {
       "@type": "Organization",
       name: "Epics Solution",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.epicssolution.com/logo.png",
+        url: "https://www.hvacdesigning.com/logo.png",
       },
     },
     author: post.author
