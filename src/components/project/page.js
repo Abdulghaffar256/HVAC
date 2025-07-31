@@ -1,7 +1,3 @@
-
-
-
-  
 "use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -17,7 +13,7 @@ const Project = () => {
 
   useEffect(() => {
     const query = `
-      *[_type=="project"] | order(publishedAt desc) {
+      *[_type=="Project"] | order(publishedAt desc) {
         description,
         "slug": slug.current,
         image,
@@ -89,7 +85,7 @@ const Project = () => {
                 )}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="md:w-1/3">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <div className="relative w-full pt-[75%]">
                         <Image
                           src={urlFor(post.image).url()}
@@ -102,7 +98,7 @@ const Project = () => {
                     </Link>
                   </div>
                   <div className="md:w-2/3">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <h2 className="text-2xl font-bold hover:underline">
                         {post.title}
                       </h2>
@@ -116,7 +112,7 @@ const Project = () => {
                       })}
                     </span>
                     <p className="mt-2 text-gray-700">{post.description}</p>
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <button className="mt-4 px-4 py-2 bg-[#FF6F61] text-white rounded hover:bg-[#E65C50]">
                         Read More
                       </button>
@@ -128,16 +124,16 @@ const Project = () => {
             {posts.length > displayCount && (
               <div className="text-center mt-8">
                 <button
-  onClick={() => setDisplayCount(displayCount + 6)}
-  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
->
-  Load More
-  <span>&gt;</span>
-</button>
+                  onClick={() => setDisplayCount(displayCount + 6)}
+                  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
+                >
+                  Load More
+                  <span>&gt;</span>
+                </button>
               </div>
             )}
           </div>
-          <div className="w-full md:w-1/4 md:sticky fixed md:top-0">
+          <div className="w-full md:w-1/4 md:sticky top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
                 Latest Blogs
@@ -157,7 +153,7 @@ const Project = () => {
                     />
                   </div>
                   <div className="ml-4">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <h4 className="text-sm font-medium hover:underline text-gray-900 dark:text-gray-100">
                         {post.title.length > 20
                           ? `${post.title.slice(0, 20)}...`
