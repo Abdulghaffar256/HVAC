@@ -49,7 +49,7 @@ const BlogSlider = () => {
             <SwiperSlide key={blog.slug}>
               <Link href={`/${blog.slug}`}>
                 <Image
-                  src={blog.imageUrl || 'https://www.epicssolution.com/default-banner.jpg'}
+                  src={blog.imageUrl || 'https://www.hvacdesigning.com/default-banner.jpg'}
                   alt={blog.title}
                   width={300}
                   height={200}
