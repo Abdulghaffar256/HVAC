@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
 
   const imageUrl = blog.image
     ? urlFor(blog.image).url()
-    : siteMetadata.socialBanner || "https://www.epicssolution.com/default-banner.jpg";
+    : siteMetadata.socialBanner || "https://www.hvacdesigning.com/default-banner.jpg";
 
   return {
     title: blog.title,
