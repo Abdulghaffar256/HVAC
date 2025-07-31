@@ -4,7 +4,8 @@ export const projectType = defineType({
   name: 'Project',
   title: 'Project Management Post',
   type: 'document',
-  fields: [ defineField({
+  fields: [
+    defineField({
       name: 'title',
       type: 'string',
       title: 'Post Title',
@@ -67,14 +68,6 @@ export const projectType = defineType({
       type: 'text',
       validation: (Rule) => Rule.required().max(200),
     }),
-    defineField({
-      name: 'title',
-      type: 'string',
-      title: 'Post Title',
-      validation: (Rule) => Rule.required(),
-    }),
-    // Other fields remain unchanged...
-
     // Main Content Array
     defineField({
       title: 'Main Content',
@@ -146,7 +139,7 @@ export const projectType = defineType({
           },
         },
         // Add YouTube Video Schema Here
-        defineField({
+        {
           name: 'youtubeVideo', // Unique name
           title: 'YouTube Video',
           type: 'object',
@@ -183,7 +176,7 @@ export const projectType = defineType({
               media: 'thumbnailImage',
             },
           },
-        }),
+        },
       ],
     }),
     defineField({
