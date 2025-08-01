@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const { slug } = params;
 
   const query = `
-    *[ _type in ["AI", "Eng", "equipment", "development", "dev"] && slug.current == $slug][0]{
+    *[ _type in ["AI", "project", "Project", "development", "dev"] && slug.current == $slug][0]{
       title,
       description,
       "slug": slug.current,
@@ -84,7 +84,7 @@ export default async function BlogPage({ params }) {
   const { slug } = params;
 
   const query = `
-    *[ _type in ["project", "Eng", "equipment", "development", "dev"] && slug.current == $slug][0]{
+    *[ _type in ["project", "Project", "equipment", "development", "dev"] && slug.current == $slug][0]{
       title,
       description,
       "slug": slug.current,
