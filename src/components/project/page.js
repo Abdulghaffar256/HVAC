@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -62,10 +63,10 @@ const Project = () => {
   return (
     <>
       <Head>
-        <title>HVAC Designing Projects </title>
+        <title>HVAC Designing Projects</title>
         <meta
           name="description"
-          content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now! "
+          content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now!"
         />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
@@ -73,6 +74,7 @@ const Project = () => {
           </script>
         ))}
       </Head>
+
       <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:flex-1">
@@ -83,9 +85,10 @@ const Project = () => {
                     {post.tags[0]}
                   </span>
                 )}
+
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="md:w-1/3">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <div className="relative w-full pt-[75%]">
                         <Image
                           src={urlFor(post.image).url()}
@@ -97,12 +100,14 @@ const Project = () => {
                       </div>
                     </Link>
                   </div>
+
                   <div className="md:w-2/3">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <h2 className="text-2xl font-bold hover:underline">
                         {post.title}
                       </h2>
                     </Link>
+
                     <span className="text-sm text-gray-500 mt-2 block">
                       by {post.author || "Abdul Ghaffar Khan"} |{" "}
                       {new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -111,8 +116,10 @@ const Project = () => {
                         year: "numeric",
                       })}
                     </span>
+
                     <p className="mt-2 text-gray-700">{post.description}</p>
-                    <Link href={`/projects/${posts.slug}`}>
+
+                    <Link href={`/projects/${post.slug}`}>
                       <button className="mt-4 px-4 py-2 bg-[#FF6F61] text-white rounded hover:bg-[#E65C50]">
                         Read More
                       </button>
@@ -121,6 +128,7 @@ const Project = () => {
                 </div>
               </div>
             ))}
+
             {posts.length > displayCount && (
               <div className="text-center mt-8">
                 <button
@@ -133,6 +141,7 @@ const Project = () => {
               </div>
             )}
           </div>
+
           <div className="w-full md:w-1/4 md:sticky top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
@@ -152,8 +161,9 @@ const Project = () => {
                       className="rounded shadow-sm"
                     />
                   </div>
+
                   <div className="ml-4">
-                    <Link href={`/projects/${posts.slug}`}>
+                    <Link href={`/projects/${post.slug}`}>
                       <h4 className="text-sm font-medium hover:underline text-gray-900 dark:text-gray-100">
                         {post.title.length > 20
                           ? `${post.title.slice(0, 20)}...`
@@ -169,10 +179,8 @@ const Project = () => {
                   </div>
                 </div>
               ))}
-              <div className="mt-8  ">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                  Categories
-                </h2>
+              <div className="mt-8 ">
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
                 <div className="space-y-2">
                   <Link
                     href="/blogs"
@@ -180,20 +188,17 @@ const Project = () => {
                   >
                     Blogs
                   </Link>
-                  
                 </div>
               </div>
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
               <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                  Certifications
-                </h2>
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
                 <div className="space-y-2">
                   <Link
                     href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit 
+                    Revit
                   </Link>
                   <Link
                     href="/designing"
@@ -201,7 +206,7 @@ const Project = () => {
                   >
                     Designing
                   </Link>
-                       <Link
+                  <Link
                     href="/control"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
