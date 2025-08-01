@@ -97,6 +97,7 @@ export default async function BlogPage({ params }) {
       notFound();
       return null;
     }
+
     // Dynamically extract headings from blog.content
     const headings = [];
     if (Array.isArray(blog.content)) {
@@ -169,6 +170,24 @@ export default async function BlogPage({ params }) {
             {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
+                {/* Document Downloads */}
+                {blog.documents?.map((doc, index) => {
+                  const fileUrl = doc.url ? `${doc.url}?dl=${encodeURIComponent(doc.title + '.pdf')}` : null;
+                  if (!fileUrl) return null;
+                  return (
+                    <div key={`doc-${index}`} className="mb-4">
+                      <a
+                        href={fileUrl}
+                        download
+                        className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                      >
+                        Download Document: {doc.title}
+                      </a>
+                      {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+                    </div>
+                  );
+                })}
+                {/* Google Drive Links */}
                 {blog.googleDriveLinks?.map((file, index) => {
                   return (
                     <div key={`file-${index}`} className="mb-4">
