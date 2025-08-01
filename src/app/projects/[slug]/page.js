@@ -1,5 +1,3 @@
-"use client"; // Ensure the following code runs on the client side for interactivity
-
 import { useState } from "react";
 import { PortableText } from "next-sanity";
 import { notFound } from "next/navigation";
@@ -20,9 +18,13 @@ function escapeJsonLd(value) {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
 }
 
+// Utility to slugify text for IDs
+function slugify(text) {
+  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = params;
-
   const query = `
     *[ _type in ["Project", "project"] && slug.current == $slug][0]{
       title,
@@ -32,18 +34,14 @@ export async function generateMetadata({ params }) {
       publishedAt
     }
   `;
-
   try {
     const blog = await client.fetch(query, { slug });
-
     if (!blog) {
       return null; // Let Next.js handle notFound in the page component
     }
-
     const imageUrl = blog.image
       ? urlFor(blog.image).url()
       : siteMetadata.socialBanner || "https://www.hvacdesigning.com/default-banner.jpg";
-
     return {
       title: blog.title,
       description: blog.description,
@@ -63,25 +61,6 @@ export async function generateMetadata({ params }) {
       alternates: {
         canonical: `${siteMetadata.siteUrl}/${slug}`,
       },
-      structuredData: {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: escapeJsonLd(blog.title),
-        description: escapeJsonLd(blog.description),
-        image: imageUrl,
-        datePublished: blog.publishedAt ? new Date(blog.publishedAt).toISOString() : undefined,
-        url: `${siteMetadata.siteUrl}/${slug}`,
-        author: { "@type": "Person", name: "Epic Solution Team" },
-        publisher: {
-          "@type": "Organization",
-          name: "EPICS Solution",
-          logo: { "@type": "ImageObject", url: siteMetadata.logo },
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${siteMetadata.siteUrl}/${slug}`,
-        },
-      },
     };
   } catch (err) {
     console.error("Error generating metadata:", err);
@@ -91,7 +70,6 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPage({ params }) {
   const { slug } = params;
-
   const query = `
     *[ _type in ["Project", "project"] && slug.current == $slug][0]{
       title,
@@ -106,30 +84,48 @@ export default async function BlogPage({ params }) {
       rarFiles
     }
   `;
-
   try {
     const blog = await client.fetch(query, { slug });
-
     if (!blog) {
       notFound();
       return null;
     }
-
     // Dynamically extract headings from blog.content
     const headings = [];
     if (Array.isArray(blog.content)) {
-      blog.content.forEach((block, index) => {
+      blog.content.forEach((block) => {
         if (block._type === "block" && block.style?.startsWith("h")) {
+          const text = block.children?.map((child) => child.text).join(" ") || "";
           headings.push({
-            text: block.children?.map((child) => child.text).join(" ") || "",
-            slug: `heading-${index}`,
+            text,
+            slug: slugify(text),
             level: parseInt(block.style.replace("h", ""), 10),
           });
         }
       });
     }
-
     const imageUrl = blog.image ? urlFor(blog.image).url() : siteMetadata.socialBanner;
+
+    // Compute structuredData
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: escapeJsonLd(blog.title),
+      description: escapeJsonLd(blog.description),
+      image: imageUrl,
+      datePublished: blog.publishedAt ? new Date(blog.publishedAt).toISOString() : undefined,
+      url: `${siteMetadata.siteUrl}/${slug}`,
+      author: { "@type": "Person", name: "Epic Solution Team" },
+      publisher: {
+        "@type": "Organization",
+        name: "EPICS Solution",
+        logo: { "@type": "ImageObject", url: siteMetadata.logo },
+      },
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${siteMetadata.siteUrl}/${slug}`,
+      },
+    };
 
     const { projectId, dataset } = client.config();
 
@@ -143,6 +139,10 @@ export default async function BlogPage({ params }) {
 
     return (
       <article>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <div className="relative w-full h-[70vh] bg-gray-800">
           {imageUrl && (
             <Image
@@ -158,7 +158,6 @@ export default async function BlogPage({ params }) {
             <VisitCourseButton href={blog.href} />
           </div>
         </div>
-
         <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
           {/* Sidebar - Table of Contents */}
           <div className="col-span-12 lg:col-span-4 hidden lg:block">
@@ -166,11 +165,9 @@ export default async function BlogPage({ params }) {
               <Sidebar headings={headings} />
             </div>
           </div>
-
           {/* Blog Content */}
           <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
-
             {/* Downloads Section */}
             {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
               <section className="mb-8">
@@ -196,19 +193,21 @@ export default async function BlogPage({ params }) {
                   if (!fileUrl) return null;
                   return (
                     <div key={`rar-${index}`} className="mb-4">
-                      <button
-                        onClick={() => window.open(fileUrl, '_blank')}
+                      <a
+                        href={fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
                       >
                         Download RAR File: {rar.title}
-                      </button>
+                      </a>
                       {rar.description && <p className="mt-2 text-gray-600">{rar.description}</p>}
                     </div>
                   );
                 })}
               </section>
             )}
-
             {blog.content ? (
               <PortableText
                 value={blog.content}
@@ -260,21 +259,30 @@ export default async function BlogPage({ params }) {
                     ),
                   },
                   block: {
-                    h1: ({ children }) => (
-                      <h1 id={`heading-${children.join("")}`} className="text-4xl font-bold my-4">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 id={`heading-${children.join("")}`} className="text-3xl font-semibold my-4">
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children }) => (
-                      <h3 id={`heading-${children.join("")}`} className="text-2xl font-medium my-3">
-                        {children}
-                      </h3>
-                    ),
+                    h1: ({ children }) => {
+                      const id = slugify(children.join(""));
+                      return (
+                        <h1 id={id} className="text-4xl font-bold my-4">
+                          {children}
+                        </h1>
+                      );
+                    },
+                    h2: ({ children }) => {
+                      const id = slugify(children.join(""));
+                      return (
+                        <h2 id={id} className="text-3xl font-semibold my-4">
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children }) => {
+                      const id = slugify(children.join(""));
+                      return (
+                        <h3 id={id} className="text-2xl font-medium my-3">
+                          {children}
+                        </h3>
+                      );
+                    },
                     normal: ({ children }) => <p className="my-2">{children}</p>,
                   },
                 }}
