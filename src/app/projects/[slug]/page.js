@@ -5,7 +5,7 @@ import Image from "next/image";
 import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
-import { notFound } from "next/navigation"; // Make sure 'notFound' is imported
+import { notFound } from "next/navigation"; // Make sure 'notFound' is imported properly
 
 const BlogPage = ({ params }) => {
   const { slug } = params;
@@ -27,16 +27,23 @@ const BlogPage = ({ params }) => {
 
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     client.fetch(query, { slug })
       .then((fetchedBlog) => {
+        if (!fetchedBlog) {
+          setError("No blog data found.");
+          setLoading(false);
+          return;
+        }
         setBlog(fetchedBlog);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching blog content:", err);
-        notFound(); // Call notFound if there's an error or no blog found
+        setError("An error occurred while fetching blog data.");
+        setLoading(false);
       });
   }, [slug]);
 
@@ -44,7 +51,11 @@ const BlogPage = ({ params }) => {
     return <div className="text-center mt-16">Loading...</div>;
   }
 
-  // Extract headings from content for the Table of Contents
+  if (error) {
+    return <div className="text-center mt-16 text-red-500">{error}</div>;
+  }
+
+  // Extract headings from content for Table of Contents
   const headings = [];
   if (Array.isArray(blog.content)) {
     blog.content.forEach((block, index) => {
