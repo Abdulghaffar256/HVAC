@@ -84,10 +84,10 @@ export default async function BlogPage({ params }) {
         description,
         "url": asset->url
       },
-      rarFiles[]{
+      googleDriveLinks[]{
         title,
         description,
-        "url": asset->url
+        link
       }
     }
   `;
@@ -166,38 +166,21 @@ export default async function BlogPage({ params }) {
           <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
             {/* Downloads Section */}
-            {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
+            {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
-                {blog.documents?.map((doc, index) => {
-                  const fileUrl = doc.url ? `${doc.url}?dl=${encodeURIComponent(doc.title + '.pdf')}` : null;
-                  if (!fileUrl) return null;
+                {blog.googleDriveLinks?.map((file, index) => {
                   return (
-                    <div key={`doc-${index}`} className="mb-4">
+                    <div key={`file-${index}`} className="mb-4">
                       <a
-                        href={fileUrl}
-                        download
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                      >
-                        Download Document: {doc.title}
-                      </a>
-                      {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
-                    </div>
-                  );
-                })}
-                {blog.rarFiles?.map((rar, index) => {
-                  return (
-                    <div key={`rar-${index}`} className="mb-4">
-                      <a
-                        href="https://drive.google.com/file/d/1KzXbAPSVRx1jjCa3cF0VWvqR1CCnmjpr/view?usp=drive_link"
+                        href={file.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        download
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
                       >
-                        Download RAR File: {rar.title}
+                        Download File: {file.title}
                       </a>
-                      {rar.description && <p className="mt-2 text-gray-600">{rar.description}</p>}
+                      {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
                     </div>
                   );
                 })}
