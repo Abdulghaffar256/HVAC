@@ -1,5 +1,5 @@
-"use client"
 
+"use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,44 +7,31 @@ import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
 
-const Project = () => {
+const Development = () => {
   const [posts, setPosts] = useState([]);
   const [displayCount, setDisplayCount] = useState(5);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const query = `
-        *[_type=="Project"] | order(publishedAt desc) {
-          description,
-          "slug": slug.current,
-          image,
-          title,
-          tags,
-          publishedAt,
-          "author": author->name
-        }
-      `;
-      try {
-        const fetchedPosts = await client.fetch(query);
-        setPosts(fetchedPosts);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching data: ", err);
-        setError("There was an issue fetching the posts. Please try again later.");
-        setLoading(false);
+    const query = `
+      *[_type=="project"] | order(publishedAt desc) {
+        description,
+        "slug": slug.current,
+        image,
+        title,
+        tags,
+        publishedAt,
+        "author": author->name
       }
-    };
-    fetchData();
+    `;
+    client.fetch(query).then((fetchedPosts) => {
+      setPosts(fetchedPosts);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
     return <div className="text-center mt-16">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center mt-16 text-red-500">{error}</div>;
   }
 
   const sidebarPosts = posts.slice(6, 10);
@@ -76,17 +63,10 @@ const Project = () => {
   return (
     <>
       <Head>
-        <title>HVAC Designing Projects</title>
+        <title>HVAC Blogs | HVAC DESIGNING </title>
         <meta
           name="description"
-          content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now!"
-        />
-        <link
-          rel="preload"
-          href="https://hvac-sigma.vercel.app/fonts/CustomFont.woff2"
-          as="font"
-          type="font/woff2"
-          crossorigin="anonymous"
+          content="Explore the latest HVAC blogs and insights."
         />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
@@ -94,7 +74,6 @@ const Project = () => {
           </script>
         ))}
       </Head>
-
       <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:flex-1">
@@ -105,7 +84,6 @@ const Project = () => {
                     {post.tags[0]}
                   </span>
                 )}
-
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="md:w-1/3">
                     <Link href={`/projects/${post.slug}`}>
@@ -120,14 +98,12 @@ const Project = () => {
                       </div>
                     </Link>
                   </div>
-
                   <div className="md:w-2/3">
                     <Link href={`/projects/${post.slug}`}>
                       <h2 className="text-2xl font-bold hover:underline">
                         {post.title}
                       </h2>
                     </Link>
-
                     <span className="text-sm text-gray-500 mt-2 block">
                       by {post.author || "Abdul Ghaffar Khan"} |{" "}
                       {new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -136,9 +112,7 @@ const Project = () => {
                         year: "numeric",
                       })}
                     </span>
-
                     <p className="mt-2 text-gray-700">{post.description}</p>
-
                     <Link href={`/projects/${post.slug}`}>
                       <button className="mt-4 px-4 py-2 bg-[#FF6F61] text-white rounded hover:bg-[#E65C50]">
                         Read More
@@ -148,21 +122,19 @@ const Project = () => {
                 </div>
               </div>
             ))}
-
             {posts.length > displayCount && (
               <div className="text-center mt-8">
                 <button
-                  onClick={() => setDisplayCount(displayCount + 6)}
-                  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
-                >
-                  Load More
-                  <span>&gt;</span>
-                </button>
+  onClick={() => setDisplayCount(displayCount + 6)}
+  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
+>
+  Load More
+  <span>&gt;</span>
+</button>
               </div>
             )}
           </div>
-
-          <div className="w-full md:w-1/4 md:sticky top-0">
+          <div className="w-full md:w-1/4 md:sticky fixed md:top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
                 Latest Blogs
@@ -181,7 +153,6 @@ const Project = () => {
                       className="rounded shadow-sm"
                     />
                   </div>
-
                   <div className="ml-4">
                     <Link href={`/projects/${post.slug}`}>
                       <h4 className="text-sm font-medium hover:underline text-gray-900 dark:text-gray-100">
@@ -199,8 +170,10 @@ const Project = () => {
                   </div>
                 </div>
               ))}
-              <div className="mt-8 ">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
+              <div className="mt-8  ">
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
+                  Categories
+                </h2>
                 <div className="space-y-2">
                   <Link
                     href="/blogs"
@@ -208,17 +181,20 @@ const Project = () => {
                   >
                     Blogs
                   </Link>
+                  
                 </div>
               </div>
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
               <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
+                  Certifications
+                </h2>
                 <div className="space-y-2">
                   <Link
                     href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit
+                    Revit 
                   </Link>
                   <Link
                     href="/designing"
@@ -226,7 +202,7 @@ const Project = () => {
                   >
                     Designing
                   </Link>
-                  <Link
+                       <Link
                     href="/control"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
@@ -242,4 +218,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Development;
