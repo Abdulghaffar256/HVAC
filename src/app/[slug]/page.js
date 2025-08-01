@@ -1,7 +1,14 @@
-import dynamic from "next/dynamic";
+import BlogDetails from "@/components/blogdetail/page";
+import siteMetadata from "@/utils/siteMetaData";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import VisitCourseButton from "@/components/buttons/page";
+import { PortableText } from "next-sanity";
+import Sidebar from "@/components/sidebar/page";
+import portableTextComponents from "@/components/yt/page";
 
-// Dynamically import the VisitCourseButton to ensure it is only rendered client-side
-const VisitCourseButton = dynamic(() => import("@/components/buttons/page"), { ssr: false });
 
 export default async function BlogPage({ params }) {
   const { slug } = params;
