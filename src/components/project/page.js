@@ -137,19 +137,8 @@ const Project = () => {
           {/* Downloads and Project Files Section */}
           <div className="w-full md:w-1/4 md:sticky top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
-              <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
-                Download Files Used in This Project
-              </h3>
-              {posts.map((post, index) => (
-                <div key={index} className="mb-4">
-                  <a
-                    href={`/projects/${post.slug}`}
-                    className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                  >
-                    Download Document: {post.title}
-                  </a>
-                </div>
-              ))}
+            
+            
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
 
               <div className="mt-8">
