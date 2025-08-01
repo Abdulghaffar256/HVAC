@@ -85,7 +85,7 @@ const Project = () => {
                 )}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="md:w-1/3">
-                    <Link href={`/projects/${post.slug}`}>
+                    <Link href={`/projects/${posts.slug}`}>
                       <div className="relative w-full pt-[75%]">
                         <Image
                           src={urlFor(post.image).url()}
@@ -98,7 +98,7 @@ const Project = () => {
                     </Link>
                   </div>
                   <div className="md:w-2/3">
-                    <Link href={`/projects/${post.slug}`}>
+                    <Link href={`/projects/${posts.slug}`}>
                       <h2 className="text-2xl font-bold hover:underline">
                         {post.title}
                       </h2>
@@ -112,7 +112,7 @@ const Project = () => {
                       })}
                     </span>
                     <p className="mt-2 text-gray-700">{post.description}</p>
-                    <Link href={`/projects/${post.slug}`}>
+                    <Link href={`/projects/${posts.slug}`}>
                       <button className="mt-4 px-4 py-2 bg-[#FF6F61] text-white rounded hover:bg-[#E65C50]">
                         Read More
                       </button>
@@ -153,7 +153,7 @@ const Project = () => {
                     />
                   </div>
                   <div className="ml-4">
-                    <Link href={`/projects/${post.slug}`}>
+                    <Link href={`/projects/${posts.slug}`}>
                       <h4 className="text-sm font-medium hover:underline text-gray-900 dark:text-gray-100">
                         {post.title.length > 20
                           ? `${post.title.slice(0, 20)}...`
