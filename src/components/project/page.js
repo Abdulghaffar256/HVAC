@@ -1,4 +1,3 @@
-
 "use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -14,7 +13,7 @@ const Project = () => {
 
   useEffect(() => {
     const query = `
-      *[_type=="Project"] | order(publishedAt desc) {
+      *[_type in ["Project", "project"]] | order(publishedAt desc) {
         description,
         "slug": slug.current,
         image,
@@ -125,55 +124,36 @@ const Project = () => {
             {posts.length > displayCount && (
               <div className="text-center mt-8">
                 <button
-  onClick={() => setDisplayCount(displayCount + 6)}
-  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
->
-  Load More
-  <span>&gt;</span>
-</button>
+                  onClick={() => setDisplayCount(displayCount + 6)}
+                  className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
+                >
+                  Load More
+                  <span>&gt;</span>
+                </button>
               </div>
             )}
           </div>
-          <div className="w-full md:w-1/4 md:sticky fixed md:top-0">
+
+          {/* Downloads and Project Files Section */}
+          <div className="w-full md:w-1/4 md:sticky top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
-                Latest Blogs
+                Download Files Used in This Project
               </h3>
-              {sidebarPosts.map((post) => (
-                <div
-                  key={post.slug}
-                  className="flex items-center mb-4 hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded"
-                >
-                  <div className="relative w-20 h-[60px]">
-                    <Image
-                      src={urlFor(post.image).url()}
-                      alt={post.title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded shadow-sm"
-                    />
-                  </div>
-                  <div className="ml-4">
-                    <Link href={`/projects/${post.slug}`}>
-                      <h4 className="text-sm font-medium hover:underline text-gray-900 dark:text-gray-100">
-                        {post.title.length > 20
-                          ? `${post.title.slice(0, 20)}...`
-                          : post.title}
-                      </h4>
-                    </Link>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </span>
-                  </div>
+              {posts.map((post, index) => (
+                <div key={index} className="mb-4">
+                  <a
+                    href={`/projects/${post.slug}`}
+                    className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                  >
+                    Download Document: {post.title}
+                  </a>
                 </div>
               ))}
-              <div className="mt-8  ">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                  Categories
-                </h2>
+              <hr className="my-8 border-gray-300 dark:border-gray-600" />
+
+              <div className="mt-8">
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
                 <div className="space-y-2">
                   <Link
                     href="/blogs"
@@ -181,20 +161,19 @@ const Project = () => {
                   >
                     Blogs
                   </Link>
-                  
                 </div>
               </div>
+
               <hr className="my-8 border-gray-300 dark:border-gray-600" />
+
               <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                  Certifications
-                </h2>
+                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
                 <div className="space-y-2">
                   <Link
                     href="/Revit"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
-                    Revit 
+                    Revit
                   </Link>
                   <Link
                     href="/designing"
@@ -202,7 +181,7 @@ const Project = () => {
                   >
                     Designing
                   </Link>
-                       <Link
+                  <Link
                     href="/control"
                     className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
                   >
