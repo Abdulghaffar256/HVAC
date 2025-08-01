@@ -11,27 +11,40 @@ const Project = () => {
   const [posts, setPosts] = useState([]);
   const [displayCount, setDisplayCount] = useState(5);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const query = `
-      *[_type=="Project"] | order(publishedAt desc) {
-        description,
-        "slug": slug.current,
-        image,
-        title,
-        tags,
-        publishedAt,
-        "author": author->name
+    const fetchData = async () => {
+      const query = `
+        *[_type=="Project"] | order(publishedAt desc) {
+          description,
+          "slug": slug.current,
+          image,
+          title,
+          tags,
+          publishedAt,
+          "author": author->name
+        }
+      `;
+      try {
+        const fetchedPosts = await client.fetch(query);
+        setPosts(fetchedPosts);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data: ", err);
+        setError("There was an issue fetching the posts. Please try again later.");
+        setLoading(false);
       }
-    `;
-    client.fetch(query).then((fetchedPosts) => {
-      setPosts(fetchedPosts);
-      setLoading(false);
-    });
+    };
+    fetchData();
   }, []);
 
   if (loading) {
     return <div className="text-center mt-16">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-16 text-red-500">{error}</div>;
   }
 
   const sidebarPosts = posts.slice(6, 10);
