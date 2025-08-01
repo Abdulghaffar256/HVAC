@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { PortableText } from "next-sanity";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
