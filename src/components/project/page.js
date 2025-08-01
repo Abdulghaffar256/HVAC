@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client"; // Ensure proper import of Sanity client
 
 const Project = () => {
   const [posts, setPosts] = useState([]);
@@ -20,61 +20,37 @@ const Project = () => {
         title,
         tags,
         publishedAt,
-        "author": author->name
+        "author": author->name,
+        documents,
+        googleDriveLinks
       }
     `;
-    client.fetch(query).then((fetchedPosts) => {
-      setPosts(fetchedPosts);
-      setLoading(false);
-    });
+    client.fetch(query)
+      .then((fetchedPosts) => {
+        setPosts(fetchedPosts);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching posts:", err);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {
     return <div className="text-center mt-16">Loading...</div>;
   }
 
-  const sidebarPosts = posts.slice(6, 10);
-
-  const schemas = posts.map((post) => ({
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    image: [urlFor(post.image).url()],
-    datePublished: post.publishedAt,
-    description: post.description,
-    url: `https://www.hvacdesigning.com/dev/${post.slug}`,
-    publisher: {
-      "@type": "Organization",
-      name: "Epics Solution",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.hvacdesigning.com/logo.png",
-      },
-    },
-    author: post.author
-      ? {
-          "@type": "Person",
-          name: post.author,
-        }
-      : undefined,
-  }));
+  const sidebarPosts = posts.slice(0, 4); // Display only the first 4 posts for the sidebar
 
   return (
     <>
       <Head>
-        <title>HVAC Blogs | HVAC DESIGNING </title>
-        <meta
-          name="description"
-          content="Explore the latest HVAC blogs and insights."
-        />
-        {schemas.map((schema, index) => (
-          <script key={index} type="application/ld+json">
-            {JSON.stringify(schema)}
-          </script>
-        ))}
+        <title>HVAC Blogs | HVAC DESIGNING</title>
+        <meta name="description" content="Explore the latest HVAC blogs and insights." />
       </Head>
       <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
         <div className="flex flex-col md:flex-row gap-8">
+          {/* Main content area */}
           <div className="w-full md:flex-1">
             {posts.slice(0, displayCount).map((post) => (
               <div key={post.slug} className="mb-12">
@@ -124,7 +100,7 @@ const Project = () => {
             {posts.length > displayCount && (
               <div className="text-center mt-8">
                 <button
-                  onClick={() => setDisplayCount(displayCount + 6)}
+                  onClick={() => setDisplayCount(displayCount + 5)}
                   className="px-6 py-2 bg-transparent border border-[#0052CC] text-[#0052CC] font-medium uppercase tracking-wider rounded-none flex items-center gap-2 hover:bg-[#0052CC] hover:text-white transition-colors duration-200"
                 >
                   Load More
@@ -134,13 +110,27 @@ const Project = () => {
             )}
           </div>
 
-          {/* Downloads and Project Files Section */}
+          {/* Sidebar with Download Links */}
           <div className="w-full md:w-1/4 md:sticky top-0">
             <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
-            
-            
-              <hr className="my-8 border-gray-300 dark:border-gray-600" />
+              <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">
+                Download Files Used in This Project
+              </h3>
+              {posts.map((post, index) => (
+                <div key={index} className="mb-4">
+                  {post.documents?.length > 0 && (
+                    <a
+                      href={`/projects/${post.slug}`}
+                      className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                    >
+                      Download Documents: {post.title}
+                    </a>
+                  )}
+                </div>
+              ))}
 
+              {/* Categories & Certifications */}
+              <hr className="my-8 border-gray-300 dark:border-gray-600" />
               <div className="mt-8">
                 <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
                 <div className="space-y-2">
