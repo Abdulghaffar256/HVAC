@@ -1,88 +1,7 @@
-import BlogDetails from "@/components/blogdetail/page";
-import siteMetadata from "@/utils/siteMetaData";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";
-import { PortableText } from "next-sanity";
-import Sidebar from "@/components/sidebar/page";
-import portableTextComponents from "@/components/yt/page";
+import dynamic from "next/dynamic";
 
-// Utility to escape JSON-LD values
-function escapeJsonLd(value) {
-  if (!value) return "";
-  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
-}
-
-export async function generateMetadata({ params }) {
-  const { slug } = params;
-
-  const query = `
-    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
-      title,
-      description,
-      "slug": slug.current,
-      image,
-      publishedAt
-    }
-  `;
-
-  try {
-    const blog = await client.fetch(query, { slug });
-
-    if (!blog) {
-      return null; // Let Next.js handle notFound in the page component
-    }
-
-    const imageUrl = blog.image
-      ? urlFor(blog.image).url()
-      : siteMetadata.socialBanner || "https://www.hvacdesigning.com/default-banner.jpg";
-
-    return {
-      title: blog.title,
-      description: blog.description,
-      openGraph: {
-        title: blog.title,
-        description: blog.description,
-        url: `${siteMetadata.siteUrl}/${slug}`,
-        images: imageUrl ? [{ url: imageUrl, alt: blog.title }] : [],
-        type: "article",
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: blog.title,
-        description: blog.description,
-        images: imageUrl ? [imageUrl] : [],
-      },
-      alternates: {
-        canonical: `${siteMetadata.siteUrl}/${slug}`,
-      },
-      structuredData: {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: escapeJsonLd(blog.title),
-        description: escapeJsonLd(blog.description),
-        image: imageUrl,
-        datePublished: blog.publishedAt ? new Date(blog.publishedAt).toISOString() : undefined,
-        url: `${siteMetadata.siteUrl}/${slug}`,
-        author: { "@type": "Person", name: "Epic Solution Team" },
-        publisher: {
-          "@type": "Organization",
-          name: "EPICS Solution",
-          logo: { "@type": "ImageObject", url: siteMetadata.logo },
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `${siteMetadata.siteUrl}/${slug}`,
-        },
-      },
-    };
-  } catch (err) {
-    console.error("Error generating metadata:", err);
-    return null; // Fallback if there is an error
-  }
-}
+// Dynamically import the VisitCourseButton to ensure it is only rendered client-side
+const VisitCourseButton = dynamic(() => import("@/components/buttons/page"), { ssr: false });
 
 export default async function BlogPage({ params }) {
   const { slug } = params;
@@ -110,7 +29,7 @@ export default async function BlogPage({ params }) {
       return null;
     }
 
-    // Dynamically extract headings from blog.content
+    // Extract headings from content
     const headings = [];
     if (Array.isArray(blog.content)) {
       blog.content.forEach((block, index) => {
@@ -166,7 +85,7 @@ export default async function BlogPage({ params }) {
           <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
 
-            {/* Downloads Section at the top of the article */}
+            {/* Downloads Section */}
             {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
