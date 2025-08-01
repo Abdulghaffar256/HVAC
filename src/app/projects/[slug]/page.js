@@ -79,8 +79,16 @@ export default async function BlogPage({ params }) {
       href,
       content,
       faq,
-      documents,
-      rarFiles
+      documents[]{
+        title,
+        description,
+        "url": asset->url
+      },
+      rarFiles[]{
+        title,
+        description,
+        "url": asset->url
+      }
     }
   `;
   try {
@@ -126,16 +134,6 @@ export default async function BlogPage({ params }) {
       },
     };
 
-    const { projectId, dataset } = client.config();
-
-    function getFileUrl(file, extensionOverride = null) {
-      if (!file?.asset?._ref) return null;
-      const ref = file.asset._ref;
-      const [, id, extension] = ref.split('-');
-      const finalExtension = extensionOverride || extension;
-      return `https://${projectId}.cdn.sanity.io/files/${dataset}/${id}.${finalExtension}?dl=${encodeURIComponent(file.title + '.' + finalExtension)}`;
-    }
-
     return (
       <article>
         <script
@@ -172,7 +170,7 @@ export default async function BlogPage({ params }) {
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
                 {blog.documents?.map((doc, index) => {
-                  const fileUrl = getFileUrl(doc);
+                  const fileUrl = doc.url ? `${doc.url}?dl=${encodeURIComponent(doc.title + '.pdf')}` : null;
                   if (!fileUrl) return null;
                   return (
                     <div key={`doc-${index}`} className="mb-4">
@@ -188,7 +186,7 @@ export default async function BlogPage({ params }) {
                   );
                 })}
                 {blog.rarFiles?.map((rar, index) => {
-                  const fileUrl = getFileUrl(rar, 'rar');
+                  const fileUrl = rar.url ? `${rar.url}?dl=${encodeURIComponent(rar.title + '.rar')}` : null;
                   if (!fileUrl) return null;
                   return (
                     <div key={`rar-${index}`} className="mb-4">
