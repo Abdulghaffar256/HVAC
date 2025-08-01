@@ -1,11 +1,14 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Head from "next/head";
-import { urlFor } from "@/sanity/lib/image";
+import BlogDetails from "@/components/blogdetail/page";
+import siteMetadata from "@/utils/siteMetaData";
 import { client } from "@/sanity/lib/client";
-import { notFound } from "next/navigation"; // Make sure 'notFound' is imported properly
+import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import VisitCourseButton from "@/components/buttons/page";
+import { PortableText } from "next-sanity";
+import Sidebar from "@/components/sidebar/page";
+import portableTextComponents from "@/components/yt/page";
+
 
 const BlogPage = ({ params }) => {
   const { slug } = params;
