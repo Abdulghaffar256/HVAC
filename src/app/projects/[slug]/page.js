@@ -1,14 +1,12 @@
-import BlogDetails from "@/components/blogdetail/page";
-import siteMetadata from "@/utils/siteMetaData";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";
-import { PortableText } from "next-sanity";
-import Sidebar from "@/components/sidebar/page";
-import portableTextComponents from "@/components/yt/page";
-
+import Head from "next/head";
+import { urlFor } from "@/sanity/lib/image";
+import { client } from "@/sanity/lib/client";
+import { PortableText } from "@portabletext/react"; // Correctly importing PortableText
+import { notFound } from "next/navigation"; // Ensure this import is correct
 
 const BlogPage = ({ params }) => {
   const { slug } = params;
@@ -210,33 +208,6 @@ const BlogPage = ({ params }) => {
               ) : (
                 <p>No content available</p>
               )}
-
-              {/* Categories & Certifications Section */}
-              <div className="mt-8">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
-                <div className="space-y-2">
-                  <Link href="/blogs" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Blogs
-                  </Link>
-                </div>
-              </div>
-
-              <hr className="my-8 border-gray-300 dark:border-gray-600" />
-
-              <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
-                <div className="space-y-2">
-                  <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Revit
-                  </Link>
-                  <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Designing
-                  </Link>
-                  <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Control
-                  </Link>
-                </div>
-              </div>
             </div>
           </div>
         </div>
