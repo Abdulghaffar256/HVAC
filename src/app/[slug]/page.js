@@ -17,7 +17,7 @@ export default async function BlogPage({ params }) {
       content,
       faq,
       documents,
-      rarFiles
+      googleDriveLinks
     }
   `;
 
@@ -86,9 +86,10 @@ export default async function BlogPage({ params }) {
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
 
             {/* Downloads Section */}
-            {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
+            {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
+                {/* Document Downloads */}
                 {blog.documents?.map((doc, index) => {
                   const fileUrl = getFileUrl(doc);
                   if (!fileUrl) return null;
@@ -97,7 +98,7 @@ export default async function BlogPage({ params }) {
                       <a
                         href={fileUrl}
                         download
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
                       >
                         Download Document: {doc.title}
                       </a>
@@ -105,18 +106,19 @@ export default async function BlogPage({ params }) {
                     </div>
                   );
                 })}
-                {blog.rarFiles?.map((rar, index) => {
-                  const fileUrl = getFileUrl(rar, 'rar');
-                  if (!fileUrl) return null;
+                {/* Google Drive Links */}
+                {blog.googleDriveLinks?.map((file, index) => {
                   return (
-                    <div key={`rar-${index}`} className="mb-4">
-                      <button
-                        onClick={() => window.open(fileUrl, '_blank')}
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    <div key={`file-${index}`} className="mb-4">
+                      <a
+                        href={file.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
                       >
-                        Download RAR File: {rar.title}
-                      </button>
-                      {rar.description && <p className="mt-2 text-gray-600">{rar.description}</p>}
+                        Download File: {file.title}
+                      </a>
+                      {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
                     </div>
                   );
                 })}
@@ -196,6 +198,7 @@ export default async function BlogPage({ params }) {
             ) : (
               <p>No content available</p>
             )}
+
             {/* FAQ Section */}
             {blog.faq && blog.faq.length > 0 && (
               <section className="mt-8">
