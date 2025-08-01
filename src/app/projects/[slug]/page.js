@@ -1,4 +1,3 @@
-
 import BlogDetails from "@/components/blogdetail/page";
 import siteMetadata from "@/utils/siteMetaData";
 import { client } from "@/sanity/lib/client";
@@ -20,7 +19,7 @@ export async function generateMetadata({ params }) {
   const { slug } = params;
 
   const query = `
-    *[ _type in ["AI", "project", "Project", "development", "dev"] && slug.current == $slug][0]{
+    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
       title,
       description,
       "slug": slug.current,
@@ -84,7 +83,7 @@ export default async function BlogPage({ params }) {
   const { slug } = params;
 
   const query = `
-    *[ _type in ["project", "Project", "equipment", "development", "dev"] && slug.current == $slug][0]{
+    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
       title,
       description,
       "slug": slug.current,
@@ -92,7 +91,9 @@ export default async function BlogPage({ params }) {
       publishedAt,
       href,
       content,
-      faq
+      faq,
+      documents,
+      rarFiles
     }
   `;
 
@@ -118,6 +119,16 @@ export default async function BlogPage({ params }) {
   }
 
   const imageUrl = blog.image ? urlFor(blog.image).url() : siteMetadata.socialBanner;
+
+  const { projectId, dataset } = client.config();
+
+  function getFileUrl(file, extensionOverride = null) {
+    if (!file?.asset?._ref) return null;
+    const ref = file.asset._ref;
+    const [, id, extension] = ref.split('-');
+    const finalExtension = extensionOverride || extension;
+    return `https://${projectId}.cdn.sanity.io/files/${dataset}/${id}.${finalExtension}?dl=${encodeURIComponent(file.title + '.' + finalExtension)}`;
+  }
 
   return (
     <article>
@@ -148,6 +159,45 @@ export default async function BlogPage({ params }) {
         {/* Blog Content */}
         <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
+
+          {/* Downloads Section at the top of the article */}
+          {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
+            <section className="mb-8">
+              <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
+              {blog.documents?.map((doc, index) => {
+                const fileUrl = getFileUrl(doc);
+                if (!fileUrl) return null;
+                return (
+                  <div key={`doc-${index}`} className="mb-4">
+                    <a
+                      href={fileUrl}
+                      download
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                      Download Document: {doc.title}
+                    </a>
+                    {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+                  </div>
+                );
+              })}
+              {blog.rarFiles?.map((rar, index) => {
+                const fileUrl = getFileUrl(rar, 'rar');
+                if (!fileUrl) return null;
+                return (
+                  <div key={`rar-${index}`} className="mb-4">
+                    <button
+                      onClick={() => window.open(fileUrl, '_blank')}
+                      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    >
+                      Download RAR File: {rar.title}
+                    </button>
+                    {rar.description && <p className="mt-2 text-gray-600">{rar.description}</p>}
+                  </div>
+                );
+              })}
+            </section>
+          )}
+
           {blog.content ? (
             <PortableText
               value={blog.content}
