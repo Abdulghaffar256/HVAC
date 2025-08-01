@@ -7,7 +7,7 @@ import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
 
-const Development = () => {
+const Project = () => {
   const [posts, setPosts] = useState([]);
   const [displayCount, setDisplayCount] = useState(5);
   const [loading, setLoading] = useState(true);
@@ -218,4 +218,4 @@ const Development = () => {
   );
 };
 
-export default Development;
+export default Project;
