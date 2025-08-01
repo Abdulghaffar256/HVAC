@@ -68,6 +68,13 @@ const Project = () => {
           name="description"
           content="Master HVAC design with theory, calculations, and hands-on projects. Learn load/ductwork sizing, industry tools, and energy-efficient solutions for residential/commercial systems. Ideal for engineers, technicians, and students. Enroll now!"
         />
+        <link
+          rel="preload"
+          href="https://hvac-sigma.vercel.app/fonts/CustomFont.woff2"
+          as="font"
+          type="font/woff2"
+          crossorigin="anonymous"
+        />
         {schemas.map((schema, index) => (
           <script key={index} type="application/ld+json">
             {JSON.stringify(schema)}
