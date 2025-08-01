@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity';
 
 export const projectType = defineType({
   name: 'project',
-  title: 'Project Management Post ',
+  title: 'Project Management Post',
   type: 'document',
   fields: [
     defineField({
@@ -76,7 +76,7 @@ export const projectType = defineType({
       description: 'Add the main content of the post here—paragraphs, headings, images, whatever works!',
       of: [
         {
-          type: 'block', // Rich text block type
+          type: 'block',
           styles: [
             { title: 'Normal', value: 'normal' },
             { title: 'Heading 1', value: 'h1' },
@@ -127,7 +127,7 @@ export const projectType = defineType({
         },
         {
           type: 'object',
-          name: 'customEmbed',  // Change this to a unique name
+          name: 'customEmbed',
           title: 'Custom Embed',
           fields: [{ title: 'Embed URL', name: 'embedUrl', type: 'url' }],
           preview: {
@@ -140,7 +140,7 @@ export const projectType = defineType({
         },
         // Add YouTube Video Schema Here
         {
-          name: 'youtubeVideo', // Unique name
+          name: 'youtubeVideo',
           title: 'YouTube Video',
           type: 'object',
           fields: [
@@ -187,7 +187,7 @@ export const projectType = defineType({
       of: [
         {
           type: 'object',
-          name: 'faqItem',  // Unique name to avoid conflicts
+          name: 'faqItem',
           title: 'FAQ Item',
           fields: [
             defineField({
@@ -242,55 +242,32 @@ export const projectType = defineType({
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
-      name: 'documents',
-      title: 'Documents',
+      name: 'googleDriveLinks',
+      title: 'Google Drive Links',
       type: 'array',
-      description: 'Upload supporting documents (e.g., PDF, DOCX)',
+      description: 'Add Google Drive links for downloadable content',
       of: [
         {
-          type: 'file',
-          options: {
-            accept: '.pdf,.doc,.docx,.txt',
-          },
+          type: 'object',
+          name: 'googleDriveLink',
+          title: 'Google Drive Link',
           fields: [
             defineField({
               name: 'title',
               type: 'string',
-              title: 'Document Title',
+              title: 'File Title',
               validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'link',
+              type: 'url',
+              title: 'Google Drive URL',
+              validation: (Rule) => Rule.uri({ scheme: ['https'] }).required(),
             }),
             defineField({
               name: 'description',
               type: 'text',
-              title: 'Document Description',
-              validation: (Rule) => Rule.max(200),
-            }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'rarFiles',
-      title: 'RAR Files',
-      type: 'array',
-      description: 'Upload compressed RAR files',
-      of: [
-        {
-          type: 'file',
-          options: {
-            accept: '.rar',
-          },
-          fields: [
-            defineField({
-              name: 'title',
-              type: 'string',
-              title: 'RAR File Title',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              type: 'text',
-              title: 'RAR File Description',
+              title: 'File Description',
               validation: (Rule) => Rule.max(200),
             }),
           ],
