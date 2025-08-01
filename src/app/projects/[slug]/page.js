@@ -186,12 +186,10 @@ export default async function BlogPage({ params }) {
                   );
                 })}
                 {blog.rarFiles?.map((rar, index) => {
-                  const fileUrl = rar.url ? `${rar.url}?dl=${encodeURIComponent(rar.title + '.rar')}` : null;
-                  if (!fileUrl) return null;
                   return (
                     <div key={`rar-${index}`} className="mb-4">
                       <a
-                        href={fileUrl}
+                        href="https://drive.google.com/file/d/1KzXbAPSVRx1jjCa3cF0VWvqR1CCnmjpr/view?usp=drive_link"
                         target="_blank"
                         rel="noopener noreferrer"
                         download
