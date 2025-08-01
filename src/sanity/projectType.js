@@ -274,5 +274,34 @@ export const projectType = defineType({
         },
       ],
     }),
+    // Documents for Project
+    defineField({
+      name: 'documents',
+      title: 'Documents',
+      type: 'array',
+      description: 'Upload supporting documents (e.g., PDF, DOCX)',
+      of: [
+        {
+          type: 'file',
+          options: {
+            accept: '.pdf,.doc,.docx,.txt',
+          },
+          fields: [
+            defineField({
+              name: 'title',
+              type: 'string',
+              title: 'Document Title',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              type: 'text',
+              title: 'Document Description',
+              validation: (Rule) => Rule.max(200),
+            }),
+          ],
+        },
+      ],
+    }),
   ],
 });
