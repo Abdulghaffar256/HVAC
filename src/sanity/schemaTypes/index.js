@@ -4,7 +4,7 @@ import { engType } from "../engType";
 import { devType } from "../devType";
 import { equipmentType } from "../equipmentType";
 import { projectType } from "../projectType";
-import { ProjectType } from "../projectType1";
+import { ProjectType } from "../ProjectType1";
 
 
 export const schema = {
