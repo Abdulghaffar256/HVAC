@@ -91,7 +91,7 @@ const BlogPage = ({ params }) => {
       <main className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 lg:px-32 bg-light dark:bg-dark text-dark dark:text-light transition-all ease">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Main content area */}
-          <div className="w-full md:flex-1">
+          <div className="w-full md:flex-3/4">
             <div className="relative w-full h-[70vh] bg-gray-800">
               {imageUrl && (
                 <Image
@@ -112,48 +112,6 @@ const BlogPage = ({ params }) => {
 
             <div className="mt-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
               <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
-
-              {/* Downloads Section */}
-              {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
-                <section className="mb-8">
-                  <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">Downloads</h2>
-
-                  {/* Document Downloads */}
-                  {blog.documents?.map((doc, index) => {
-                    const fileUrl = getFileUrl(doc);
-                    if (!fileUrl) return null;
-                    return (
-                      <div key={`doc-${index}`} className="mb-6">
-                        <a
-                          href={fileUrl}
-                          download
-                          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
-                        >
-                          Download Document: {doc.title}
-                        </a>
-                        {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
-                      </div>
-                    );
-                  })}
-
-                  {/* Google Drive Links */}
-                  {blog.googleDriveLinks?.map((file, index) => {
-                    return (
-                      <div key={`file-${index}`} className="mb-6">
-                        <a
-                          href={file.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
-                        >
-                          Download File: {file.title}
-                        </a>
-                        {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
-                      </div>
-                    );
-                  })}
-                </section>
-              )}
 
               {/* Content */}
               {blog.content ? (
@@ -221,8 +179,19 @@ const BlogPage = ({ params }) => {
                 <Link href="/blogs" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
                   Blogs
                 </Link>
+                {/* Add Download option for Categories */}
+                <div className="mb-6">
+                  <a
+                    href="/downloads/category"
+                    className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+                  >
+                    Download Category Files
+                  </a>
+                </div>
               </div>
+
               <hr className="my-4 border-gray-300 dark:border-gray-600" />
+
               <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">Certifications</h3>
               <div className="space-y-2">
                 <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
@@ -234,6 +203,15 @@ const BlogPage = ({ params }) => {
                 <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
                   Control
                 </Link>
+                {/* Add Download option for Certifications */}
+                <div className="mb-6">
+                  <a
+                    href="/downloads/certifications"
+                    className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+                  >
+                    Download Certification Files
+                  </a>
+                </div>
               </div>
             </div>
           </div>
