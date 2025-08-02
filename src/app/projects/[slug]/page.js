@@ -116,41 +116,44 @@ const BlogPage = ({ params }) => {
               {/* Downloads Section */}
               {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
                 <section className="mb-8">
-                  <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">Downloads</h2>
-                  {/* Document Downloads */}
-                  {blog.documents?.map((doc, index) => {
-                    const fileUrl = getFileUrl(doc);
-                    if (!fileUrl) return null;
-                    return (
-                      <div key={`doc-${index}`} className="mb-4">
-                        <a
-                          href={fileUrl}
-                          download
-                          className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                        >
-                          Download Document: {doc.title}
-                        </a>
-                        {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
-                      </div>
-                    );
-                  })}
-                  {/* Google Drive Links */}
-                  {blog.googleDriveLinks?.map((file, index) => {
-                    return (
-                      <div key={`file-${index}`} className="mb-4">
-                        <a
-                          href={file.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                        >
-                          Download File: {file.title}
-                        </a>
-                        {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
-                      </div>
-                    );
-                  })}
-                </section>
+  <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">Downloads</h2>
+
+  {/* Document Downloads */}
+  {blog.documents?.map((doc, index) => {
+    const fileUrl = getFileUrl(doc);
+    if (!fileUrl) return null;
+    return (
+      <div key={`doc-${index}`} className="mb-6"> {/* Added margin-bottom for spacing between buttons */}
+        <a
+          href={fileUrl}
+          download
+          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+        >
+          Download Document: {doc.title}
+        </a>
+        {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+      </div>
+    );
+  })}
+
+  {/* Google Drive Links */}
+  {blog.googleDriveLinks?.map((file, index) => {
+    return (
+      <div key={`file-${index}`} className="mb-6"> {/* Added margin-bottom for spacing between buttons */}
+        <a
+          href={file.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+        >
+          Download File: {file.title}
+        </a>
+        {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
+      </div>
+    );
+  })}
+</section>
+
               )}
 
               {/* Content */}
