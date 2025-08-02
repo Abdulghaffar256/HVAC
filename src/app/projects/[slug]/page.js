@@ -84,10 +84,10 @@ export default async function BlogPage({ params }) {
         description,
         "url": asset->url
       },
-      rarFiles[]{
+      googleDriveLinks[]{
         title,
         description,
-        "url": asset->url
+        link
       }
     }
   `;
@@ -174,14 +174,24 @@ export default async function BlogPage({ params }) {
                   if (!fileUrl) return null;
                   return (
                     <div key={`doc-${index}`} className="mb-4">
+                     {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
+              <section className="mb-8">
+                <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
+                {blog.googleDriveLinks?.map((file, index) => {
+                  return (
+                    <div key={`file-${index}`} className="mb-4">
                       <a
-                        href={fileUrl}
-                        download
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        href={file.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
                       >
-                        Download Document: {doc.title}
+                        Download File: {file.title}
                       </a>
-                      {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+                      {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
+                    </div>
+                  );
+                })}
                     </div>
                   );
                 })}
