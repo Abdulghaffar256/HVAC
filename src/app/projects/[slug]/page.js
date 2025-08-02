@@ -1,3 +1,5 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import { PortableText } from "next-sanity";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
@@ -79,24 +81,26 @@ export default async function BlogPage({ params }) {
       href,
       content,
       faq,
-      documents[]{
+      documents[] {
         title,
         description,
         "url": asset->url
       },
-      googleDriveLinks[]{
+      googleDriveLinks[] {
         title,
         description,
         link
       }
     }
   `;
+
   try {
     const blog = await client.fetch(query, { slug });
     if (!blog) {
       notFound();
       return null;
     }
+
     // Dynamically extract headings from blog.content
     const headings = [];
     if (Array.isArray(blog.content)) {
@@ -165,54 +169,8 @@ export default async function BlogPage({ params }) {
           {/* Blog Content */}
           <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
-            {/* Downloads Section */}
-            {(blog.documents?.length > 0 || blog.rarFiles?.length > 0) && (
-              <section className="mb-8">
-                <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
-                {blog.documents?.map((doc, index) => {
-                  const fileUrl = doc.url ? `${doc.url}?dl=${encodeURIComponent(doc.title + '.pdf')}` : null;
-                  if (!fileUrl) return null;
-                  return (
-                    <div key={`doc-${index}`} className="mb-4">
-                     {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
-              <section className="mb-8">
-                <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
-                {blog.googleDriveLinks?.map((file, index) => {
-                  return (
-                    <div key={`file-${index}`} className="mb-4">
-                      <a
-                        href={file.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                      >
-                        Download File: {file.title}
-                      </a>
-                      {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
-                    </div>
-                  );
-                })}
-                    </div>
-                  );
-                })}
-                {blog.rarFiles?.map((rar, index) => {
-                  return (
-                    <div key={`rar-${index}`} className="mb-4">
-                      <a
-                        href="https://drive.google.com/file/d/1KzXbAPSVRx1jjCa3cF0VWvqR1CCnmjpr/view?usp=drive_link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        download
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                      >
-                        Download RAR File: {rar.title}
-                      </a>
-                      {rar.description && <p className="mt-2 text-gray-600">{rar.description}</p>}
-                    </div>
-                  );
-                })}
-              </section>
-            )}
+
+            {/* Content */}
             {blog.content ? (
               <PortableText
                 value={blog.content}
@@ -264,30 +222,21 @@ export default async function BlogPage({ params }) {
                     ),
                   },
                   block: {
-                    h1: ({ children }) => {
-                      const id = slugify(children.join(""));
-                      return (
-                        <h1 id={id} className="text-4xl font-bold my-4">
-                          {children}
-                        </h1>
-                      );
-                    },
-                    h2: ({ children }) => {
-                      const id = slugify(children.join(""));
-                      return (
-                        <h2 id={id} className="text-3xl font-semibold my-4">
-                          {children}
-                        </h2>
-                      );
-                    },
-                    h3: ({ children }) => {
-                      const id = slugify(children.join(""));
-                      return (
-                        <h3 id={id} className="text-2xl font-medium my-3">
-                          {children}
-                        </h3>
-                      );
-                    },
+                    h1: ({ children }) => (
+                      <h1 id={`heading-${children.join("")}`} className="text-4xl font-bold my-4">
+                        {children}
+                      </h1>
+                    ),
+                    h2: ({ children }) => (
+                      <h2 id={`heading-${children.join("")}`} className="text-3xl font-semibold my-4">
+                        {children}
+                      </h2>
+                    ),
+                    h3: ({ children }) => (
+                      <h3 id={`heading-${children.join("")}`} className="text-2xl font-medium my-3">
+                        {children}
+                      </h3>
+                    ),
                     normal: ({ children }) => <p className="my-2">{children}</p>,
                   },
                 }}
@@ -295,29 +244,38 @@ export default async function BlogPage({ params }) {
             ) : (
               <p>No content available</p>
             )}
-            {/* FAQ Section */}
-            {blog.faq && blog.faq.length > 0 && (
-              <section className="mt-8">
-                <h2 className="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
-                {blog.faq.map((item, index) => (
-                  <div key={index} className="mb-6">
-                    <h3 className="text-xl font-medium text-blue-600">{item.question}</h3>
-                    <PortableText
-                      value={item.answer}
-                      components={{
-                        block: {
-                          normal: ({ children }) => <p className="mt-2">{children}</p>,
-                        },
-                        list: {
-                          bullet: ({ children }) => <ul className="list-disc ml-5 mt-2">{children}</ul>,
-                          number: ({ children }) => <ol className="list-decimal ml-5 mt-2">{children}</ol>,
-                        },
-                        listItem: {
-                          bullet: ({ children }) => <li>{children}</li>,
-                          number: ({ children }) => <li>{children}</li>,
-                        },
-                      }}
-                    />
+
+            {/* Download Section */}
+            {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
+              <section className="mb-8">
+                <h2 className="text-3xl font-semibold mb-4">Downloads</h2>
+                {blog.documents?.map((doc, index) => {
+                  const fileUrl = doc.url ? `${doc.url}?dl=${encodeURIComponent(doc.title + '.pdf')}` : null;
+                  if (!fileUrl) return null;
+                  return (
+                    <div key={`doc-${index}`} className="mb-4">
+                      <a
+                        href={fileUrl}
+                        download
+                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                      >
+                        Download Document: {doc.title}
+                      </a>
+                      {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+                    </div>
+                  );
+                })}
+                {blog.googleDriveLinks?.map((file, index) => (
+                  <div key={`file-${index}`} className="mb-4">
+                    <a
+                      href={file.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                    >
+                      Download File: {file.title}
+                    </a>
+                    {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
                   </div>
                 ))}
               </section>
