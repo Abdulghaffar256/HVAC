@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import { PortableText } from "next-sanity"; // Ensure this is imported correctly
+import { PortableText } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation"; // Ensure notFound is imported
@@ -116,44 +116,43 @@ const BlogPage = ({ params }) => {
               {/* Downloads Section */}
               {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
                 <section className="mb-8">
-  <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">Downloads</h2>
+                  <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">Downloads</h2>
 
-  {/* Document Downloads */}
-  {blog.documents?.map((doc, index) => {
-    const fileUrl = getFileUrl(doc);
-    if (!fileUrl) return null;
-    return (
-      <div key={`doc-${index}`} className="mb-6"> {/* Added margin-bottom for spacing between buttons */}
-        <a
-          href={fileUrl}
-          download
-          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
-        >
-          Download Document: {doc.title}
-        </a>
-        {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
-      </div>
-    );
-  })}
+                  {/* Document Downloads */}
+                  {blog.documents?.map((doc, index) => {
+                    const fileUrl = getFileUrl(doc);
+                    if (!fileUrl) return null;
+                    return (
+                      <div key={`doc-${index}`} className="mb-6">
+                        <a
+                          href={fileUrl}
+                          download
+                          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+                        >
+                          Download Document: {doc.title}
+                        </a>
+                        {doc.description && <p className="mt-2 text-gray-600">{doc.description}</p>}
+                      </div>
+                    );
+                  })}
 
-  {/* Google Drive Links */}
-  {blog.googleDriveLinks?.map((file, index) => {
-    return (
-      <div key={`file-${index}`} className="mb-6"> {/* Added margin-bottom for spacing between buttons */}
-        <a
-          href={file.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
-        >
-          Download File: {file.title}
-        </a>
-        {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
-      </div>
-    );
-  })}
-</section>
-
+                  {/* Google Drive Links */}
+                  {blog.googleDriveLinks?.map((file, index) => {
+                    return (
+                      <div key={`file-${index}`} className="mb-6">
+                        <a
+                          href={file.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-gradient-to-r from-[#FF6F61] to-[#E65C50] text-white px-8 py-4 rounded-lg shadow-xl hover:scale-105 hover:bg-[#E65C50] transition-all duration-300 transform"
+                        >
+                          Download File: {file.title}
+                        </a>
+                        {file.description && <p className="mt-2 text-gray-600">{file.description}</p>}
+                      </div>
+                    );
+                  })}
+                </section>
               )}
 
               {/* Content */}
@@ -211,31 +210,30 @@ const BlogPage = ({ params }) => {
                 <p>No content available</p>
               )}
 
-              {/* Categories & Certifications Section */}
-              <div className="mt-8">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
-                <div className="space-y-2">
-                  <Link href="/blogs" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Blogs
-                  </Link>
-                </div>
+            </div>
+          </div>
+
+          {/* Categories and Certifications Section */}
+          <div className="w-full md:w-1/4">
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+              <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">Categories</h3>
+              <div className="space-y-2">
+                <Link href="/blogs" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+                  Blogs
+                </Link>
               </div>
-
-              <hr className="my-8 border-gray-300 dark:border-gray-600" />
-
-              <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
-                <div className="space-y-2">
-                  <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Revit
-                  </Link>
-                  <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Designing
-                  </Link>
-                  <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                    Control
-                  </Link>
-                </div>
+              <hr className="my-4 border-gray-300 dark:border-gray-600" />
+              <h3 className="text-xl font-semibold mb-4 text-[#FF6F61]">Certifications</h3>
+              <div className="space-y-2">
+                <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+                  Revit
+                </Link>
+                <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+                  Designing
+                </Link>
+                <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+                  Control
+                </Link>
               </div>
             </div>
           </div>
