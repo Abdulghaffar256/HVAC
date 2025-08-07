@@ -74,7 +74,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogPage({ params }) {
   const { slug } = params;
 
-  const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{ title, description, "slug": slug.current, image, publishedAt, href, content, faq, documents, googleDriveLinks }`;
+  const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{ title, description, "slug": slug.current, image, publishedAt, href, content, faq, documents, googleDriveLinks, youtubeLinks }`;
 
   const blog = await client.fetch(query, { slug });
 
