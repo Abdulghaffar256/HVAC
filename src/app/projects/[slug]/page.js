@@ -14,9 +14,12 @@ function urlFor(source) {
   return urlBuilder(client).image(source);
 }
 
+function slugify(text) {
+  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+}
+
 export default async function BlogPage({ params }) {
   const { slug } = params;
-
   const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{
     title,
     description,
@@ -29,41 +32,39 @@ export default async function BlogPage({ params }) {
     documents,
     googleDriveLinks
   }`;
-
   const blog = await client.fetch(query, { slug });
-
   if (!blog) {
     notFound();
   }
-
   // Extract headings
   const headings = [];
   if (Array.isArray(blog.content)) {
     blog.content.forEach((block, index) => {
       if (block._type === "block" && block.style?.startsWith("h")) {
+        const text = block.children?.map((child) => child.text).join(" ") || "";
         headings.push({
-          text: block.children?.map((child) => child.text).join(" ") || "",
-          slug: `heading-${index}`,
+          text,
+          slug: slugify(text),
           level: parseInt(block.style.replace("h", ""), 10),
         });
       }
     });
   }
-
-  const imageUrl = blog.image
-    ? urlFor(blog.image).url()
-    : null;
-
+  const imageUrl = blog.image ? urlFor(blog.image).url() : null;
   const { projectId, dataset } = client.config();
 
   function getFileUrl(file, extensionOverride = null) {
     if (!file?.asset?._ref) return null;
     const ref = file.asset._ref;
-    const [, id, extension] = ref.split("-");
-    const finalExtension = extensionOverride || extension;
-    return `https://${projectId}.cdn.sanity.io/files/${dataset}/${id}.${finalExtension}?dl=${encodeURIComponent(
-      file.title + "." + finalExtension
-    )}`;
+    const parts = ref.split("-");
+    const type = parts[0];
+    if (type !== "file" && type !== "image") return null;
+    const ext = extensionOverride || parts[parts.length - 1];
+    const id = parts.slice(1, -1).join("-");
+    const assetType = type === "image" ? "images" : "files";
+    const baseUrl = `https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext}`;
+    const dlParam = file.title ? `?dl=${encodeURIComponent(file.title + "." + ext)}` : "";
+    return baseUrl + dlParam;
   }
 
   return (
@@ -83,18 +84,15 @@ export default async function BlogPage({ params }) {
           <VisitCourseButton href={blog.href} />
         </div>
       </div>
-
       <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
         {/* Main Content */}
         <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
-
           {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">
                 Downloads
               </h2>
-
               {blog.documents?.map((doc, index) => {
                 const fileUrl = getFileUrl(doc);
                 if (!fileUrl) return null;
@@ -113,7 +111,6 @@ export default async function BlogPage({ params }) {
                   </div>
                 );
               })}
-
               {blog.googleDriveLinks?.map((file, index) => (
                 <div key={`file-${index}`} className="mb-4">
                   <a
@@ -131,7 +128,6 @@ export default async function BlogPage({ params }) {
               ))}
             </section>
           )}
-
           {blog.content ? (
             <PortableText
               value={blog.content}
@@ -139,21 +135,30 @@ export default async function BlogPage({ params }) {
                 ...portableTextComponents,
                 types: {
                   ...portableTextComponents.types,
-                  image: ({ value }) => (
-                    <div className="my-4">
-                      <Image
-                        src={urlFor(value).url()}
-                        alt={value.alt || blog.title}
-                        width={800}
-                        height={400}
-                        className="w-full h-auto rounded"
-                        sizes="(max-width: 768px) 100vw, 800px"
-                      />
-                    </div>
-                  ),
+                  image: ({ value }) => {
+                    if (!value?.asset) return null;
+                    return (
+                      <div className="my-4">
+                        <Image
+                          src={urlFor(value).url()}
+                          alt={value.alt || blog.title}
+                          width={800}
+                          height={400}
+                          className="w-full h-auto rounded"
+                          sizes="(max-width: 768px) 100vw, 800px"
+                        />
+                      </div>
+                    );
+                  },
                   youtubeEmbed: ({ value }) => {
-                    if (!value?.videoUrl) return null;
-                    const videoId = new URL(value.videoUrl).searchParams.get("v");
+                    if (!value?.videoUrl || typeof value.videoUrl !== "string") return null;
+                    let videoId;
+                    try {
+                      const url = new URL(value.videoUrl);
+                      videoId = url.searchParams.get("v");
+                    } catch {
+                      return null;
+                    }
                     if (!videoId) return null;
                     return (
                       <div className="my-4">
@@ -183,21 +188,33 @@ export default async function BlogPage({ params }) {
                   ),
                 },
                 block: {
-                  h1: ({ children }) => (
-                    <h1 id={`heading-${children.join("")}`} className="text-4xl font-bold my-4">
-                      {children}
-                    </h1>
-                  ),
-                  h2: ({ children }) => (
-                    <h2 id={`heading-${children.join("")}`} className="text-3xl font-semibold my-4">
-                      {children}
-                    </h2>
-                  ),
-                  h3: ({ children }) => (
-                    <h3 id={`heading-${children.join("")}`} className="text-2xl font-medium my-3">
-                      {children}
-                    </h3>
-                  ),
+                  h1: ({ children, value }) => {
+                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const id = slugify(text);
+                    return (
+                      <h1 id={id} className="text-4xl font-bold my-4">
+                        {children}
+                      </h1>
+                    );
+                  },
+                  h2: ({ children, value }) => {
+                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const id = slugify(text);
+                    return (
+                      <h2 id={id} className="text-3xl font-semibold my-4">
+                        {children}
+                      </h2>
+                    );
+                  },
+                  h3: ({ children, value }) => {
+                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const id = slugify(text);
+                    return (
+                      <h3 id={id} className="text-2xl font-medium my-3">
+                        {children}
+                      </h3>
+                    );
+                  },
                   normal: ({ children }) => <p className="my-2">{children}</p>,
                 },
               }}
@@ -205,7 +222,6 @@ export default async function BlogPage({ params }) {
           ) : (
             <p>No content available</p>
           )}
-
           <div className="mt-8">
             <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
             <div className="space-y-2">
@@ -217,9 +233,7 @@ export default async function BlogPage({ params }) {
               </Link>
             </div>
           </div>
-
           <hr className="my-8 border-gray-300 dark:border-gray-600" />
-
           <div>
             <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
             <div className="space-y-2">
