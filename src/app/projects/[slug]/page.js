@@ -1,12 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-import { client, urlFor } from "@/lib/sanity";
-import { PortableText } from "@portabletext/react";
-import { notFound } from "next/navigation";
-import { siteMetadata } from "@/data/siteMetadata";
-import VisitCourseButton from "@/components/VisitCourseButton";
-import portableTextComponents from "@/components/portableTextComponents";
-
 export default async function BlogPage({ params }) {
   const { slug } = params;
 
