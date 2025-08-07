@@ -83,7 +83,7 @@ export default async function BlogPage({ params }) {
   const { slug } = params;
 
   const query = `
-    *[ _type in ["AI", "Eng", "equipment", "development", "dev"] && slug.current == $slug][0]{
+    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
       title,
       description,
       "slug": slug.current,
