@@ -239,6 +239,7 @@ export default async function BlogPage({ params }) {
             </section>
           )}
 
+          {/* YouTube Embed Links Section */}
           {youtubeLinks && youtubeLinks.length > 0 && (
             <section className="mt-8">
               <h2 className="text-3xl font-semibold mb-4">YouTube Videos</h2>
