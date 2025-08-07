@@ -11,6 +11,7 @@ export default async function BlogPage({ params }) {
       href,
       content,
       faq,
+      documents,
       googleDriveLinks
     }
   ;
