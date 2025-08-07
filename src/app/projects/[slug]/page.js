@@ -1,13 +1,13 @@
-import BlogDetails from "@/components/blogdetail/page";  // Ensure the path is correct
+import BlogDetails from "@/components/blogdetail/page"; // Ensure the path is correct
 import siteMetadata from "@/utils/siteMetaData";
-import { client } from "@/sanity/lib/client";  // Ensure the Sanity client is properly configured
-import { urlFor } from "@/sanity/lib/image";  // Ensure image URL generation is correct
+import { client } from "@/sanity/lib/client"; // Ensure the Sanity client is properly configured
+import { urlFor } from "@/sanity/lib/image"; // Ensure image URL generation is correct
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";  // Ensure this path is correct
+import VisitCourseButton from "@/components/buttons/page"; // Ensure this path is correct
 import { PortableText } from "next-sanity";
-import Sidebar from "@/components/sidebar/page";  // Ensure this path is correct
-import portableTextComponents from "@/components/yt/page";  // Ensure this path is correct
+import Sidebar from "@/components/sidebar/page"; // Ensure this path is correct
+import portableTextComponents from "@/components/yt/page"; // Ensure this path is correct
 
 // Escape JSON-LD values to prevent injection of unescaped characters
 function escapeJsonLd(value) {
@@ -19,15 +19,7 @@ function escapeJsonLd(value) {
 export async function generateMetadata({ params }) {
   const { slug } = params;
 
-  const query = `
-    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
-      title,
-      description,
-      "slug": slug.current,
-      image,
-      publishedAt
-    }
-  `;
+  const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{ title, description, "slug": slug.current, image, publishedAt, href, content, faq, documents, googleDriveLinks }`;
 
   const blog = await client.fetch(query, { slug });
 
@@ -82,18 +74,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogPage({ params }) {
   const { slug } = params;
 
-  const query = `
-    *[ _type in ["Project", "project"] && slug.current == $slug][0]{
-      title,
-      description,
-      "slug": slug.current,
-      image,
-      publishedAt,
-      href,
-      content,
-      faq
-    }
-  `;
+  const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{ title, description, "slug": slug.current, image, publishedAt, href, content, faq, documents, googleDriveLinks }`;
 
   const blog = await client.fetch(query, { slug });
 
@@ -117,6 +98,9 @@ export default async function BlogPage({ params }) {
 
   const imageUrl = blog.image ? urlFor(blog.image).url() : siteMetadata.socialBanner;
 
+  // Google Drive Link
+  const googleDriveLink = blog.googleDriveLinks || "https://drive.google.com"; // Ensure this field exists in your CMS
+
   return (
     <article>
       <div className="relative w-full h-[70vh] bg-gray-800">
@@ -131,7 +115,7 @@ export default async function BlogPage({ params }) {
         )}
         <div className="absolute inset-0 bg-gray-800/60" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white">
-          <VisitCourseButton href={blog.href} />
+          <VisitCourseButton href={googleDriveLink} /> {/* Link to Google Drive */}
         </div>
       </div>
 
