@@ -4,9 +4,8 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import urlBuilder from "@sanity/image-url";
-import VisitCourseButton from "@/components/ui/VisitCourseButton";
+import VisitCourseButton from "@/components/buttons";
 import Link from "next/link";
-import { portableTextComponents } from "@/components/PortableTextComponents";
 
 export const revalidate = 60;
 
