@@ -20,11 +20,11 @@ export default async function BlogPage({ params }) {
     const blog = await client.fetch(query, { slug });
 
     if (!blog) {
-      notFound();
+      notFound(); // Or redirect("/not-found")
       return null;
     }
 
-    // Extract headings from content
+    // Extract headings
     const headings = [];
     if (Array.isArray(blog.content)) {
       blog.content.forEach((block, index) => {
@@ -73,19 +73,16 @@ export default async function BlogPage({ params }) {
         </div>
 
         <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
-          {/* Blog Content */}
+          {/* Main Content */}
           <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
             <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
 
-            {/* Downloads Section */}
-            {(blog.documents?.length > 0 ||
-              blog.googleDriveLinks?.length > 0) && (
+            {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
               <section className="mb-8">
                 <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">
                   Downloads
                 </h2>
 
-                {/* Document Downloads */}
                 {blog.documents?.map((doc, index) => {
                   const fileUrl = getFileUrl(doc);
                   if (!fileUrl) return null;
@@ -105,24 +102,21 @@ export default async function BlogPage({ params }) {
                   );
                 })}
 
-                {/* Google Drive Links */}
-                {blog.googleDriveLinks?.map((file, index) => {
-                  return (
-                    <div key={`file-${index}`} className="mb-4">
-                      <a
-                        href={file.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                      >
-                        Download File: {file.title}
-                      </a>
-                      {file.description && (
-                        <p className="mt-2 text-gray-600">{file.description}</p>
-                      )}
-                    </div>
-                  );
-                })}
+                {blog.googleDriveLinks?.map((file, index) => (
+                  <div key={`file-${index}`} className="mb-4">
+                    <a
+                      href={file.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+                    >
+                      Download File: {file.title}
+                    </a>
+                    {file.description && (
+                      <p className="mt-2 text-gray-600">{file.description}</p>
+                    )}
+                  </div>
+                ))}
               </section>
             )}
 
@@ -147,9 +141,7 @@ export default async function BlogPage({ params }) {
                     ),
                     youtubeEmbed: ({ value }) => {
                       if (!value?.videoUrl) return null;
-                      const videoId = new URL(value.videoUrl).searchParams.get(
-                        "v"
-                      );
+                      const videoId = new URL(value.videoUrl).searchParams.get("v");
                       if (!videoId) return null;
                       return (
                         <div className="my-4">
@@ -180,32 +172,21 @@ export default async function BlogPage({ params }) {
                   },
                   block: {
                     h1: ({ children }) => (
-                      <h1
-                        id={`heading-${children.join("")}`}
-                        className="text-4xl font-bold my-4"
-                      >
+                      <h1 id={`heading-${children.join("")}`} className="text-4xl font-bold my-4">
                         {children}
                       </h1>
                     ),
                     h2: ({ children }) => (
-                      <h2
-                        id={`heading-${children.join("")}`}
-                        className="text-3xl font-semibold my-4"
-                      >
+                      <h2 id={`heading-${children.join("")}`} className="text-3xl font-semibold my-4">
                         {children}
                       </h2>
                     ),
                     h3: ({ children }) => (
-                      <h3
-                        id={`heading-${children.join("")}`}
-                        className="text-2xl font-medium my-3"
-                      >
+                      <h3 id={`heading-${children.join("")}`} className="text-2xl font-medium my-3">
                         {children}
                       </h3>
                     ),
-                    normal: ({ children }) => (
-                      <p className="my-2">{children}</p>
-                    ),
+                    normal: ({ children }) => <p className="my-2">{children}</p>,
                   },
                 }}
               />
@@ -213,11 +194,9 @@ export default async function BlogPage({ params }) {
               <p>No content available</p>
             )}
 
-            {/* Categories & Certifications Section */}
+            {/* Categories & Certifications */}
             <div className="mt-8">
-              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                Categories
-              </h2>
+              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
               <div className="space-y-2">
                 <Link
                   href="/blogs"
@@ -231,26 +210,15 @@ export default async function BlogPage({ params }) {
             <hr className="my-8 border-gray-300 dark:border-gray-600" />
 
             <div>
-              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
-                Certifications
-              </h2>
+              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
               <div className="space-y-2">
-                <Link
-                  href="/Revit"
-                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                >
+                <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
                   Revit
                 </Link>
-                <Link
-                  href="/designing"
-                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                >
+                <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
                   Designing
                 </Link>
-                <Link
-                  href="/control"
-                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                >
+                <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
                   Control
                 </Link>
               </div>
