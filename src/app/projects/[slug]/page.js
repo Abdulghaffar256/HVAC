@@ -1,12 +1,13 @@
-// src/app/projects/[slug]/page.js
-import { PortableText } from "@portabletext/react";
-import { client } from "@/lib/sanity";
-import { notFound } from "next/navigation";
+import BlogDetails from "@/components/blogdetail/page";
+import siteMetadata from "@/utils/siteMetaData";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
-import urlBuilder from "@sanity/image-url";
-import VisitCourseButton from "@/components/buttons";
-import Link from "next/link";
-
+import { notFound } from "next/navigation";
+import VisitCourseButton from "@/components/buttons/page";
+import { PortableText } from "next-sanity";
+import Sidebar from "@/components/sidebar/page";
+import portableTextComponents from "@/components/yt/page";
 export const revalidate = 60;
 
 function urlFor(source) {
