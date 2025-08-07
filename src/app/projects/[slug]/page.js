@@ -6,6 +6,7 @@ import Image from "next/image";
 import urlBuilder from "@sanity/image-url";
 import VisitCourseButton from "@/components/buttons";
 import Link from "next/link";
+import { portableTextComponents } from "@/components/PortableTextComponents";
 
 export const revalidate = 60;
 
@@ -31,7 +32,13 @@ export default async function BlogPage({ params }) {
     documents,
     googleDriveLinks
   }`;
-  const blog = await client.fetch(query, { slug });
+  let blog;
+  try {
+    blog = await client.fetch(query, { slug });
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    notFound();
+  }
   if (!blog) {
     notFound();
   }
