@@ -1,18 +1,14 @@
-import BlogDetails from "@/components/blogdetail/page";
-import siteMetadata from "@/utils/siteMetaData";
+// src/app/projects/[slug]/page.js
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";
+import VisitCourseButton from "@/components/buttons";
 import { PortableText } from "next-sanity";
-import Sidebar from "@/components/sidebar/page";
-import portableTextComponents from "@/components/yt/page";
-export const revalidate = 60;
+import portableTextComponents from "@/components/PortableTextComponents";
+import Link from "next/link";
 
-function urlFor(source) {
-  return urlBuilder(client).image(source);
-}
+export const revalidate = 60;
 
 function slugify(text) {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
