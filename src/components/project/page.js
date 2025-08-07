@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import { urlFor } from "@/sanity/lib/image";
-import { client } from "@/sanity/lib/client"; // Ensure proper import of Sanity client
+import { client } from "@/sanity/lib/client";
 
 const Project = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +12,7 @@ const Project = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const query = 
+    const query = `
       *[_type in ["Project", "project"]] | order(publishedAt desc) {
         description,
         "slug": slug.current,
@@ -24,7 +24,7 @@ const Project = () => {
         documents,
         googleDriveLinks
       }
-    ;
+    `;
     client.fetch(query)
       .then((fetchedPosts) => {
         setPosts(fetchedPosts);
@@ -40,8 +40,6 @@ const Project = () => {
     return <div className="text-center mt-16">Loading...</div>;
   }
 
-  const sidebarPosts = posts.slice(0, 4); // Display only the first 4 posts for the sidebar
-
   return (
     <>
       <Head>
@@ -54,14 +52,14 @@ const Project = () => {
           <div className="w-full md:flex-1">
             {posts.slice(0, displayCount).map((post) => (
               <div key={post.slug} className="mb-12">
-                {post.tags && post.tags.length > 0 && (
+                {post.tags?.length > 0 && (
                   <span className="uppercase text-[#FF6F61] font-semibold text-sm mb-2 block">
                     {post.tags[0]}
                   </span>
                 )}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="md:w-1/3">
-                    <Link href={/projects/${post.slug}}>
+                    <Link href={`/projects/${post.slug}`}>
                       <div className="relative w-full pt-[75%]">
                         <Image
                           src={urlFor(post.image).url()}
@@ -74,7 +72,7 @@ const Project = () => {
                     </Link>
                   </div>
                   <div className="md:w-2/3">
-                    <Link href={/projects/${post.slug}}>
+                    <Link href={`/projects/${post.slug}`}>
                       <h2 className="text-2xl font-bold hover:underline">
                         {post.title}
                       </h2>
@@ -88,7 +86,7 @@ const Project = () => {
                       })}
                     </span>
                     <p className="mt-2 text-gray-700">{post.description}</p>
-                    <Link href={/projects/${post.slug}}>
+                    <Link href={`/projects/${post.slug}`}>
                       <button className="mt-4 px-4 py-2 bg-[#FF6F61] text-white rounded hover:bg-[#E65C50]">
                         Read More
                       </button>
@@ -110,48 +108,41 @@ const Project = () => {
             )}
           </div>
 
-          {/* Sidebar with Download Links */}
-
-              ))}
-
-              {/* Categories & Certifications */}
-              <hr className="my-8 border-gray-300 dark:border-gray-600" />
-              <div className="mt-8">
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
-                <div className="space-y-2">
-                  <Link
-                    href="/blogs"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Blogs
-                  </Link>
-                </div>
+          {/* Sidebar with Categories & Certifications */}
+          <div className="w-full md:w-1/4 md:sticky top-0">
+            <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+              {/* Categories */}
+              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
+              <div className="space-y-2 mb-8">
+                <Link
+                  href="/blogs"
+                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                >
+                  Blogs
+                </Link>
               </div>
 
-              <hr className="my-8 border-gray-300 dark:border-gray-600" />
-
-              <div>
-                <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
-                <div className="space-y-2">
-                  <Link
-                    href="/Revit"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Revit
-                  </Link>
-                  <Link
-                    href="/designing"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Designing
-                  </Link>
-                  <Link
-                    href="/control"
-                    className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-                  >
-                    Control
-                  </Link>
-                </div>
+              {/* Certifications */}
+              <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
+              <div className="space-y-2">
+                <Link
+                  href="/Revit"
+                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                >
+                  Revit
+                </Link>
+                <Link
+                  href="/designing"
+                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                >
+                  Designing
+                </Link>
+                <Link
+                  href="/control"
+                  className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+                >
+                  Control
+                </Link>
               </div>
             </div>
           </div>
@@ -160,4 +151,6 @@ const Project = () => {
     </>
   );
 };
+
 export default Project;
+
