@@ -1,19 +1,21 @@
-import BlogDetails from "@/components/blogdetail/page";
+import BlogDetails from "@/components/blogdetail/page";  // Ensure the path is correct
 import siteMetadata from "@/utils/siteMetaData";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+import { client } from "@/sanity/lib/client";  // Ensure the Sanity client is properly configured
+import { urlFor } from "@/sanity/lib/image";  // Ensure image URL generation is correct
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";
+import VisitCourseButton from "@/components/buttons/page";  // Ensure this path is correct
 import { PortableText } from "next-sanity";
-import Sidebar from "@/components/sidebar/page";
-import portableTextComponents from "@/components/yt/page";
+import Sidebar from "@/components/sidebar/page";  // Ensure this path is correct
+import portableTextComponents from "@/components/yt/page";  // Ensure this path is correct
 
+// Escape JSON-LD values to prevent injection of unescaped characters
 function escapeJsonLd(value) {
   if (!value) return "";
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
 }
 
+// Generate metadata for the blog page
 export async function generateMetadata({ params }) {
   const { slug } = params;
 
@@ -76,6 +78,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// Default BlogPage component
 export default async function BlogPage({ params }) {
   const { slug } = params;
 
