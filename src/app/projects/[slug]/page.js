@@ -110,8 +110,6 @@ export default async function BlogPage({ params }) {
     </div>
   </aside>
 
-  {/* Main Content */}
-  <div className="col-span-12 lg:col-span-7 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
 
         {/* Main Content */}
               <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
