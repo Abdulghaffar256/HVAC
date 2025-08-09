@@ -3,15 +3,15 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import VisitCourseButton from "@/components/buttons/page";  // Ensure this path is correct
+import VisitCourseButton from "@/components/buttons/page";
 import { PortableText } from "next-sanity";
-import portableTextComponents from "@/components/yt/page";  // Ensure this path is correct
+import portableTextComponents from "@/components/yt/page";
 import Link from "next/link";
 
 export const revalidate = 60;
 
 function slugify(text) {
-  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+  return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 }
 
 export default async function BlogPage({ params }) {
@@ -28,6 +28,7 @@ export default async function BlogPage({ params }) {
     documents,
     googleDriveLinks
   }`;
+
   let blog;
   try {
     blog = await client.fetch(query, { slug });
@@ -38,10 +39,11 @@ export default async function BlogPage({ params }) {
   if (!blog) {
     notFound();
   }
+
   // Extract headings
   const headings = [];
   if (Array.isArray(blog.content)) {
-    blog.content.forEach((block, index) => {
+    blog.content.forEach((block) => {
       if (block._type === "block" && block.style?.startsWith("h")) {
         const text = block.children?.map((child) => child.text).join(" ") || "";
         headings.push({
@@ -52,22 +54,23 @@ export default async function BlogPage({ params }) {
       }
     });
   }
+
   const imageUrl = blog.image ? urlFor(blog.image).url() : null;
   const { projectId, dataset } = client.config();
 
-function getFileUrl(file, extensionOverride = null) {
-  if (!file?.asset?._ref) return null;
-  const ref = file.asset._ref;
-  const parts = ref.split("-");
-  const type = parts[0];
-  if (type !== "file" && type !== "image") return null;
-  const ext = extensionOverride || parts[parts.length - 1];
-  const id = parts.slice(1, -1).join("-");
-  const assetType = type === "image" ? "images" : "files";
-  const baseUrl = `https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext}`;
-  const dlParam = file.title ? `?dl=${encodeURIComponent(file.title + "." + ext)}` : "";
-  return baseUrl + dlParam;
-}
+  function getFileUrl(file, extensionOverride = null) {
+    if (!file?.asset?._ref) return null;
+    const ref = file.asset._ref;
+    const parts = ref.split("-");
+    const type = parts[0];
+    if (type !== "file" && type !== "image") return null;
+    const ext = extensionOverride || parts[parts.length - 1];
+    const id = parts.slice(1, -1).join("-");
+    const assetType = type === "image" ? "images" : "files";
+    const baseUrl = `https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext}`;
+    const dlParam = file.title ? `?dl=${encodeURIComponent(file.title + "." + ext)}` : "";
+    return baseUrl + dlParam;
+  }
 
   return (
     <article>
@@ -90,16 +93,18 @@ function getFileUrl(file, extensionOverride = null) {
         {/* Main Content */}
         <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
+
           {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
             <section className="mb-8">
               <h2 className="text-3xl font-semibold mb-4 text-[#FF6F61]">
                 Downloads
               </h2>
+
               {blog.documents?.map((doc, index) => {
                 const fileUrl = getFileUrl(doc);
                 if (!fileUrl) return null;
                 return (
-                  <div key={doc-${index}} className="mb-4">
+                  <div key={`doc-${index}`} className="mb-4">
                     <a
                       href={fileUrl}
                       download
@@ -113,8 +118,9 @@ function getFileUrl(file, extensionOverride = null) {
                   </div>
                 );
               })}
+
               {blog.googleDriveLinks?.map((file, index) => (
-                <div key={file-${index}} className="mb-4">
+                <div key={`file-${index}`} className="mb-4">
                   <a
                     href={file.link}
                     target="_blank"
@@ -130,6 +136,7 @@ function getFileUrl(file, extensionOverride = null) {
               ))}
             </section>
           )}
+
           {blog.content ? (
             <PortableText
               value={blog.content}
@@ -167,7 +174,7 @@ function getFileUrl(file, extensionOverride = null) {
                         <iframe
                           width={value.videoWidth || 800}
                           height={value.videoHeight || 450}
-                          src={https://www.youtube.com/embed/${videoId}}
+                          src={`https://www.youtube.com/embed/${videoId}`}
                           frameBorder="0"
                           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
@@ -224,6 +231,7 @@ function getFileUrl(file, extensionOverride = null) {
           ) : (
             <p>No content available</p>
           )}
+
           <div className="mt-8">
             <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
             <div className="space-y-2">
@@ -235,7 +243,9 @@ function getFileUrl(file, extensionOverride = null) {
               </Link>
             </div>
           </div>
+
           <hr className="my-8 border-gray-300 dark:border-gray-600" />
+
           <div>
             <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
             <div className="space-y-2">
@@ -253,5 +263,5 @@ function getFileUrl(file, extensionOverride = null) {
         </div>
       </div>
     </article>
-  );
+  );
 }
