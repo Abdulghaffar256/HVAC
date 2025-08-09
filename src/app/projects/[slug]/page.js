@@ -91,7 +91,8 @@ export default async function BlogPage({ params }) {
       </div>
       <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
         {/* Main Content */}
-        <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200">
+              <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
+
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
 
           {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
