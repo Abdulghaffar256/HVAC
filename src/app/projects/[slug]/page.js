@@ -130,128 +130,100 @@ export default async function BlogPage({ params }) {
               ))}
             </section>
           )}
-          {blog.content ? (
-            <PortableText
-              value={blog.content}
-              components={{
-                ...portableTextComponents,
-                types: {
-                  ...portableTextComponents.types,
-                  image: ({ value }) => {
-                    if (!value?.asset) return null;
-                    return (
-                      <div className="my-4">
-                        <Image
-                          src={urlFor(value).url()}
-                          alt={value.alt || blog.title}
-                          width={800}
-                          height={400}
-                          className="w-full h-auto rounded"
-                          sizes="(max-width: 768px) 100vw, 800px"
-                        />
-                      </div>
-                    );
-                  },
-                  youtubeEmbed: ({ value }) => {
-                    if (!value?.videoUrl || typeof value.videoUrl !== "string") return null;
-                    let videoId;
-                    try {
-                      const url = new URL(value.videoUrl);
-                      videoId = url.searchParams.get("v");
-                    } catch {
-                      return null;
-                    }
-                    if (!videoId) return null;
-                    return (
-                      <div className="my-4">
-                        <iframe
-                          width={value.videoWidth || 800}
-                          height={value.videoHeight || 450}
-                          src={`https://www.youtube.com/embed/${videoId}`}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="w-full rounded-lg shadow-md"
-                        />
-                      </div>
-                    );
-                  },
-                },
-                marks: {
-                  link: ({ value, children }) => (
-                    <a
-                      href={value?.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline hover:text-blue-800"
-                    >
-                      {children}
-                    </a>
-                  ),
-                },
-                block: {
-                  h1: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
-                    const id = slugify(text);
-                    return (
-                      <h1 id={id} className="text-4xl font-bold my-4">
-                        {children}
-                      </h1>
-                    );
-                  },
-                  h2: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
-                    const id = slugify(text);
-                    return (
-                      <h2 id={id} className="text-3xl font-semibold my-4">
-                        {children}
-                      </h2>
-                    );
-                  },
-                  h3: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
-                    const id = slugify(text);
-                    return (
-                      <h3 id={id} className="text-2xl font-medium my-3">
-                        {children}
-                      </h3>
-                    );
-                  },
-                  normal: ({ children }) => <p className="my-2">{children}</p>,
-                },
-              }}
-            />
-          ) : (
-            <p>No content available</p>
-          )}
-          <div className="mt-8">
-            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
-            <div className="space-y-2">
-              <Link
-                href="/blogs"
-                className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
-              >
-                Blogs
-              </Link>
-            </div>
-          </div>
-          <hr className="my-8 border-gray-300 dark:border-gray-600" />
-          <div>
-            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
-            <div className="space-y-2">
-              <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                Revit
-              </Link>
-              <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                Designing
-              </Link>
-              <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
-                Control
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
+        {blog.content ? (
+  <div className="text-center">
+    <PortableText
+      value={blog.content}
+      components={{
+        ...portableTextComponents,
+        // keep all your types, marks, and block definitions here
+        types: {
+          ...portableTextComponents.types,
+          image: ({ value }) => {
+            if (!value?.asset) return null;
+            return (
+              <div className="my-4">
+                <Image
+                  src={urlFor(value).url()}
+                  alt={value.alt || blog.title}
+                  width={800}
+                  height={400}
+                  className="w-full h-auto rounded"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              </div>
+            );
+          },
+          youtubeEmbed: ({ value }) => {
+            if (!value?.videoUrl || typeof value.videoUrl !== "string") return null;
+            let videoId;
+            try {
+              const url = new URL(value.videoUrl);
+              videoId = url.searchParams.get("v");
+            } catch {
+              return null;
+            }
+            if (!videoId) return null;
+            return (
+              <div className="my-4">
+                <iframe
+                  width={value.videoWidth || 800}
+                  height={value.videoHeight || 450}
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full rounded-lg shadow-md"
+                />
+              </div>
+            );
+          },
+        },
+        marks: {
+          link: ({ value, children }) => (
+            <a
+              href={value?.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline hover:text-blue-800"
+            >
+              {children}
+            </a>
+          ),
+        },
+        block: {
+          h1: ({ children, value }) => {
+            const text = value.children?.map((child) => child.text).join(" ") || "";
+            const id = slugify(text);
+            return (
+              <h1 id={id} className="text-4xl font-bold my-4">
+                {children}
+              </h1>
+            );
+          },
+          h2: ({ children, value }) => {
+            const text = value.children?.map((child) => child.text).join(" ") || "";
+            const id = slugify(text);
+            return (
+              <h2 id={id} className="text-3xl font-semibold my-4">
+                {children}
+              </h2>
+            );
+          },
+          h3: ({ children, value }) => {
+            const text = value.children?.map((child) => child.text).join(" ") || "";
+            const id = slugify(text);
+            return (
+              <h3 id={id} className="text-2xl font-medium my-3">
+                {children}
+              </h3>
+            );
+          },
+          normal: ({ children }) => <p className="my-2">{children}</p>,
+        },
+      }}
+    />
+  </div>
+) : (
+  <p>No content available</p>
+)}
