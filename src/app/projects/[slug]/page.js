@@ -90,6 +90,29 @@ export default async function BlogPage({ params }) {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
+  
+  {/* Sidebar for Headings */}
+  <aside className="hidden lg:block lg:col-span-3">
+    <div className="sticky top-20 space-y-2">
+      <h2 className="font-bold text-lg mb-2">On this page</h2>
+      <ul className="space-y-1">
+        {headings.map((h, index) => (
+          <li key={index} className={`ml-${(h.level - 1) * 2}`}>
+            <a
+              href={`#${h.slug}`}
+              className="text-gray-600 hover:text-[#FF6F61] text-sm"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </aside>
+
+  {/* Main Content */}
+  <div className="col-span-12 lg:col-span-7 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
+
         {/* Main Content */}
               <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
 
