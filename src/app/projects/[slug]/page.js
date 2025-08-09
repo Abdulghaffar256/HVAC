@@ -55,19 +55,19 @@ export default async function BlogPage({ params }) {
   const imageUrl = blog.image ? urlFor(blog.image).url() : null;
   const { projectId, dataset } = client.config();
 
-  function getFileUrl(file, extensionOverride = null) {
-    if (!file?.asset?._ref) return null;
-    const ref = file.asset._ref;
-    const parts = ref.split("-");
-    const type = parts[0];
-    if (type !== "file" && type !== "image") return null;
-    const ext = extensionOverride || parts[parts.length - 1];
-    const id = parts.slice(1, -1).join("-");
-    const assetType = type === "image" ? "images" : "files";
-    const baseUrl = https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext};
-    const dlParam = file.title ? ?dl=${encodeURIComponent(file.title + "." + ext)} : "";
-    return baseUrl + dlParam;
-  }
+function getFileUrl(file, extensionOverride = null) {
+  if (!file?.asset?._ref) return null;
+  const ref = file.asset._ref;
+  const parts = ref.split("-");
+  const type = parts[0];
+  if (type !== "file" && type !== "image") return null;
+  const ext = extensionOverride || parts[parts.length - 1];
+  const id = parts.slice(1, -1).join("-");
+  const assetType = type === "image" ? "images" : "files";
+  const baseUrl = `https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext}`;
+  const dlParam = file.title ? `?dl=${encodeURIComponent(file.title + "." + ext)}` : "";
+  return baseUrl + dlParam;
+}
 
   return (
     <article>
