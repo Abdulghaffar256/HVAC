@@ -22,6 +22,12 @@ const tools = [
     link: "/duct-sizer",
     description: "Determine optimal duct sizes based on airflow and velocity.",
   },
+  {
+    name: "CFM Calculator",
+    image: "/img/cfmcalc.jpg", // ✅ Add an image in /public/img
+    link: "/cfm-calculator",
+    description: "Calculate cubic feet per minute based on room volume and ACH.",
+  },
 ];
 
 export default function HvacToolsPage() {
