@@ -10,6 +10,19 @@ import Link from "next/link";
 
 export const revalidate = 60;
 
+// ✅ Added SEO metadata for Google
+export async function generateMetadata({ params }) {
+  const { slug } = params;
+  return {
+    title: `${slug.replace(/-/g, " ")} | HVAC Designing`,
+    description:
+      "Explore HVAC design projects, tutorials, and load calculators with detailed explanations.",
+    alternates: {
+      canonical: `https://www.hvacdesigning.com/${slug}`,
+    },
+  };
+}
+
 function slugify(text) {
   return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 }
@@ -45,7 +58,8 @@ export default async function BlogPage({ params }) {
   if (Array.isArray(blog.content)) {
     blog.content.forEach((block) => {
       if (block._type === "block" && block.style?.startsWith("h")) {
-        const text = block.children?.map((child) => child.text).join(" ") || "";
+        const text =
+          block.children?.map((child) => child.text).join(" ") || "";
         headings.push({
           text,
           slug: slugify(text),
@@ -68,7 +82,9 @@ export default async function BlogPage({ params }) {
     const id = parts.slice(1, -1).join("-");
     const assetType = type === "image" ? "images" : "files";
     const baseUrl = `https://cdn.sanity.io/${assetType}/${projectId}/${dataset}/${id}.${ext}`;
-    const dlParam = file.title ? `?dl=${encodeURIComponent(file.title + "." + ext)}` : "";
+    const dlParam = file.title
+      ? `?dl=${encodeURIComponent(file.title + "." + ext)}`
+      : "";
     return baseUrl + dlParam;
   }
 
@@ -90,30 +106,27 @@ export default async function BlogPage({ params }) {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-8 mt-8 px-5 md:px-10">
-  
-  {/* Sidebar for Headings */}
-  <aside className="hidden lg:block lg:col-span-3">
-    <div className="sticky top-20 space-y-2">
-      <h2 className="font-bold text-lg mb-2">On this page</h2>
-      <ul className="space-y-1">
-        {headings.map((h, index) => (
-          <li key={index} className={`ml-${(h.level - 1) * 2}`}>
-            <a
-              href={`#${h.slug}`}
-              className="text-gray-600 hover:text-[#FF6F61] text-sm"
-            >
-              {h.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </aside>
-
+        {/* Sidebar for Headings */}
+        <aside className="hidden lg:block lg:col-span-3">
+          <div className="sticky top-20 space-y-2">
+            <h2 className="font-bold text-lg mb-2">On this page</h2>
+            <ul className="space-y-1">
+              {headings.map((h, index) => (
+                <li key={index} className={`ml-${(h.level - 1) * 2}`}>
+                  <a
+                    href={`#${h.slug}`}
+                    className="text-gray-600 hover:text-[#FF6F61] text-sm"
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
 
         {/* Main Content */}
-              <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
-
+        <div className="col-span-12 lg:col-span-8 text-black bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-200 mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold mb-6">{blog.title}</h1>
 
           {(blog.documents?.length > 0 || blog.googleDriveLinks?.length > 0) && (
@@ -182,7 +195,11 @@ export default async function BlogPage({ params }) {
                     );
                   },
                   youtubeEmbed: ({ value }) => {
-                    if (!value?.videoUrl || typeof value.videoUrl !== "string") return null;
+                    if (
+                      !value?.videoUrl ||
+                      typeof value.videoUrl !== "string"
+                    )
+                      return null;
                     let videoId;
                     try {
                       const url = new URL(value.videoUrl);
@@ -220,7 +237,9 @@ export default async function BlogPage({ params }) {
                 },
                 block: {
                   h1: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const text =
+                      value.children?.map((child) => child.text).join(" ") ||
+                      "";
                     const id = slugify(text);
                     return (
                       <h1 id={id} className="text-4xl font-bold my-4">
@@ -229,7 +248,9 @@ export default async function BlogPage({ params }) {
                     );
                   },
                   h2: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const text =
+                      value.children?.map((child) => child.text).join(" ") ||
+                      "";
                     const id = slugify(text);
                     return (
                       <h2 id={id} className="text-3xl font-semibold my-4">
@@ -238,7 +259,9 @@ export default async function BlogPage({ params }) {
                     );
                   },
                   h3: ({ children, value }) => {
-                    const text = value.children?.map((child) => child.text).join(" ") || "";
+                    const text =
+                      value.children?.map((child) => child.text).join(" ") ||
+                      "";
                     const id = slugify(text);
                     return (
                       <h3 id={id} className="text-2xl font-medium my-3">
@@ -255,7 +278,9 @@ export default async function BlogPage({ params }) {
           )}
 
           <div className="mt-8">
-            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Categories</h2>
+            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
+              Categories
+            </h2>
             <div className="space-y-2">
               <Link
                 href="/blogs"
@@ -269,15 +294,26 @@ export default async function BlogPage({ params }) {
           <hr className="my-8 border-gray-300 dark:border-gray-600" />
 
           <div>
-            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">Certifications</h2>
+            <h2 className="text-lg font-bold mb-4 text-[#FF6F61]">
+              Certifications
+            </h2>
             <div className="space-y-2">
-              <Link href="/Revit" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+              <Link
+                href="/Revit"
+                className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+              >
                 Revit
               </Link>
-              <Link href="/designing" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+              <Link
+                href="/designing"
+                className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+              >
                 Designing
               </Link>
-              <Link href="/control" className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]">
+              <Link
+                href="/control"
+                className="block text-gray-700 dark:text-gray-300 hover:text-[#FF6F61]"
+              >
                 Control
               </Link>
             </div>
