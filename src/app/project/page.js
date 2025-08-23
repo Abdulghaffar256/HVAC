@@ -2,29 +2,53 @@ import Project from "@/components/project/page";
 
 // ✅ Use Next.js Metadata API for SEO (App Router compatible)
 export const metadata = {
-  title: "HVAC Project",
-  description: "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
+  title: "HVAC Project | HVAC Designing",
+  description:
+    "Explore the best online courses related to HVAC control. Learn practical HVAC designing, control systems, and hands-on projects for free.",
+  keywords: [
+    "HVAC",
+    "HVAC project",
+    "HVAC controls",
+    "HVAC design",
+    "HVAC designing",
+    "energy efficient HVAC",
+    "HVAC practical project",
+    "HVAC online courses",
+  ],
+  authors: [{ name: "HVAC Designing" }],
+  alternates: {
+    canonical: "https://www.hvacdesigning.com/project",
+  },
   openGraph: {
     title: "HVAC Project - Learn HVAC Controls Free",
-    description: "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
+    description:
+      "Best online courses related to HVAC control. Learn HVAC designing and controls with practical hands-on projects for free.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Designing",
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "https://www.hvacdesigning.com/social-banner.png",
         width: 1200,
         height: 630,
-        alt: "HVAC Project Banner",
+        alt: "HVAC Project Banner - Learn HVAC Controls Free",
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "HVAC Project - Learn HVAC Controls Free",
-    description: "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
+    description:
+      "Join the best online courses related to HVAC control. Learn about HVAC controls and energy-efficient system designing for free.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
+    creator: "@hvacdesigning",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  themeColor: "#ffffff",
 };
 
 export default function Eng() {
@@ -44,4 +68,3 @@ export default function Eng() {
     </div>
   );
 }
-
