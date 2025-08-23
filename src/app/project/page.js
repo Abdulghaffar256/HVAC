@@ -1,15 +1,15 @@
 import Project from "@/components/project/page";
+import Image from "next/image";
 
+// ✅ Page Metadata using Next.js 13 Metadata API
 export const metadata = {
-  title: {
-    absolute: "HVAC Project", // Prevents "| HVAC Designing" suffix
-  },
+  title: "HVAC Project",
   description:
-    "Join the best online courses related to HVAC projects. Learn about real-world HVAC applications and controls for free.",
+    "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
   openGraph: {
-    title: "HVAC Project",
+    title: "HVAC Project - Learn HVAC Controls Free",
     description:
-      "Learn about HVAC projects, real-world applications, and controls for free.",
+      "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Project",
     images: [
@@ -20,14 +20,13 @@ export const metadata = {
         alt: "HVAC Project Banner",
       },
     ],
-    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Project",
+    title: "HVAC Project - Learn HVAC Controls Free",
     description:
-      "Master HVAC projects with hands-on tutorials and resources — free and beginner-friendly.",
+      "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
   },
 };
@@ -35,14 +34,14 @@ export const metadata = {
 export default function Eng() {
   return (
     <div className="mt-8">
-      {/* Page Heading */}
+      {/* Header Section */}
       <div className="flex justify-center items-center font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
-        <h1>HVAC / Project</h1>
+        <h1>HVAC Designing Practical Project</h1>
       </div>
 
-      {/* Page Content */}
+      {/* Content Section */}
       <div className="mt-6">
-        <article style={{ minHeight: "300px", width: "100%" }}>
+        <article className="w-full" style={{ minHeight: "300px" }}>
           <Project />
         </article>
       </div>
