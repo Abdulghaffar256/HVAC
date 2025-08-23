@@ -13,7 +13,7 @@ export const metadata = {
     description:
       "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
     url: "https://www.hvacdesigning.com/project",
-    siteName: "HVAC Designing",
+    siteName: "HVAC Designing|project",
     images: [
       {
         url: "https://www.hvacdesigning.com/social-banner.png",
