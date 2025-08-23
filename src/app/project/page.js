@@ -1,75 +1,54 @@
-"use client";
-
 import React from "react";
 import Project from "@/components/project/page";
-import Head from "next/head";
 import Link from "next/link";
+
+// ✅ Page-specific metadata (Next.js 13+)
+export const metadata = {
+  title: "HVAC Project",
+  description:
+    "Best online courses related to HVAC control. Learn HVAC Designing Practical Projects step-by-step for free.",
+  openGraph: {
+    title: "HVAC Project",
+    description:
+      "Explore HVAC Designing Practical Projects with detailed, step-by-step guidance — perfect for engineers and students.",
+    url: "https://www.hvacdesigning.com/project",
+    images: ["https://www.hvacdesigning.com/social-banner.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HVAC Project",
+    description:
+      "Learn HVAC Designing Practical Projects with free tutorials and online guidance.",
+    images: ["https://www.hvacdesigning.com/social-banner.png"],
+  },
+};
 
 export default function Eng() {
   return (
-    <>
-      <Head>
-        <title>HVAC Project</title>
-
-        {/* Open Graph Meta Tags */}
-        <meta
-          property="og:title"
-          content="Best online courses related to HVAC control - Learn HVAC controls free"
-        />
-        <meta
-          property="og:description"
-          content="Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free."
-        />
-        <meta
-          property="og:image"
-          content="https://www.hvacdesigning.com/social-banner.png"
-        />
-        <meta
-          property="og:url"
-          content="https://www.hvacdesigning.com/project"
-        />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Best online courses related to HVAC control - Learn HVAC controls free"
-        />
-        <meta
-          name="twitter:description"
-          content="Join the best online courses related to HVAC control. Learn about HVAC controls for free."
-        />
-        <meta
-          name="twitter:image"
-          content="https://www.hvacdesigning.com/social-banner.png"
-        />
-      </Head>
-
-      <div className="mt-8">
-        {/* Header */}
-        <div className="flex justify-center align-middle font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
-          <h1>HVAC Designing Practical Project</h1>
-        </div>
-
-        {/* Project Component wrapped in Link with hover effects */}
-        <div className="mt-6">
-          <article style={{ minHeight: "300px", width: "100%" }}>
-            <Link
-              href="/project-details" // 👈 change this to your actual project detail route
-              className="relative block group rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition duration-300 border-2 border-transparent hover:border-blue-600 hover:ring-2 hover:ring-blue-500"
-            >
-              {/* Project content */}
-              <div className="relative z-10">
-                <Project />
-              </div>
-
-              {/* Transparent hover overlay */}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-white/10 transition-all duration-300 z-0" />
-            </Link>
-          </article>
-        </div>
+    <div className="mt-8">
+      {/* Heading */}
+      <div className="flex justify-center align-middle font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
+        <h1>HVAC Designing Practical Project</h1>
       </div>
-    </>
+
+      {/* Project Section */}
+      <div className="mt-6">
+        <article style={{ minHeight: "300px", width: "100%" }}>
+          <Link
+            href="/project-details" // Adjust route as needed
+            className="relative block group rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition duration-300 border-2 border-transparent hover:border-blue-600 hover:ring-2 hover:ring-blue-500"
+          >
+            {/* Project Component */}
+            <div className="relative z-10">
+              <Project />
+            </div>
+
+            {/* Hover Overlay */}
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-white/10 transition-all duration-300 z-0" />
+          </Link>
+        </article>
+      </div>
+    </div>
   );
 }
