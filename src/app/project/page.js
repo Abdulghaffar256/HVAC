@@ -1,32 +1,19 @@
 // app/project/page.js
 
 import Project from "@/components/project/page";
+import Image from "next/image";
 
+// ✅ Metadata API for Next.js App Router
 export const metadata = {
-  title: "HVAC Project | HVAC Designing",
+  title: "HVAC / Project", // <-- UPDATED TITLE
   description:
-    "Explore HVAC projects and learn HVAC control systems with hands-on tutorials. Join free courses to master energy-efficient HVAC design.",
-  keywords: [
-    "HVAC",
-    "HVAC project",
-    "HVAC controls",
-    "HVAC design",
-    "energy efficient HVAC",
-    "HVAC practical project",
-    "HVAC online courses",
-  ],
-  authors: [{ name: "HVAC Designing" }],
-  alternates: {
-    canonical: "https://www.hvacdesigning.com/project",
-  },
+    "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
   openGraph: {
-    title: "HVAC Project | HVAC Designing",
+    title: "HVAC / Project - Learn HVAC Controls Free",
     description:
-      "Learn practical HVAC system design and controls with this free project-based course.",
+      "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Designing",
-    locale: "en_US",
-    type: "website",
     images: [
       {
         url: "https://www.hvacdesigning.com/social-banner.png",
@@ -35,20 +22,15 @@ export const metadata = {
         alt: "HVAC Project Banner",
       },
     ],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Project | HVAC Designing",
+    title: "HVAC / Project - Learn HVAC Controls Free",
     description:
-      "Hands-on HVAC design and controls tutorials. Learn for free with project-based content.",
+      "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
-    creator: "@hvacdesigning",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  themeColor: "#ffffff",
 };
 
 export default function Eng() {
@@ -56,7 +38,7 @@ export default function Eng() {
     <div className="mt-8">
       {/* Header */}
       <div className="flex justify-center align-middle font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
-        <h1>HVAC Designing Practical Project</h1>
+        <h1>HVAC / Project</h1> {/* <-- UPDATED HEADING */}
       </div>
 
       {/* Project Component */}
