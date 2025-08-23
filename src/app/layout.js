@@ -18,10 +18,13 @@ const manrope = Manrope({
   variable: "--font-mr",
 });
 
-// Global metadata (default values)
+// Default Metadata with Title Template
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
-  title: siteMetadata.title, // Only site name by default (no template)
+  title: {
+    template: `%s | ${siteMetadata.title}`, // Page Title | HVAC Designing
+    default: siteMetadata.title,           // Default: HVAC Designing
+  },
   description: siteMetadata.description,
   openGraph: {
     title: siteMetadata.title,
@@ -55,14 +58,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Static Meta */}
+        {/* Basic SEO */}
         <meta name="description" content={siteMetadata.description} />
+
+        {/* Verification */}
         <meta
           name="google-site-verification"
           content="isxs4KD5kyGRSUtKJdLnv4P5uLyId4vVwG4u7LzzSOU"
         />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Preload Fonts */}
         <link
           rel="preload"
           href="/fonts/CustomFont.woff2"
