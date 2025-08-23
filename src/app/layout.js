@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import siteMetadata from "@/utils/siteMetaData";
 
-// Define fonts
+// Load fonts
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -18,13 +18,10 @@ const manrope = Manrope({
   variable: "--font-mr",
 });
 
-// Metadata configuration
+// Global metadata (default values)
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
-  title: {
-    template: `%s | ${siteMetadata.title}`,
-    default: siteMetadata.title,
-  },
+  title: siteMetadata.title, // Only site name by default (no template)
   description: siteMetadata.description,
   openGraph: {
     title: siteMetadata.title,
@@ -34,6 +31,11 @@ export const metadata = {
     images: [siteMetadata.socialBanner],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteMetadata.title,
+    images: [siteMetadata.socialBanner],
   },
   robots: {
     index: true,
@@ -47,22 +49,14 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
-  twitter: {
-    card: "summary_large_image",
-    title: siteMetadata.title,
-    images: [siteMetadata.socialBanner],
-  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-  <head>
-  <meta
-    name="google-site-verification"
-    content="isxs4KD5kyGRSUtKJdLnv4P5uLyId4vVwG4u7LzzSOU"
-  />
-
+      <head>
+        {/* Static Meta */}
+        <meta name="description" content={siteMetadata.description} />
         <meta
           name="google-site-verification"
           content="isxs4KD5kyGRSUtKJdLnv4P5uLyId4vVwG4u7LzzSOU"
