@@ -1,4 +1,5 @@
 import Project from "@/components/project/page";
+import Script from "next/script";
 
 // ✅ Use Next.js Metadata API for SEO (App Router compatible)
 export const metadata = {
@@ -54,6 +55,27 @@ export const metadata = {
 export default function Eng() {
   return (
     <div className="mt-8">
+      {/* Inject JSON-LD Schema for better indexing */}
+      <Script id="ld-json" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "HVAC Project",
+          url: "https://www.hvacdesigning.com/project",
+          description:
+            "Explore the best online courses related to HVAC control. Learn practical HVAC designing, control systems, and hands-on projects for free.",
+          publisher: {
+            "@type": "Organization",
+            name: "HVAC Designing",
+            url: "https://www.hvacdesigning.com",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.hvacdesigning.com/logo.png",
+            },
+          },
+        })}
+      </Script>
+
       {/* Header */}
       <div className="flex justify-center align-middle font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
         <h1>HVAC Designing Practical Project</h1>
