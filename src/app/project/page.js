@@ -1,36 +1,53 @@
-// app/project/page.js (or wherever your route is)
-
 import Project from "@/components/project/page";
-import Image from "next/image";
 
-// ✅ Metadata API (better than next/head)
+// ✅ Enhanced Metadata for SEO
 export const metadata = {
-  title: "HVAC Project",
+  title: "HVAC Designing Practical Project | HVAC Project",
   description:
-    "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
+    "Join the best online courses related to HVAC control. Learn HVAC designing, energy-efficient systems, and practical controls for free.",
+  keywords: [
+    "HVAC",
+    "HVAC project",
+    "HVAC controls",
+    "HVAC design",
+    "energy efficient HVAC",
+    "HVAC practical project",
+    "HVAC online courses",
+  ],
+  authors: [{ name: "HVAC Designing" }],
+  alternates: {
+    canonical: "https://www.hvacdesigning.com/project",
+  },
   openGraph: {
-    title: "HVAC Project - Learn HVAC Controls Free",
+    title: "HVAC Designing Practical Project",
     description:
-      "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
+      "Learn HVAC controls, design, and practical applications with our hands-on projects. Free resources for students and professionals.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Designing",
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "https://www.hvacdesigning.com/social-banner.png",
         width: 1200,
         height: 630,
-        alt: "HVAC Project Banner",
+        alt: "HVAC Project Banner - Learn HVAC Controls Free",
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Project - Learn HVAC Controls Free",
+    title: "HVAC Designing Practical Project",
     description:
-      "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
+      "Hands-on HVAC control and design projects. Learn practical skills with free online resources.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
+    creator: "@hvacdesigning",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  themeColor: "#ffffff",
 };
 
 export default function Eng() {
