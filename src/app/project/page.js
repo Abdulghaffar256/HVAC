@@ -1,10 +1,11 @@
+// app/project/page.js
+
 import Project from "@/components/project/page";
 
-// ✅ Enhanced Metadata for SEO
 export const metadata = {
-  title: "HVAC Designing Practical Project | HVAC Project",
+  title: "HVAC Project | HVAC Designing",
   description:
-    "Join the best online courses related to HVAC control. Learn HVAC designing, energy-efficient systems, and practical controls for free.",
+    "Explore HVAC projects and learn HVAC control systems with hands-on tutorials. Join free courses to master energy-efficient HVAC design.",
   keywords: [
     "HVAC",
     "HVAC project",
@@ -19,9 +20,9 @@ export const metadata = {
     canonical: "https://www.hvacdesigning.com/project",
   },
   openGraph: {
-    title: "HVAC Designing Practical Project",
+    title: "HVAC Project | HVAC Designing",
     description:
-      "Learn HVAC controls, design, and practical applications with our hands-on projects. Free resources for students and professionals.",
+      "Learn practical HVAC system design and controls with this free project-based course.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Designing",
     locale: "en_US",
@@ -31,15 +32,15 @@ export const metadata = {
         url: "https://www.hvacdesigning.com/social-banner.png",
         width: 1200,
         height: 630,
-        alt: "HVAC Project Banner - Learn HVAC Controls Free",
+        alt: "HVAC Project Banner",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Designing Practical Project",
+    title: "HVAC Project | HVAC Designing",
     description:
-      "Hands-on HVAC control and design projects. Learn practical skills with free online resources.",
+      "Hands-on HVAC design and controls tutorials. Learn for free with project-based content.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
     creator: "@hvacdesigning",
   },
