@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Project from "@/components/project/page";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function Eng() {
   return (
@@ -49,10 +52,21 @@ export default function Eng() {
           <h1>HVAC Designing Practical Project</h1>
         </div>
 
-        {/* Project Component */}
+        {/* Project Component wrapped in Link with hover effects */}
         <div className="mt-6">
           <article style={{ minHeight: "300px", width: "100%" }}>
-            <Project />
+            <Link
+              href="/project-details" // 👈 change this to your actual project detail route
+              className="relative block group rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition duration-300 border-2 border-transparent hover:border-blue-600 hover:ring-2 hover:ring-blue-500"
+            >
+              {/* Project content */}
+              <div className="relative z-10">
+                <Project />
+              </div>
+
+              {/* Transparent hover overlay */}
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-white/10 transition-all duration-300 z-0" />
+            </Link>
           </article>
         </div>
       </div>
