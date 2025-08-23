@@ -5,7 +5,7 @@ export default function Eng() {
   return (
     <>
       <Head>
-        <title>HVAC / Project</title>
+        <title>HVAC | Project</title>
         <meta
           name="description"
           content="Join the best online courses related to HVAC control. Learn about HVAC controls for free."
