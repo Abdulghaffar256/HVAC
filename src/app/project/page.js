@@ -1,81 +1,41 @@
-import Project from "@/components/project/page";
-import Script from "next/script";
+// app/project/page.js (or wherever your route is)
 
-// ✅ Use Next.js Metadata API for SEO (App Router compatible)
+import Project from "@/components/project/page";
+import Image from "next/image";
+
+// ✅ Metadata API (better than next/head)
 export const metadata = {
-  title: "HVAC Project | HVAC Designing",
+  title: "HVAC Project",
   description:
-    "Explore the best online courses related to HVAC control. Learn practical HVAC designing, control systems, and hands-on projects for free.",
-  keywords: [
-    "HVAC",
-    "HVAC project",
-    "HVAC controls",
-    "HVAC design",
-    "HVAC designing",
-    "energy efficient HVAC",
-    "HVAC practical project",
-    "HVAC online courses",
-  ],
-  authors: [{ name: "HVAC Designing" }],
-  alternates: {
-    canonical: "https://www.hvacdesigning.com/project",
-  },
+    "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
   openGraph: {
     title: "HVAC Project - Learn HVAC Controls Free",
     description:
-      "Best online courses related to HVAC control. Learn HVAC designing and controls with practical hands-on projects for free.",
+      "Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free.",
     url: "https://www.hvacdesigning.com/project",
     siteName: "HVAC Designing",
-    locale: "en_US",
-    type: "website",
     images: [
       {
         url: "https://www.hvacdesigning.com/social-banner.png",
         width: 1200,
         height: 630,
-        alt: "HVAC Project Banner - Learn HVAC Controls Free",
+        alt: "HVAC Project Banner",
       },
     ],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "HVAC Project - Learn HVAC Controls Free",
     description:
-      "Join the best online courses related to HVAC control. Learn about HVAC controls and energy-efficient system designing for free.",
+      "Join the best online courses related to HVAC control. Learn about HVAC controls for free.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
-    creator: "@hvacdesigning",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  themeColor: "#ffffff",
 };
 
 export default function Eng() {
   return (
     <div className="mt-8">
-      {/* Inject JSON-LD Schema for better indexing */}
-      <Script id="ld-json" type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: "HVAC Project",
-          url: "https://www.hvacdesigning.com/project",
-          description:
-            "Explore the best online courses related to HVAC control. Learn practical HVAC designing, control systems, and hands-on projects for free.",
-          publisher: {
-            "@type": "Organization",
-            name: "HVAC Designing",
-            url: "https://www.hvacdesigning.com",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://www.hvacdesigning.com/logo.png",
-            },
-          },
-        })}
-      </Script>
-
       {/* Header */}
       <div className="flex justify-center align-middle font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
         <h1>HVAC Designing Practical Project</h1>
