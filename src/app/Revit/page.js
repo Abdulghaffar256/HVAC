@@ -1,36 +1,58 @@
 import React from "react";
 import UniComponent1 from "@/components/courses/page";
+import Head from "next/head";
 
-export const metadata = {
-  title: "HVAC REVIT",
-  description: "Master Revit MEP 2025 with tutorials, blogs, and hands-on learning.",
-  openGraph: {
-    title: "HVAC REVIT",
-    description: "Master Revit MEP 2025 with tutorials, blogs, and hands-on learning.",
-    url: "https://www.hvacdesigning.com/revit",
-    images: ["https://www.hvacdesigning.com/social-banner.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "HVAC REVIT",
-    images: ["https://www.hvacdesigning.com/social-banner.png"],
-  },
-};
-
-export default function Mar() {
+export default function Eng() {
   return (
-    <div className="mt-8">
-      {/* Heading Section */}
-      <div className="flex justify-center items-center font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
-        <h1>Revit Tutorials</h1>
-      </div>
+    <>
+      {/* Meta Tags for SEO and Social Sharing */}
+      <Head>
+        <title>HVAC Revit</title> 
+        <meta
+          property="og:title"
+          content="Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free."
+        />
+        <meta
+          property="og:description"
+          content="Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free."
+        />
+        <meta
+          property="og:image"
+          content="https://www.hvacdesigning.com/social-banner.png"
+        />
+        <meta property="og:url" content="https://www.hvacdesigning.com/" />
+        <meta property="og:type" content="website" />
 
-      {/* Content Section */}
-      <div className="mt-6">
-        <article style={{ minHeight: "300px", width: "100%" }}>
-          <UniComponent1 />
-        </article>
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free."
+        />
+        <meta
+          name="twitter:description"
+          content="Best online courses related to HVAC control. In this course, you will learn about HVAC controls for free."
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.hvacdesigning.com/social-banner.png"
+        />
+      </Head>
+
+      {/* Page Content */}
+      <div className="mt-8">
+        {/* Heading Section */}
+        <div className="flex justify-center items-center font-semibold text-2xl border border-dark dark:border-light text-black dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh]">
+          <h1>Revit Tutorials</h1>
+        </div>
+
+        {/* Content Section */}
+        <div className="mt-6">
+          <article style={{ minHeight: "300px", width: "100%" }}>
+            <UniComponent1 />
+          </article>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
