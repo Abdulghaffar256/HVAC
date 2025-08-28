@@ -6,11 +6,11 @@ import Link from "next/link";
 export const metadata = {
   title: "HVAC Project",
   description:
-    "Best online courses related to HVAC control. Learn HVAC Designing Practical Projects step-by-step for free.",
+    "Best online courses related to HVAC control. Learn HVAC Projects step-by-step for free.",
   openGraph: {
     title: "HVAC Project",
     description:
-      "Explore HVAC Designing Practical Projects with detailed, step-by-step guidance — perfect for engineers and students.",
+      "Explore HVAC Projects with detailed, step-by-step guidance — perfect for engineers and students.",
     url: "https://www.hvacdesigning.com/project",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
     type: "website",
@@ -19,7 +19,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "HVAC Project",
     description:
-      "Learn HVAC Designing Practical Projects with free tutorials and online guidance.",
+      "Learn HVAC Projects with free tutorials and online guidance.",
     images: ["https://www.hvacdesigning.com/social-banner.png"],
   },
 };
