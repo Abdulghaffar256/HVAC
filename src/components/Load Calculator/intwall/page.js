@@ -60,7 +60,10 @@ const HeatTransferCalculator = ({ onCalculate }) => {
   };
 
   return (
-    <div className="container mx-auto p-8 bg-gray-100 min-h-screen">
+    <div
+      className="container mx-auto p-8 bg-gray-100 relative"
+      style={{ minHeight: "calc(100vh - 80px)", paddingTop: "100px" }} // push content below navbar
+    >
       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
         Heat Transfer Through Partition Wall
       </h1>
@@ -139,10 +142,13 @@ const HeatTransferCalculator = ({ onCalculate }) => {
         <h2 className="text-2xl font-semibold mb-4">Result</h2>
         {heatTransfer > 0 ? (
           <p className="text-xl">
-            Heat Transfer Through Wall: <strong>{heatTransfer.toFixed(2)} BTU/hr</strong>
+            Heat Transfer Through Wall:{" "}
+            <strong>{heatTransfer.toFixed(2)} BTU/hr</strong>
           </p>
         ) : (
-          <p className="text-gray-600">Enter values and click the button to calculate heat transfer.</p>
+          <p className="text-gray-600">
+            Enter values and click the button to calculate heat transfer.
+          </p>
         )}
       </div>
     </div>
@@ -150,5 +156,3 @@ const HeatTransferCalculator = ({ onCalculate }) => {
 };
 
 export default HeatTransferCalculator;
-
-
