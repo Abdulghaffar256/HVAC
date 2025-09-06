@@ -49,44 +49,45 @@ const CombinedHeatCalculators = () => {
     setUpdateKey((prev) => prev + 1);
   };
 
-  const downloadReport = () => {
-    const data = [
-      ["HVAC Load Report"],
-      [],
-      ["Component", "Heat Load (BTU/h)"],
-      ...calculators.map(({ id, label }) => [
-        label,
-        parseFloat(heatValues[id]).toFixed(2),
-      ]),
-      [],
-      ["Total Heat Load", totalAmount],
-      ["Tons of Refrigeration", convertToTons(totalCombinedHeat)],
-      ["Recommendation", getResultMessage()],
-    ];
+const downloadReport = () => {
+  const data = [
+    ["HVAC Load Report"],
+    [],
+    ["Component", "Heat Load (BTU/h)"],
+    ...calculators.map(({ id, label }) => [
+      label,
+      parseFloat(heatValues[id]).toFixed(2),
+    ]),
+    [],
+    ["Total Heat Load", totalAmount],
+    ["Tons of Refrigeration", convertToTons(totalCombinedHeat)],
+    ["Recommendation", getResultMessage()],
+  ];
 
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    const maxLabelLength = Math.max(
-      ...calculators.map(({ label }) => label.length),
-      "Component".length,
-      "Tons of Refrigeration".length,
-      "Recommendation".length
-    );
-    worksheet["!cols"] = [
-      { wch: maxLabelLength + 5 },
-      { wch: 20 },
-    ];
+  const worksheet = XLSX.utils.aoa_to_sheet(data);
+  worksheet["!cols"] = [
+    { wch: 30 },
+    { wch: 20 },
+  ];
 
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
 
-    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([wbout], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
 
-    const blob = new Blob([wbout], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "HVAC_Load_Report.xlsx";
-    link.click();
-  };
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "HVAC_Load_Report.xlsx";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url); // ✅ cleanup
+};
+
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
