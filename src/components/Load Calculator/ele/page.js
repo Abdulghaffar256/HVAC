@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const HeatDissipationCalculator6 = ({ onCalculate }) => {
+const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
   const [heatDissipation, setHeatDissipation] = useState(0);
   const [numEquipment, setNumEquipment] = useState(0);
   const [totalHeat, setTotalHeat] = useState(null);
+
+  // 🔹 Reset inputs & result when parent increments updateKey
+  useEffect(() => {
+    setHeatDissipation(0);
+    setNumEquipment(0);
+    setTotalHeat(null);
+    if (onCalculate) onCalculate(0); // also reset parent value
+  }, [updateKey]);
 
   const calculateHeatDissipation = () => {
     if (heatDissipation <= 0 || isNaN(heatDissipation)) {
@@ -23,7 +31,6 @@ const HeatDissipationCalculator6 = ({ onCalculate }) => {
 
     // 🔥 Send the calculated value to parent component
     if (onCalculate) {
-      console.log("Sending heat dissipation value:", totalHeatGenerated);
       onCalculate(totalHeatGenerated);
     }
   };
