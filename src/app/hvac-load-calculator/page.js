@@ -1,6 +1,8 @@
 "use client";
 
-// ✅ Imports only
+import { useState } from "react";
+
+// ✅ Imports for calculators
 import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
 import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
 import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
@@ -10,11 +12,40 @@ import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
 export default function LoadCalculatorPage() {
+  // ✅ Keep track of partial results
+  const [results, setResults] = useState({
+    exWall: 0,
+    glass: 0,
+    roof: 0,
+    intWall: 0,
+    lighting: 0,
+    people: 0,
+    electrical: 0,
+  });
+
+  // ✅ Update handler for each calculator
+  const handleResultChange = (key, value) => {
+    setResults((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // ✅ Compute total
+  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
+
+  // ✅ Convert to refrigeration tons (1 TR = 12000 BTU/hr ≈ 3.517 kW)
+  const tons = totalLoad / 3.517;
+
   return (
     <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
-      <h1 className="text-3xl font-bold text-blue-600 text-center mb-10">
+      <h1 className="text-3xl font-bold text-blue-600 text-center mb-8">
         HVAC Load Calculators
       </h1>
+
+      {/* ✅ Summary Card */}
+      <div className="p-6 mb-10 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-2xl shadow-md text-center">
+        <h2 className="text-2xl font-semibold mb-2">Total Cooling Load</h2>
+        <p className="text-lg">🔹 {totalLoad.toFixed(2)} kW</p>
+        <p className="text-lg">❄️ {tons.toFixed(2)} Tons of Refrigeration</p>
+      </div>
 
       {/* ✅ 2-column responsive grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -23,7 +54,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             External Wall Heat Transfer
           </h2>
-          <HeatTransferCalculator1 />
+          <HeatTransferCalculator1 onResult={(val) => handleResultChange("exWall", val)} />
         </div>
 
         {/* ✅ Glass */}
@@ -31,7 +62,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Glass Heat Transfer
           </h2>
-          <HeatTransferCalculator2 />
+          <HeatTransferCalculator2 onResult={(val) => handleResultChange("glass", val)} />
         </div>
 
         {/* ✅ Roof */}
@@ -39,7 +70,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Roof Heat Transfer
           </h2>
-          <HeatTransferThroughRoof3 />
+          <HeatTransferThroughRoof3 onResult={(val) => handleResultChange("roof", val)} />
         </div>
 
         {/* ✅ Internal Wall */}
@@ -47,7 +78,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Internal Wall Heat Transfer
           </h2>
-          <HeatTransferCalculator7 />
+          <HeatTransferCalculator7 onResult={(val) => handleResultChange("intWall", val)} />
         </div>
 
         {/* ✅ Lighting */}
@@ -55,7 +86,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Lighting Heat Generation
           </h2>
-          <HeatGeneratedByLighting4 />
+          <HeatGeneratedByLighting4 onResult={(val) => handleResultChange("lighting", val)} />
         </div>
 
         {/* ✅ People */}
@@ -63,7 +94,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             People Heat Gain
           </h2>
-          <HeatCalculator5 />
+          <HeatCalculator5 onResult={(val) => handleResultChange("people", val)} />
         </div>
 
         {/* ✅ Electrical Equipment (full row) */}
@@ -71,7 +102,7 @@ export default function LoadCalculatorPage() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Electrical Equipment Heat Dissipation
           </h2>
-          <HeatDissipationCalculator6 />
+          <HeatDissipationCalculator6 onResult={(val) => handleResultChange("electrical", val)} />
         </div>
       </div>
     </div>
