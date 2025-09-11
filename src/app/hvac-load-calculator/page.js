@@ -11,12 +11,13 @@ import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
 export default function LoadCalculatorPage() {
   return (
-    <div className="max-w-5xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
+    <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
       <h1 className="text-3xl font-bold text-blue-600 text-center mb-10">
         HVAC Load Calculators
       </h1>
 
-      <div className="space-y-8">
+      {/* ✅ Two column grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* ✅ External Wall */}
         <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
@@ -66,7 +67,7 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ Electrical Equipment */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50 md:col-span-2">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Electrical Equipment Heat Dissipation
           </h2>
