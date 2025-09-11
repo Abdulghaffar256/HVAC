@@ -12,12 +12,16 @@ const materials = [
   { label: "Frame Wall with Insulation", uValue: 0.178 },
 ];
 
+// Direction options
+const directions = ["North", "South", "East", "West", "Horizontal"];
+
 const HeatTransferCalculator1 = ({ onCalculate }) => {
   const [inputs, setInputs] = useState({
     length: 0,
     height: 0,
     tempDifference: 0,
     uValue: 0,
+    direction: "", // new field
   });
 
   const [result, setResult] = useState(0);
@@ -25,7 +29,7 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
   // Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    setInputs((prev) => ({ ...prev, [name]: parseFloat(value) || value }));
   };
 
   // U-Value change handler
@@ -36,11 +40,11 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
 
   // Manual calculation
   const calculateHeatTransfer = () => {
-    const { length, height, tempDifference, uValue } = inputs;
+    const { length, height, tempDifference, uValue, direction } = inputs;
     const area = length * height;
     const heatTransfer = uValue * area * tempDifference;
     setResult(heatTransfer);
-    if (onCalculate) onCalculate(heatTransfer);
+    if (onCalculate) onCalculate({ heatTransfer, direction });
   };
 
   return (
@@ -55,6 +59,24 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
           {materials.map((material, index) => (
             <option key={index} value={material.label}>
               {material.label} (U-Value: {material.uValue})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Direction Selection */}
+      <div className="mb-4">
+        <label className="block mb-1 font-medium">Wall Direction:</label>
+        <select
+          name="direction"
+          value={inputs.direction}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        >
+          <option value="">-- Select Direction --</option>
+          {directions.map((dir, index) => (
+            <option key={index} value={dir}>
+              {dir}
             </option>
           ))}
         </select>
@@ -110,11 +132,14 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
       <div className="bg-gray-100 p-4 rounded-lg mt-4">
         <h3 className="text-lg font-semibold">Heat Transfer:</h3>
         <p className="text-xl font-bold text-blue-600">{result.toFixed(2)} BTU/hr</p>
+        {inputs.direction && (
+          <p className="mt-2 text-gray-700">
+            <span className="font-medium">Direction:</span> {inputs.direction}
+          </p>
+        )}
       </div>
     </div>
   );
 };
 
 export default HeatTransferCalculator1;
-
-
