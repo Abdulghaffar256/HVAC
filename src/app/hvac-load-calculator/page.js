@@ -49,42 +49,32 @@ const CombinedHeatCalculators = () => {
   const recalculateValues = () => {
     setUpdateKey((prev) => prev + 1);
   };
+const downloadReport = () => {
+  // CSV header
+  let csv = "Component,Heat Load (BTU/h)\n";
 
-  const downloadReport = () => {
-    const data = [
-      ["HVAC Load Report"],
-      [],
-      ["Component", "Heat Load (BTU/h)"],
-      ...calculators.map(({ id, label }) => [
-        label,
-        parseFloat(heatValues[id]).toFixed(2),
-      ]),
-      [],
-      ["Total Heat Load", totalAmount],
-      ["Tons of Refrigeration", convertToTons(totalCombinedHeat)],
-      ["Recommendation", getResultMessage()],
-    ];
+  // Component rows
+  calculators.forEach(({ id, label }) => {
+    csv += `${label},${parseFloat(heatValues[id]).toFixed(2)}\n`;
+  });
 
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    worksheet["!cols"] = [{ wch: 30 }, { wch: 20 }];
+  // Summary
+  csv += `\nTotal Heat Load,${totalAmount}\n`;
+  csv += `Tons of Refrigeration,${convertToTons(totalCombinedHeat)}\n`;
+  csv += `Recommendation,${getResultMessage()}\n`;
 
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
+  // Create file
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
 
-    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-    const blob = new Blob([wbout], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "HVAC_Load_Report.xlsx";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url); // ✅ cleanup
-  };
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "HVAC_Load_Report.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
