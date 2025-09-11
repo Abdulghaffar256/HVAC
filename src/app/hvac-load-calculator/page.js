@@ -95,7 +95,8 @@ const CombinedHeatCalculators = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+    // ✅ Added pt-24 so content starts below fixed header
+    <div className="container mx-auto px-6 py-10 pt-24 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold text-blue-700">HVAC Load Calculator</h1>
