@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 
-// ✅ Dynamically import calculators (no SSR, loads only when needed)
+// ✅ Dynamically import calculators (no SSR)
 const HeatDissipationCalculator6 = dynamic(
   () => import("@/components/Load Calculator/ele/page"),
   { ssr: false }
@@ -68,20 +68,14 @@ const CombinedHeatCalculators = () => {
   };
 
   const downloadReport = () => {
-    // CSV header
     let csv = "Component,Heat Load (BTU/h)\n";
-
-    // Component rows
     calculators.forEach(({ id, label }) => {
       csv += `${label},${parseFloat(heatValues[id]).toFixed(2)}\n`;
     });
-
-    // Summary
     csv += `\nTotal Heat Load,${totalAmount}\n`;
     csv += `Tons of Refrigeration,${convertToTons(totalCombinedHeat)}\n`;
     csv += `Recommendation,${getResultMessage()}\n`;
 
-    // Create file
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
@@ -95,8 +89,8 @@ const CombinedHeatCalculators = () => {
   };
 
   return (
-    // ✅ Added pt-24 so content starts below fixed header
-    <div className="container mx-auto px-6 py-10 pt-24 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+    // ✅ Ensure this content sits BELOW navbar
+    <div className="relative z-10 container mx-auto px-6 py-10 pt-28 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold text-blue-700">HVAC Load Calculator</h1>
