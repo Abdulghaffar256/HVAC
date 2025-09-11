@@ -4,6 +4,7 @@ import { useState } from "react";
 // ✅ Added imports
 import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
 import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
+import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 
 export default function SimpleLoadCalculator() {
   const [values, setValues] = useState({
