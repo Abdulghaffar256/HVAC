@@ -1,13 +1,37 @@
 'use client';
 
 import React, { useState } from "react";
-import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
-import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
-import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
-import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
-import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
-import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
-import HeatCalculator5 from "@/components/Load Calculator/people/page";
+import dynamic from "next/dynamic";
+
+// ✅ Dynamically import calculators (no SSR, loads only when needed)
+const HeatDissipationCalculator6 = dynamic(
+  () => import("@/components/Load Calculator/ele/page"),
+  { ssr: false }
+);
+const HeatTransferCalculator1 = dynamic(
+  () => import("@/components/Load Calculator/exwall/page"),
+  { ssr: false }
+);
+const HeatTransferCalculator2 = dynamic(
+  () => import("@/components/Load Calculator/exglass/page"),
+  { ssr: false }
+);
+const HeatTransferThroughRoof3 = dynamic(
+  () => import("@/components/Load Calculator/exroof/page"),
+  { ssr: false }
+);
+const HeatTransferCalculator7 = dynamic(
+  () => import("@/components/Load Calculator/intwall/page"),
+  { ssr: false }
+);
+const HeatGeneratedByLighting4 = dynamic(
+  () => import("@/components/Load Calculator/light/page"),
+  { ssr: false }
+);
+const HeatCalculator5 = dynamic(
+  () => import("@/components/Load Calculator/people/page"),
+  { ssr: false }
+);
 
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
@@ -72,6 +96,7 @@ const CombinedHeatCalculators = () => {
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold text-blue-700">HVAC Load Calculator</h1>
         <p className="text-lg text-gray-600 mt-2">Calculate total heat loads efficiently.</p>
@@ -87,16 +112,20 @@ const CombinedHeatCalculators = () => {
         </p>
       </div>
 
-      {/* Calculators */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      {/* Collapsible Calculators */}
+      <div className="space-y-4">
         {calculators.map(({ id, component: Component, label }) => (
-          <div
+          <details
             key={id}
-            className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl"
+            className="bg-white rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl"
           >
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">{label}</h3>
-            <Component onCalculate={(heat) => updateHeatValue(id, heat)} />
-          </div>
+            <summary className="cursor-pointer text-xl font-semibold text-gray-800 px-6 py-4">
+              {label}
+            </summary>
+            <div className="p-6 border-t">
+              <Component onCalculate={(heat) => updateHeatValue(id, heat)} />
+            </div>
+          </details>
         ))}
       </div>
 
