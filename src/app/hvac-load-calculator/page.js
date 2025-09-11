@@ -44,6 +44,13 @@ export default function LoadCalculatorPage() {
     { label: "Electrical Equipment", key: "electrical" },
   ];
 
+  // ✅ Custom Result Message
+  const getResultMessage = () => {
+    if (tons < 1) return "Small space – a single split AC may be enough.";
+    if (tons < 5) return "Medium load – multiple units or packaged AC recommended.";
+    return "Large load – consider central HVAC system.";
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
       <h1 className="text-3xl font-bold text-blue-600 text-center mb-8">
@@ -130,7 +137,7 @@ export default function LoadCalculatorPage() {
         </div>
       </div>
 
-      {/* ✅ Load Breakdown at the END */}
+      {/* ✅ Load Breakdown */}
       <div className="p-6 mt-10 border border-gray-300 rounded-xl shadow bg-gray-50">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">
           Load Breakdown
@@ -153,6 +160,35 @@ export default function LoadCalculatorPage() {
             );
           })}
         </ul>
+      </div>
+
+      {/* ✅ Detailed Breakdown Section */}
+      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Detailed Breakdown
+        </h2>
+        <ul className="mt-2 text-gray-700 list-disc pl-5 space-y-2">
+          {breakdown.map((item) => (
+            <li
+              key={item.key}
+              className="transition-all hover:text-blue-500"
+            >
+              <span className="font-medium">{item.label}:</span>{" "}
+              {results[item.key].toFixed(2)} kW
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-4 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-700">Result</h3>
+          <p className="text-lg font-medium text-gray-700">
+            {getResultMessage()}
+          </p>
+        </div>
+
+        <div className="mt-6 text-center text-2xl font-bold text-blue-700">
+          Total Heat Load: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} TR)
+        </div>
       </div>
     </div>
   );
