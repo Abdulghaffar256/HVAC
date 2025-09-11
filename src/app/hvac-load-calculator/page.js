@@ -7,6 +7,7 @@ import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
 import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
+import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 
 export default function SimpleLoadCalculator() {
   const [values, setValues] = useState({
