@@ -16,27 +16,62 @@ export default function LoadCalculatorPage() {
         HVAC Load Calculators
       </h1>
 
-      <div className="space-y-10">
+      <div className="space-y-8">
         {/* ✅ External Wall */}
-        <HeatTransferCalculator1 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            External Wall Heat Transfer
+          </h2>
+          <HeatTransferCalculator1 />
+        </div>
 
         {/* ✅ Glass */}
-        <HeatTransferCalculator2 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Glass Heat Transfer
+          </h2>
+          <HeatTransferCalculator2 />
+        </div>
 
         {/* ✅ Roof */}
-        <HeatTransferThroughRoof3 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Roof Heat Transfer
+          </h2>
+          <HeatTransferThroughRoof3 />
+        </div>
 
         {/* ✅ Internal Wall */}
-        <HeatTransferCalculator7 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Internal Wall Heat Transfer
+          </h2>
+          <HeatTransferCalculator7 />
+        </div>
 
         {/* ✅ Lighting */}
-        <HeatGeneratedByLighting4 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Lighting Heat Generation
+          </h2>
+          <HeatGeneratedByLighting4 />
+        </div>
 
         {/* ✅ People */}
-        <HeatCalculator5 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            People Heat Gain
+          </h2>
+          <HeatCalculator5 />
+        </div>
 
         {/* ✅ Electrical Equipment */}
-        <HeatDissipationCalculator6 />
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Electrical Equipment Heat Dissipation
+          </h2>
+          <HeatDissipationCalculator6 />
+        </div>
       </div>
     </div>
   );
