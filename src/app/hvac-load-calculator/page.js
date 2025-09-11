@@ -16,10 +16,10 @@ export default function LoadCalculatorPage() {
         HVAC Load Calculators
       </h1>
 
-      {/* ✅ Two column grid */}
+      {/* ✅ 2-column responsive grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* ✅ External Wall */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             External Wall Heat Transfer
           </h2>
@@ -27,7 +27,7 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ Glass */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Glass Heat Transfer
           </h2>
@@ -35,7 +35,7 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ Roof */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Roof Heat Transfer
           </h2>
@@ -43,7 +43,7 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ Internal Wall */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Internal Wall Heat Transfer
           </h2>
@@ -51,7 +51,7 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ Lighting */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Lighting Heat Generation
           </h2>
@@ -59,15 +59,15 @@ export default function LoadCalculatorPage() {
         </div>
 
         {/* ✅ People */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             People Heat Gain
           </h2>
           <HeatCalculator5 />
         </div>
 
-        {/* ✅ Electrical Equipment */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50 md:col-span-2">
+        {/* ✅ Electrical Equipment (full row) */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50 md:col-span-2">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             Electrical Equipment Heat Dissipation
           </h2>
