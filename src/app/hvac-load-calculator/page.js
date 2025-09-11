@@ -8,7 +8,6 @@ import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 import HeatCalculator5 from "@/components/Load Calculator/people/page";
-import * as XLSX from "xlsx";
 
 const calculators = [
   { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
@@ -24,7 +23,6 @@ const CombinedHeatCalculators = () => {
   const [heatValues, setHeatValues] = useState(
     Object.fromEntries(calculators.map(({ id }) => [id, 0]))
   );
-  const [updateKey, setUpdateKey] = useState(0);
 
   const updateHeatValue = (key, value) => {
     setHeatValues((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
@@ -43,38 +41,34 @@ const CombinedHeatCalculators = () => {
 
   const resetValues = () => {
     setHeatValues(Object.fromEntries(calculators.map(({ id }) => [id, 0])));
-    setUpdateKey((prev) => prev + 1);
   };
 
-  const recalculateValues = () => {
-    setUpdateKey((prev) => prev + 1);
+  const downloadReport = () => {
+    // CSV header
+    let csv = "Component,Heat Load (BTU/h)\n";
+
+    // Component rows
+    calculators.forEach(({ id, label }) => {
+      csv += `${label},${parseFloat(heatValues[id]).toFixed(2)}\n`;
+    });
+
+    // Summary
+    csv += `\nTotal Heat Load,${totalAmount}\n`;
+    csv += `Tons of Refrigeration,${convertToTons(totalCombinedHeat)}\n`;
+    csv += `Recommendation,${getResultMessage()}\n`;
+
+    // Create file
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "HVAC_Load_Report.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
-const downloadReport = () => {
-  // CSV header
-  let csv = "Component,Heat Load (BTU/h)\n";
-
-  // Component rows
-  calculators.forEach(({ id, label }) => {
-    csv += `${label},${parseFloat(heatValues[id]).toFixed(2)}\n`;
-  });
-
-  // Summary
-  csv += `\nTotal Heat Load,${totalAmount}\n`;
-  csv += `Tons of Refrigeration,${convertToTons(totalCombinedHeat)}\n`;
-  csv += `Recommendation,${getResultMessage()}\n`;
-
-  // Create file
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "HVAC_Load_Report.csv";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
 
   return (
     <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
@@ -101,8 +95,7 @@ const downloadReport = () => {
             className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl"
           >
             <h3 className="text-xl font-semibold mb-3 text-gray-800">{label}</h3>
-            {/* ✅ pass updateKey as prop, NOT as key */}
-            <Component onCalculate={(heat) => updateHeatValue(id, heat)} updateKey={updateKey} />
+            <Component onCalculate={(heat) => updateHeatValue(id, heat)} />
           </div>
         ))}
       </div>
@@ -136,13 +129,6 @@ const downloadReport = () => {
             className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 transition"
           >
             Reset
-          </button>
-          <button
-            type="button"
-            onClick={recalculateValues}
-            className="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition"
-          >
-            Recalculate
           </button>
           <button
             type="button"
