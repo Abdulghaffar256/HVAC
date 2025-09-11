@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import * as XLSX from "xlsx";
-
-// ✅ Imports of calculators
+// ✅ Imports only
 import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
 import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
 import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
@@ -12,154 +9,69 @@ import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
-// ✅ List of calculators
-const calculators = [
-  { id: "HeatTransferCalculator1", component: HeatTransferCalculator1, label: "Exterior Wall" },
-  { id: "HeatTransferThroughRoof3", component: HeatTransferThroughRoof3, label: "Roof" },
-  { id: "HeatTransferCalculator2", component: HeatTransferCalculator2, label: "Glass" },
-  { id: "HeatTransferCalculator7", component: HeatTransferCalculator7, label: "Interior Wall" },
-  { id: "HeatGeneratedByLighting4", component: HeatGeneratedByLighting4, label: "Lighting" },
-  { id: "HeatCalculator5", component: HeatCalculator5, label: "People" },
-  { id: "HeatDissipationCalculator6", component: HeatDissipationCalculator6, label: "Electrical Equipment" },
-];
-
 export default function LoadCalculatorPage() {
-  const [heatValues, setHeatValues] = useState(
-    Object.fromEntries(calculators.map(({ id }) => [id, 0]))
-  );
-  const [updateKey, setUpdateKey] = useState(0);
-
-  // ✅ Update individual heat values
-  const updateHeatValue = (key, value) => {
-    setHeatValues((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
-  };
-
-  // ✅ Calculate totals
-  const totalCombinedHeat = Object.values(heatValues).reduce((acc, val) => acc + val, 0);
-  const totalAmount = totalCombinedHeat.toFixed(2);
-  const convertToTons = (btu) => (btu / 12000).toFixed(2);
-
-  // ✅ Recommendation message
-  const getResultMessage = () => {
-    if (totalCombinedHeat < 24000) return "Low heat load. No additional cooling required.";
-    if (totalCombinedHeat <= 60000) return "Moderate heat load. Consider efficient HVAC.";
-    return "High heat load! Upgraded HVAC system recommended.";
-  };
-
-  // ✅ Reset + Recalculate
-  const resetValues = () => {
-    setHeatValues(Object.fromEntries(calculators.map(({ id }) => [id, 0])));
-    setUpdateKey((prev) => prev + 1);
-  };
-  const recalculateValues = () => setUpdateKey((prev) => prev + 1);
-
-  // ✅ Excel report download
-  const downloadReport = () => {
-    const data = [
-      ["HVAC Load Report"],
-      [],
-      ["Component", "Heat Load (BTU/h)"],
-      ...calculators.map(({ id, label }) => [label, parseFloat(heatValues[id]).toFixed(2)]),
-      [],
-      ["Total Heat Load", totalAmount],
-      ["Tons of Refrigeration", convertToTons(totalCombinedHeat)],
-      ["Recommendation", getResultMessage()],
-    ];
-
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    worksheet["!cols"] = [{ wch: 30 }, { wch: 20 }];
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "HVAC Load");
-
-    const wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-    const blob = new Blob([wbout], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "HVAC_Load_Report.xlsx";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
   return (
-    <div className="container mx-auto px-6 py-10 min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
-      {/* ✅ Page Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-extrabold text-blue-700">HVAC Load Calculator</h1>
-        <p className="text-lg text-gray-600 mt-2">Calculate total heat loads efficiently.</p>
-      </div>
+    <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
+      <h1 className="text-3xl font-bold text-blue-600 text-center mb-10">
+        HVAC Load Calculators
+      </h1>
 
-      {/* ✅ Total Heat Summary */}
-      <div className="bg-blue-600 text-white p-6 rounded-xl shadow-lg text-center mb-8">
-        <h2 className="text-3xl font-bold">Total Heat Load</h2>
-        <p className="text-2xl mt-2 font-semibold">{totalAmount} BTU/h</p>
-        <p className="text-xl mt-1">
-          Equivalent to{" "}
-          <span className="font-bold">{convertToTons(totalCombinedHeat)} Tons of Refrigeration</span>
-        </p>
-      </div>
-
-      {/* ✅ Grid with calculators (2 columns) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {calculators.map(({ id, component: Component, label }) => (
-          <div
-            key={id}
-            className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 transition-all hover:shadow-xl"
-          >
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">{label}</h3>
-            <Component onCalculate={(heat) => updateHeatValue(id, heat)} updateKey={updateKey} />
-          </div>
-        ))}
-      </div>
-
-      {/* ✅ Breakdown Section */}
-      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Detailed Breakdown</h2>
-        <ul className="mt-2 text-gray-700 list-disc pl-5 space-y-2">
-          {calculators.map(({ id, label }) => (
-            <li key={id} className="transition-all hover:text-blue-500">
-              <span className="font-medium">{label}:</span> {heatValues[id].toFixed(2)} BTU/h
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-4 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
-          <h3 className="text-xl font-semibold text-green-700">Result</h3>
-          <p className="text-lg font-medium text-gray-700">{getResultMessage()}</p>
+      {/* ✅ Two column grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* ✅ External Wall */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            External Wall Heat Transfer
+          </h2>
+          <HeatTransferCalculator1 />
         </div>
 
-        <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-          Total Heat Load: {totalAmount} BTU/h
+        {/* ✅ Glass */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Glass Heat Transfer
+          </h2>
+          <HeatTransferCalculator2 />
         </div>
 
-        {/* ✅ Action Buttons */}
-        <div className="flex justify-center gap-6 mt-8">
-          <button
-            type="button"
-            onClick={resetValues}
-            className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 transition"
-          >
-            Reset
-          </button>
-          <button
-            type="button"
-            onClick={recalculateValues}
-            className="bg-yellow-500 text-white px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition"
-          >
-            Recalculate
-          </button>
-          <button
-            type="button"
-            onClick={downloadReport}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700 transition"
-          >
-            Download Report
-          </button>
+        {/* ✅ Roof */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Roof Heat Transfer
+          </h2>
+          <HeatTransferThroughRoof3 />
+        </div>
+
+        {/* ✅ Internal Wall */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Internal Wall Heat Transfer
+          </h2>
+          <HeatTransferCalculator7 />
+        </div>
+
+        {/* ✅ Lighting */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Lighting Heat Generation
+          </h2>
+          <HeatGeneratedByLighting4 />
+        </div>
+
+        {/* ✅ People */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            People Heat Gain
+          </h2>
+          <HeatCalculator5 />
+        </div>
+
+        {/* ✅ Electrical Equipment */}
+        <div className="p-6 border border-gray-300 rounded-xl shadow-sm bg-gray-50 md:col-span-2">
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+            Electrical Equipment Heat Dissipation
+          </h2>
+          <HeatDissipationCalculator6 />
         </div>
       </div>
     </div>
