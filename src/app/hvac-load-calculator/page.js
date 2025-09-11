@@ -34,7 +34,6 @@ export default function LoadCalculatorPage() {
   // ✅ Convert to refrigeration tons (1 TR = 12000 BTU/hr ≈ 3.517 kW)
   const tons = totalLoad / 3.517;
 
-  // ✅ Recommendations based on share of load
   const breakdown = [
     { label: "External Wall", key: "exWall" },
     { label: "Glass", key: "glass" },
@@ -44,28 +43,6 @@ export default function LoadCalculatorPage() {
     { label: "People", key: "people" },
     { label: "Electrical Equipment", key: "electrical" },
   ];
-
-  const getRecommendation = (key, value) => {
-    if (value === 0) return "No significant load.";
-    switch (key) {
-      case "glass":
-        return "Consider double glazing or shading.";
-      case "roof":
-        return "Improve roof insulation.";
-      case "lighting":
-        return "Switch to energy-efficient LED lighting.";
-      case "people":
-        return "Ensure proper ventilation and fresh air supply.";
-      case "electrical":
-        return "Use energy-efficient appliances.";
-      case "exWall":
-        return "Improve external wall insulation.";
-      case "intWall":
-        return "Check partition design for thermal transfer.";
-      default:
-        return "Standard load.";
-    }
-  };
 
   return (
     <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
@@ -78,35 +55,6 @@ export default function LoadCalculatorPage() {
         <h2 className="text-2xl font-semibold mb-2">Total Cooling Load</h2>
         <p className="text-lg">🔹 {totalLoad.toFixed(2)} kW</p>
         <p className="text-lg">❄️ {tons.toFixed(2)} Tons of Refrigeration</p>
-      </div>
-
-      {/* ✅ Detailed Breakdown */}
-      <div className="p-6 mb-10 border border-gray-300 rounded-xl shadow bg-gray-50">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">
-          Load Breakdown & Recommendations
-        </h2>
-        <ul className="space-y-3">
-          {breakdown.map((item) => {
-            const value = results[item.key];
-            const percent =
-              totalLoad > 0 ? ((value / totalLoad) * 100).toFixed(1) : 0;
-            return (
-              <li
-                key={item.key}
-                className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-2"
-              >
-                <span className="font-medium text-gray-700">
-                  {item.label}:{" "}
-                  <span className="text-blue-600">{value.toFixed(2)} kW</span>{" "}
-                  <span className="text-sm text-gray-500">({percent}%)</span>
-                </span>
-                <span className="text-sm text-gray-600 mt-1 sm:mt-0">
-                  💡 {getRecommendation(item.key, value)}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
       </div>
 
       {/* ✅ 2-column responsive grid */}
@@ -180,6 +128,31 @@ export default function LoadCalculatorPage() {
             onResult={(val) => handleResultChange("electrical", val)}
           />
         </div>
+      </div>
+
+      {/* ✅ Load Breakdown at the END */}
+      <div className="p-6 mt-10 border border-gray-300 rounded-xl shadow bg-gray-50">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">
+          Load Breakdown
+        </h2>
+        <ul className="space-y-2">
+          {breakdown.map((item) => {
+            const value = results[item.key];
+            const percent =
+              totalLoad > 0 ? ((value / totalLoad) * 100).toFixed(1) : 0;
+            return (
+              <li
+                key={item.key}
+                className="flex justify-between border-b border-gray-200 pb-2"
+              >
+                <span className="font-medium text-gray-700">{item.label}</span>
+                <span className="text-gray-600">
+                  {value.toFixed(2)} kW ({percent}%)
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
