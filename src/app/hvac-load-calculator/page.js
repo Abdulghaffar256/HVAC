@@ -22,33 +22,9 @@ export default function LoadCalculatorPage() {
     electrical: 0,
   });
 
-  // ✅ Reads numbers from the DOM and updates parent results
-  const syncResults = () => {
-    const newResults = {
-      exWall: getValueFromDOM("External Wall"),
-      glass: getValueFromDOM("Glass"),
-      roof: getValueFromDOM("Roof"),
-      intWall: getValueFromDOM("Internal Wall"),
-      lighting: getValueFromDOM("Lighting"),
-      people: getValueFromDOM("People"),
-      electrical: getValueFromDOM("Electrical"),
-    };
-    setResults(newResults);
-  };
-
-  // ✅ Helper: parse number from calculator card text
-  const getValueFromDOM = (label) => {
-    const el = [...document.querySelectorAll("div")].find((div) =>
-      div.innerText.includes(label)
-    );
-    if (!el) return 0;
-    const num = el.innerText.match(/([\d.]+)\s*(kW|Btu\/h)?/);
-    if (!num) return 0;
-    let value = parseFloat(num[1]);
-    if (num[2] && num[2].includes("Btu")) {
-      value = value / 3412; // convert to kW
-    }
-    return value || 0;
+  // ✅ Update state directly when a child calculator returns a value
+  const updateResult = (key, value) => {
+    setResults((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
   };
 
   const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
@@ -72,25 +48,17 @@ export default function LoadCalculatorPage() {
 
       {/* ✅ 2-column responsive grid with calculators */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <HeatTransferCalculator1 />
-        <HeatTransferCalculator2 />
-        <HeatTransferThroughRoof3 />
-        <HeatTransferCalculator7 />
-        <HeatGeneratedByLighting4 />
-        <HeatCalculator5 />
+        <HeatTransferCalculator1 onCalculate={(v) => updateResult("exWall", v)} />
+        <HeatTransferCalculator2 onCalculate={(v) => updateResult("glass", v)} />
+        <HeatTransferThroughRoof3 onCalculate={(v) => updateResult("roof", v)} />
+        <HeatTransferCalculator7 onCalculate={(v) => updateResult("intWall", v)} />
+        <HeatGeneratedByLighting4 onCalculate={(v) => updateResult("lighting", v)} />
+        <HeatCalculator5 onCalculate={(v) => updateResult("people", v)} />
         <div className="md:col-span-2">
-          <HeatDissipationCalculator6 />
+          <HeatDissipationCalculator6
+            onCalculate={(v) => updateResult("electrical", v)}
+          />
         </div>
-      </div>
-
-      {/* ✅ Sync Button */}
-      <div className="mt-8 text-center">
-        <button
-          onClick={syncResults}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700"
-        >
-          🔄 Update Results
-        </button>
       </div>
 
       {/* ✅ Results Section */}
