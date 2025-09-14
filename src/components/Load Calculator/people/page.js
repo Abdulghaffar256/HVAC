@@ -22,7 +22,7 @@ const HeatCalculator5 = ({ onCalculate }) => {
   const [inputs, setInputs] = useState({
     activity: "",
     numPeople: "",
-    manualHeat: 0, // For direct heat input
+    manualHeat: 0,
   });
 
   const [totalHeat, setTotalHeat] = useState(0);
@@ -32,9 +32,10 @@ const HeatCalculator5 = ({ onCalculate }) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: name === "numPeople" || name === "manualHeat"
-        ? value === "" ? "" : Math.max(0, parseFloat(value) || 0)
-        : value,
+      [name]:
+        name === "numPeople" || name === "manualHeat"
+          ? value === "" ? "" : Math.max(0, parseFloat(value) || 0)
+          : value,
     }));
   };
 
@@ -43,7 +44,7 @@ const HeatCalculator5 = ({ onCalculate }) => {
     const { activity, numPeople, manualHeat } = inputs;
 
     let calculatedHeat = 0;
-    
+
     if (manualHeat > 0) {
       calculatedHeat = manualHeat;
     } else if (activity && heatData[activity] && numPeople > 0) {
@@ -52,14 +53,15 @@ const HeatCalculator5 = ({ onCalculate }) => {
     }
 
     setTotalHeat(calculatedHeat);
+
     if (typeof onCalculate === "function") {
       onCalculate(calculatedHeat);
     }
   }, [inputs, onCalculate]);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-      <h2 className="text-2xl font-semibold mb-4 text-blue-600">
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">
         Heat Load from People
       </h2>
 
@@ -98,7 +100,9 @@ const HeatCalculator5 = ({ onCalculate }) => {
 
       {/* Manual Heat Input */}
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Enter Heat Load (BTU/h) Manually:</label>
+        <label className="block mb-1 font-medium">
+          Enter Heat Load (BTU/h) Manually:
+        </label>
         <input
           type="number"
           name="manualHeat"
@@ -111,11 +115,15 @@ const HeatCalculator5 = ({ onCalculate }) => {
 
       {/* Result */}
       <div className="bg-gray-100 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold">Result</h3>
-        <p>
-          Total Heat Load:{" "}
-          <strong>{totalHeat.toFixed(2)} Btu/h</strong>
-        </p>
+        {totalHeat > 0 ? (
+          <p>
+            Total Heat Load: <strong>{totalHeat.toFixed(2)} BTU/h</strong>
+          </p>
+        ) : (
+          <p className="text-gray-600">
+            Enter details to calculate heat load.
+          </p>
+        )}
       </div>
     </div>
   );
