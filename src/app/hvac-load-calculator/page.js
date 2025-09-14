@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-// ✅ Imports for calculators
+// ✅ Import calculators
 import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
 import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
 import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
@@ -12,69 +12,86 @@ import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
 export default function LoadCalculatorPage() {
-  const [results, setResults] = useState({
-    exWall: 0,
-    glass: 0,
-    roof: 0,
-    intWall: 0,
-    lighting: 0,
-    people: 0,
-    electrical: 0,
-  });
+  const [results, setResults] = useState({});
+  const [resetKey, setResetKey] = useState(0);
 
-  // ✅ React way: update directly from children
-  const updateResult = (key, value) => {
-    setResults((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
+  // 🔹 Collect results safely without forcing re-render loops
+  const handleCalculate = (name, value) => {
+    setResults((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
-  const tons = totalLoad / 3.517;
+  // 🔹 Reset all calculators
+  const resetAll = () => {
+    setResults({});
+    setResetKey((k) => k + 1); // forces children to reset
+  };
 
-  const breakdown = [
-    { label: "External Wall", key: "exWall" },
-    { label: "Glass", key: "glass" },
-    { label: "Roof", key: "roof" },
-    { label: "Internal Wall", key: "intWall" },
-    { label: "Lighting", key: "lighting" },
-    { label: "People", key: "people" },
-    { label: "Electrical Equipment", key: "electrical" },
-  ];
+  // 🔹 Compute total heat dynamically
+  const totalHeat = Object.values(results).reduce((acc, v) => acc + v, 0);
 
   return (
-    <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
-      <h1 className="text-3xl font-bold text-blue-600 text-center mb-8">
+    <div className="max-w-5xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
+      <h1 className="text-3xl font-bold text-blue-600 text-center mb-10">
         HVAC Load Calculators
       </h1>
 
-      {/* ✅ 2-column responsive grid with calculators */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <HeatTransferCalculator1 onCalculate={(v) => updateResult("exWall", v)} />
-        <HeatTransferCalculator2 onCalculate={(v) => updateResult("glass", v)} />
-        <HeatTransferThroughRoof3 onCalculate={(v) => updateResult("roof", v)} />
-        <HeatTransferCalculator7 onCalculate={(v) => updateResult("intWall", v)} />
-        <HeatGeneratedByLighting4 onCalculate={(v) => updateResult("lighting", v)} />
-        <HeatCalculator5 onCalculate={(v) => updateResult("people", v)} />
-        <div className="md:col-span-2">
-          <HeatDissipationCalculator6 onCalculate={(v) => updateResult("electrical", v)} />
-        </div>
+      {/* ✅ Reset Button */}
+      <div className="flex justify-center mb-6">
+        <button
+          onClick={resetAll}
+          className="bg-red-500 text-white py-2 px-6 rounded hover:bg-red-600 transition duration-300"
+        >
+          Reset All
+        </button>
       </div>
 
-      {/* ✅ Results Section */}
-      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Results</h2>
-        <ul className="mt-2 text-gray-700 space-y-2">
-          {breakdown.map(({ label, key }) => (
-            <li key={key} className="transition-all hover:text-blue-600">
-              <span className="font-medium">{label}:</span>{" "}
-              {results[key].toFixed(2)} kW
-            </li>
-          ))}
-        </ul>
+      {/* ✅ Sections with child calculators */}
+      <div className="space-y-10">
+        <HeatTransferCalculator1
+          onCalculate={(val) => handleCalculate("wall", val)}
+          updateKey={resetKey}
+        />
 
-        {/* ✅ Simple Total */}
-        <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-          Total: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} Tons)
-        </div>
+        <HeatTransferCalculator2
+          onCalculate={(val) => handleCalculate("glass", val)}
+          updateKey={resetKey}
+        />
+
+        <HeatTransferThroughRoof3
+          onCalculate={(val) => handleCalculate("roof", val)}
+          updateKey={resetKey}
+        />
+
+        <HeatTransferCalculator7
+          onCalculate={(val) => handleCalculate("intwall", val)}
+          updateKey={resetKey}
+        />
+
+        <HeatGeneratedByLighting4
+          onCalculate={(val) => handleCalculate("lighting", val)}
+          updateKey={resetKey}
+        />
+
+        <HeatCalculator5
+          onCalculate={(val) => handleCalculate("people", val)}
+          updateKey={resetKey}
+        />
+
+        <HeatDissipationCalculator6
+          onCalculate={(val) => handleCalculate("equipment", val)}
+          updateKey={resetKey}
+        />
+      </div>
+
+      {/* ✅ Simple Total Result */}
+      <div className="mt-10 p-6 bg-blue-50 rounded-lg shadow-inner text-center">
+        <h2 className="text-2xl font-bold text-blue-700">Total Load</h2>
+        <p className="text-lg mt-2">
+          <strong>{totalHeat.toFixed(2)} Btu/h</strong>
+        </p>
       </div>
     </div>
   );
