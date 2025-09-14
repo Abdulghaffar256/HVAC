@@ -1,17 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const HeatTransferCalculator2 = ({ onCalculate }) => {
+const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
   const [inputs, setInputs] = useState({
-    length: "",
-    height: "",
+    length: 0,
+    height: 0,
     shgf: "20° N",
     sc: "Clear Glass Without Shading",
     clf: "N",
   });
 
   const [result, setResult] = useState(null);
+
+  // 🔹 Reset when parent triggers updateKey
+  useEffect(() => {
+    setInputs({
+      length: 0,
+      height: 0,
+      shgf: "20° N",
+      sc: "Clear Glass Without Shading",
+      clf: "N",
+    });
+    setResult(null);
+    if (onCalculate) onCalculate(0);
+  }, [updateKey]);
 
   const shgfValues = {
     "20° N": 250,
@@ -44,18 +57,21 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: value }));
+    setInputs((prev) => ({
+      ...prev,
+      [name]: name === "length" || name === "height" ? parseFloat(value) || 0 : value,
+    }));
   };
 
   const calculateHeatTransfer = () => {
     const { length, height, shgf, sc, clf } = inputs;
 
-    if (!length || !height || length <= 0 || height <= 0) {
+    if (length <= 0 || height <= 0) {
       alert("Please enter valid dimensions for glass.");
       return;
     }
 
-    const area = parseFloat(length) * parseFloat(height);
+    const area = length * height;
     const selectedSHGF = shgfValues[shgf];
     const selectedSC = shadingCoefficients[sc];
     const selectedCLF = clfValues[clf];
@@ -107,8 +123,8 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
-            {Object.keys(shgfValues).map((lat, index) => (
-              <option key={index} value={lat}>{lat}</option>
+            {Object.keys(shgfValues).map((lat) => (
+              <option key={lat} value={lat}>{lat}</option>
             ))}
           </select>
         </div>
@@ -121,8 +137,8 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
-            {Object.keys(shadingCoefficients).map((type, index) => (
-              <option key={index} value={type}>{type}</option>
+            {Object.keys(shadingCoefficients).map((type) => (
+              <option key={type} value={type}>{type}</option>
             ))}
           </select>
         </div>
@@ -135,8 +151,8 @@ const HeatTransferCalculator2 = ({ onCalculate }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
-            {Object.keys(clfValues).map((facing, index) => (
-              <option key={index} value={facing}>{facing}</option>
+            {Object.keys(clfValues).map((facing) => (
+              <option key={facing} value={facing}>{facing}</option>
             ))}
           </select>
         </div>
