@@ -138,34 +138,57 @@ export default function LoadCalculatorPage() {
       </div>
 
     
-      {/* ✅ Detailed Breakdown Section */}
-      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Detailed Breakdown
-        </h2>
-        <ul className="mt-2 text-gray-700 list-disc pl-5 space-y-2">
-          {breakdown.map((item) => (
-            <li
-              key={item.key}
-              className="transition-all hover:text-blue-500"
-            >
-              <span className="font-medium">{item.label}:</span>{" "}
-              {results[item.key].toFixed(2)} kW
-            </li>
-          ))}
-        </ul>
+     {/* ✅ Detailed Breakdown Section */}
+<div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
+  <h2 className="text-2xl font-bold text-gray-800 mb-6">
+    Detailed Breakdown
+  </h2>
 
-        <div className="mt-4 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
-          <h3 className="text-xl font-semibold text-green-700">Result</h3>
-          <p className="text-lg font-medium text-gray-700">
-            {getResultMessage()}
-          </p>
-        </div>
+  {/* Table format for clarity */}
+  <div className="overflow-x-auto">
+    <table className="w-full border-collapse">
+      <thead>
+        <tr className="bg-gray-100 text-gray-700">
+          <th className="p-3 text-left font-semibold">Component</th>
+          <th className="p-3 text-right font-semibold">Load (kW)</th>
+          <th className="p-3 text-right font-semibold">Load (TR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {breakdown.map((item) => (
+          <tr
+            key={item.key}
+            className="border-b hover:bg-blue-50 transition"
+          >
+            <td className="p-3 font-medium">{item.label}</td>
+            <td className="p-3 text-right">
+              {results[item.key].toFixed(2)}
+            </td>
+            <td className="p-3 text-right">
+              {(results[item.key] / 3.517).toFixed(2)}
+            </td>
+          </tr>
+        ))}
 
-        <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-          Total Heat Load: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} TR)
-        </div>
-      </div>
+        {/* ✅ Final Total Row */}
+        <tr className="bg-green-100 font-bold border-t-2 border-green-500">
+          <td className="p-3">TOTAL</td>
+          <td className="p-3 text-right">{totalLoad.toFixed(2)}</td>
+          <td className="p-3 text-right">{tons.toFixed(2)}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {/* ✅ Recommendation Card */}
+  <div className="mt-6 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
+    <h3 className="text-xl font-semibold text-green-700">Result</h3>
+    <p className="text-lg font-medium text-gray-700">
+      {getResultMessage()}
+    </p>
+  </div>
+</div>
+
     </div>
   );
 }
