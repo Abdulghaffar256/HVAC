@@ -6,12 +6,11 @@ const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
   const [numEquipment, setNumEquipment] = useState(0);
   const [totalHeat, setTotalHeat] = useState(null);
 
-  // 🔹 Reset when parent changes updateKey
+  // 🔹 Reset inputs & local result only when parent increments updateKey
   useEffect(() => {
     setHeatDissipation(0);
     setNumEquipment(0);
     setTotalHeat(null);
-    if (onCalculate) onCalculate(0); // reset parent state too
   }, [updateKey]);
 
   const calculateHeatDissipation = () => {
@@ -27,7 +26,7 @@ const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
     const totalHeatGenerated = heatDissipation * numEquipment;
     setTotalHeat(totalHeatGenerated);
 
-    // 🔥 Send result to parent
+    // 🔥 Notify parent ONLY when user calculates
     if (onCalculate) {
       onCalculate(totalHeatGenerated);
     }
