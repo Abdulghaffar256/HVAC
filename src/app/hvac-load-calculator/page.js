@@ -142,19 +142,18 @@ export default function LoadCalculatorPage() {
 <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
   <h2 className="text-2xl font-bold text-gray-800 mb-4">Results</h2>
   <ul className="mt-2 text-gray-700 space-y-2">
-    {calculators.map(({ id, label }) => (
-      <li key={id} className="transition-all hover:text-blue-600">
-        <span className="font-medium">{label}:</span> {heatValues[id].toFixed(2)}
+    {breakdown.map(({ label, key }) => (
+      <li key={key} className="transition-all hover:text-blue-600">
+        <span className="font-medium">{label}:</span> {results[key].toFixed(2)} kW
       </li>
     ))}
   </ul>
 
   {/* ✅ Simple Total */}
   <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-    Total: {totalAmount}
+    Total: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} Tons)
   </div>
 </div>
-
 
     </div>
   );
