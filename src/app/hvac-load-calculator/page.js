@@ -138,7 +138,7 @@ export default function LoadCalculatorPage() {
       </div>
 
     
-  {/* Detailed Breakdown */}
+ {/* Detailed Breakdown */}
 <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
   <h2 className="text-2xl font-bold text-gray-800 mb-4">Detailed Breakdown</h2>
 
@@ -150,7 +150,7 @@ export default function LoadCalculatorPage() {
             Component
           </th>
           <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
-            Heat Load (kW)
+            Heat Load
           </th>
           <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
             Contribution (%)
@@ -165,9 +165,7 @@ export default function LoadCalculatorPage() {
           return (
             <tr key={key} className="hover:bg-gray-50">
               <td className="px-6 py-3 border-b font-medium">{label}</td>
-              <td className="px-6 py-3 border-b text-center">
-                {value.toFixed(2)}
-              </td>
+              <td className="px-6 py-3 border-b text-center">{value.toFixed(2)}</td>
               <td className="px-6 py-3 border-b text-center">{percent}%</td>
             </tr>
           );
@@ -183,7 +181,7 @@ export default function LoadCalculatorPage() {
   </div>
 
   <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-    Total Cooling Load: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} TR)
+    Total Cooling Load: {totalLoad.toFixed(2)}
   </div>
 </div>
 
