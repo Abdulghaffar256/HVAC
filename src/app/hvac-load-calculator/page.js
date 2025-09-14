@@ -22,7 +22,7 @@ export default function LoadCalculatorPage() {
     electrical: 0,
   });
 
-  // ✅ Update state directly when a child calculator returns a value
+  // ✅ React way: update directly from children
   const updateResult = (key, value) => {
     setResults((prev) => ({ ...prev, [key]: Math.max(0, Number(value)) }));
   };
@@ -55,9 +55,7 @@ export default function LoadCalculatorPage() {
         <HeatGeneratedByLighting4 onCalculate={(v) => updateResult("lighting", v)} />
         <HeatCalculator5 onCalculate={(v) => updateResult("people", v)} />
         <div className="md:col-span-2">
-          <HeatDissipationCalculator6
-            onCalculate={(v) => updateResult("electrical", v)}
-          />
+          <HeatDissipationCalculator6 onCalculate={(v) => updateResult("electrical", v)} />
         </div>
       </div>
 
