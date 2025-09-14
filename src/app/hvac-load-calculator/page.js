@@ -12,7 +12,6 @@ import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
 import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
 export default function LoadCalculatorPage() {
-  // ✅ Keep track of partial results
   const [results, setResults] = useState({
     exWall: 0,
     glass: 0,
@@ -23,15 +22,36 @@ export default function LoadCalculatorPage() {
     electrical: 0,
   });
 
-  // ✅ Update handler for each calculator
-  const handleResultChange = (key, value) => {
-    setResults((prev) => ({ ...prev, [key]: value }));
+  // ✅ Reads numbers from the DOM and updates parent results
+  const syncResults = () => {
+    const newResults = {
+      exWall: getValueFromDOM("External Wall"),
+      glass: getValueFromDOM("Glass"),
+      roof: getValueFromDOM("Roof"),
+      intWall: getValueFromDOM("Internal Wall"),
+      lighting: getValueFromDOM("Lighting"),
+      people: getValueFromDOM("People"),
+      electrical: getValueFromDOM("Electrical"),
+    };
+    setResults(newResults);
   };
 
-  // ✅ Compute total
-  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
+  // ✅ Helper: parse number from calculator card text
+  const getValueFromDOM = (label) => {
+    const el = [...document.querySelectorAll("div")].find((div) =>
+      div.innerText.includes(label)
+    );
+    if (!el) return 0;
+    const num = el.innerText.match(/([\d.]+)\s*(kW|Btu\/h)?/);
+    if (!num) return 0;
+    let value = parseFloat(num[1]);
+    if (num[2] && num[2].includes("Btu")) {
+      value = value / 3412; // convert to kW
+    }
+    return value || 0;
+  };
 
-  // ✅ Convert to refrigeration tons (1 TR = 12000 BTU/hr ≈ 3.517 kW)
+  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
   const tons = totalLoad / 3.517;
 
   const breakdown = [
@@ -44,117 +64,52 @@ export default function LoadCalculatorPage() {
     { label: "Electrical Equipment", key: "electrical" },
   ];
 
-  // ✅ Custom Result Message
-  const getResultMessage = () => {
-    if (tons < 1) return "Small space – a single split AC may be enough.";
-    if (tons < 5) return "Medium load – multiple units or packaged AC recommended.";
-    return "Large load – consider central HVAC system.";
-  };
-
   return (
     <div className="max-w-6xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
       <h1 className="text-3xl font-bold text-blue-600 text-center mb-8">
         HVAC Load Calculators
       </h1>
 
-      {/* ✅ Summary Card */}
-      <div className="p-6 mb-10 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-2xl shadow-md text-center">
-        <h2 className="text-2xl font-semibold mb-2">Total Cooling Load</h2>
-        <p className="text-lg">🔹 {totalLoad.toFixed(2)} kW</p>
-        <p className="text-lg">❄️ {tons.toFixed(2)} Tons of Refrigeration</p>
-      </div>
-
-      {/* ✅ 2-column responsive grid */}
+      {/* ✅ 2-column responsive grid with calculators */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* ✅ External Wall */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            External Wall Heat Transfer
-          </h2>
-          <HeatTransferCalculator1
-            onResult={(val) => handleResultChange("exWall", val)}
-          />
-        </div>
-
-        {/* ✅ Glass */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Glass Heat Transfer
-          </h2>
-          <HeatTransferCalculator2
-            onResult={(val) => handleResultChange("glass", val)}
-          />
-        </div>
-
-        {/* ✅ Roof */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Roof Heat Transfer
-          </h2>
-          <HeatTransferThroughRoof3
-            onResult={(val) => handleResultChange("roof", val)}
-          />
-        </div>
-
-        {/* ✅ Internal Wall */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Internal Wall Heat Transfer
-          </h2>
-          <HeatTransferCalculator7
-            onResult={(val) => handleResultChange("intWall", val)}
-          />
-        </div>
-
-        {/* ✅ Lighting */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Lighting Heat Generation
-          </h2>
-          <HeatGeneratedByLighting4
-            onResult={(val) => handleResultChange("lighting", val)}
-          />
-        </div>
-
-        {/* ✅ People */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            People Heat Gain
-          </h2>
-          <HeatCalculator5
-            onResult={(val) => handleResultChange("people", val)}
-          />
-        </div>
-
-        {/* ✅ Electrical Equipment (full row) */}
-        <div className="p-6 border border-gray-300 rounded-xl shadow bg-gray-50 md:col-span-2">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Electrical Equipment Heat Dissipation
-          </h2>
-          <HeatDissipationCalculator6
-            onResult={(val) => handleResultChange("electrical", val)}
-          />
+        <HeatTransferCalculator1 />
+        <HeatTransferCalculator2 />
+        <HeatTransferThroughRoof3 />
+        <HeatTransferCalculator7 />
+        <HeatGeneratedByLighting4 />
+        <HeatCalculator5 />
+        <div className="md:col-span-2">
+          <HeatDissipationCalculator6 />
         </div>
       </div>
 
-    
-{/* ✅ Simple Breakdown Section */}
-<div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
-  <h2 className="text-2xl font-bold text-gray-800 mb-4">Results</h2>
-  <ul className="mt-2 text-gray-700 space-y-2">
-    {breakdown.map(({ label, key }) => (
-      <li key={key} className="transition-all hover:text-blue-600">
-        <span className="font-medium">{label}:</span> {results[key].toFixed(2)} kW
-      </li>
-    ))}
-  </ul>
+      {/* ✅ Sync Button */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={syncResults}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700"
+        >
+          🔄 Update Results
+        </button>
+      </div>
 
-  {/* ✅ Simple Total */}
-  <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-    Total: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} Tons)
-  </div>
-</div>
+      {/* ✅ Results Section */}
+      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Results</h2>
+        <ul className="mt-2 text-gray-700 space-y-2">
+          {breakdown.map(({ label, key }) => (
+            <li key={key} className="transition-all hover:text-blue-600">
+              <span className="font-medium">{label}:</span>{" "}
+              {results[key].toFixed(2)} kW
+            </li>
+          ))}
+        </ul>
 
+        {/* ✅ Simple Total */}
+        <div className="mt-6 text-center text-2xl font-bold text-blue-700">
+          Total: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} Tons)
+        </div>
+      </div>
     </div>
   );
 }
