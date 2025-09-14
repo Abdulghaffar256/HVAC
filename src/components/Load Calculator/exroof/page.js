@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const roofMaterials = [
   { label: "Steel Sheet with 1-in. Insulation", uValue: 0.213 },
@@ -19,22 +19,30 @@ const roofMaterials = [
   { label: "Other", uValue: null },
 ];
 
-const HeatTransferThroughRoof3 = ({ onCalculate }) => {
+const HeatTransferThroughRoof3 = ({ onCalculate, updateKey }) => {
   const [inputs, setInputs] = useState({
-    length: "",
-    width: "",
-    tempDifference: "",
+    length: 0,
+    width: 0,
+    tempDifference: 0,
     uValue: 0,
   });
 
   const [isCustomUValue, setIsCustomUValue] = useState(false);
   const [result, setResult] = useState(null);
 
+  // 🔹 Reset when parent triggers updateKey
+  useEffect(() => {
+    setInputs({ length: 0, width: 0, tempDifference: 0, uValue: 0 });
+    setIsCustomUValue(false);
+    setResult(null);
+    if (onCalculate) onCalculate(0);
+  }, [updateKey]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: value === "" ? "" : parseFloat(value),
+      [name]: parseFloat(value) || 0,
     }));
   };
 
@@ -44,7 +52,7 @@ const HeatTransferThroughRoof3 = ({ onCalculate }) => {
     );
     if (selectedMaterial?.label === "Other") {
       setIsCustomUValue(true);
-      setInputs((prev) => ({ ...prev, uValue: "" }));
+      setInputs((prev) => ({ ...prev, uValue: 0 }));
     } else {
       setIsCustomUValue(false);
       setInputs((prev) => ({ ...prev, uValue: selectedMaterial?.uValue || 0 }));
@@ -54,7 +62,7 @@ const HeatTransferThroughRoof3 = ({ onCalculate }) => {
   const calculateHeatTransfer = () => {
     const { length, width, tempDifference, uValue } = inputs;
 
-    if (!length || !width || !tempDifference || !uValue || uValue <= 0) {
+    if (length <= 0 || width <= 0 || tempDifference <= 0 || uValue <= 0) {
       alert("Please enter valid values for all fields.");
       return;
     }
