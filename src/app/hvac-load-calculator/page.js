@@ -1,98 +1,94 @@
 "use client";
+import React, { useState, useEffect } from "react";
 
-import { useState } from "react";
+const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
+  const [heatDissipation, setHeatDissipation] = useState(0);
+  const [numEquipment, setNumEquipment] = useState(0);
+  const [totalHeat, setTotalHeat] = useState(null);
 
-// ✅ Import calculators
-import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
-import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
-import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
-import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
-import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
-import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
-import HeatCalculator5 from "@/components/Load Calculator/people/page";
+  // 🔹 Reset when parent changes updateKey
+  useEffect(() => {
+    setHeatDissipation(0);
+    setNumEquipment(0);
+    setTotalHeat(null);
+    if (onCalculate) onCalculate(0); // reset parent state too
+  }, [updateKey]);
 
-export default function LoadCalculatorPage() {
-  const [results, setResults] = useState({});
-  const [resetKey, setResetKey] = useState(0);
+  const calculateHeatDissipation = () => {
+    if (heatDissipation <= 0 || isNaN(heatDissipation)) {
+      alert("Please enter a valid heat dissipation value.");
+      return;
+    }
+    if (numEquipment <= 0 || isNaN(numEquipment)) {
+      alert("Please enter a valid number of equipment.");
+      return;
+    }
 
-  // 🔹 Collect results safely without forcing re-render loops
-  const handleCalculate = (name, value) => {
-    setResults((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const totalHeatGenerated = heatDissipation * numEquipment;
+    setTotalHeat(totalHeatGenerated);
+
+    // 🔥 Send result to parent
+    if (onCalculate) {
+      onCalculate(totalHeatGenerated);
+    }
   };
-
-  // 🔹 Reset all calculators
-  const resetAll = () => {
-    setResults({});
-    setResetKey((k) => k + 1); // forces children to reset
-  };
-
-  // 🔹 Compute total heat dynamically
-  const totalHeat = Object.values(results).reduce((acc, v) => acc + v, 0);
 
   return (
-    <div className="max-w-5xl mx-auto p-8 mt-20 bg-white rounded-2xl shadow-lg">
-      <h1 className="text-3xl font-bold text-blue-600 text-center mb-10">
-        HVAC Load Calculators
+    <div className="p-6 bg-gray-50 rounded-lg shadow-md mb-8">
+      <h1 className="text-2xl font-bold text-blue-600 mb-4">
+        Heat Dissipation by Electric Equipment
       </h1>
 
-      {/* ✅ Reset Button */}
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={resetAll}
-          className="bg-red-500 text-white py-2 px-6 rounded hover:bg-red-600 transition duration-300"
-        >
-          Reset All
-        </button>
-      </div>
-
-      {/* ✅ Sections with child calculators */}
-      <div className="space-y-10">
-        <HeatTransferCalculator1
-          onCalculate={(val) => handleCalculate("wall", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatTransferCalculator2
-          onCalculate={(val) => handleCalculate("glass", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatTransferThroughRoof3
-          onCalculate={(val) => handleCalculate("roof", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatTransferCalculator7
-          onCalculate={(val) => handleCalculate("intwall", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatGeneratedByLighting4
-          onCalculate={(val) => handleCalculate("lighting", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatCalculator5
-          onCalculate={(val) => handleCalculate("people", val)}
-          updateKey={resetKey}
-        />
-
-        <HeatDissipationCalculator6
-          onCalculate={(val) => handleCalculate("equipment", val)}
-          updateKey={resetKey}
+      {/* Heat Dissipation Input */}
+      <div className="mb-4">
+        <label className="block mb-1 font-medium">
+          Heat Dissipation per Equipment (Btu/h):
+        </label>
+        <input
+          type="number"
+          value={heatDissipation}
+          onChange={(e) => setHeatDissipation(parseFloat(e.target.value) || 0)}
+          className="w-full p-2 border rounded"
+          min="0"
         />
       </div>
 
-      {/* ✅ Simple Total Result */}
-      <div className="mt-10 p-6 bg-blue-50 rounded-lg shadow-inner text-center">
-        <h2 className="text-2xl font-bold text-blue-700">Total Load</h2>
-        <p className="text-lg mt-2">
-          <strong>{totalHeat.toFixed(2)} Btu/h</strong>
-        </p>
+      {/* Equipment Count */}
+      <div className="mb-4">
+        <label className="block mb-1 font-medium">Number of Equipment:</label>
+        <input
+          type="number"
+          value={numEquipment}
+          onChange={(e) => setNumEquipment(parseFloat(e.target.value) || 0)}
+          className="w-full p-2 border rounded"
+          min="1"
+        />
+      </div>
+
+      {/* Calculate Button */}
+      <button
+        onClick={calculateHeatDissipation}
+        className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
+      >
+        Calculate Heat Dissipation
+      </button>
+
+      {/* Result Section */}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-2">Result</h2>
+        {totalHeat !== null ? (
+          <p className="text-lg">
+            Total Heat Dissipation:{" "}
+            <strong>{totalHeat.toFixed(2)} Btu/h</strong>
+          </p>
+        ) : (
+          <p className="text-gray-600">
+            Enter values to calculate heat dissipation.
+          </p>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default HeatDissipationCalculator6;
