@@ -103,13 +103,7 @@ export default function LoadCalculatorPage() {
         />
       </div>
 
-      {/* ✅ Simple Total Result */}
-      <div className="mt-10 p-6 bg-blue-50 rounded-lg shadow-inner text-center">
-        <h2 className="text-2xl font-bold text-blue-700">Total Load</h2>
-        <p className="text-lg mt-2">
-          <strong>{totalHeat.toFixed(2)} Btu/h</strong>
-        </p>
-      </div>
+    
     </div>
   );
 }
