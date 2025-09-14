@@ -137,31 +137,7 @@ export default function LoadCalculatorPage() {
         </div>
       </div>
 
-      {/* ✅ Load Breakdown */}
-      <div className="p-6 mt-10 border border-gray-300 rounded-xl shadow bg-gray-50">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">
-          Load Breakdown
-        </h2>
-        <ul className="space-y-2">
-          {breakdown.map((item) => {
-            const value = results[item.key];
-            const percent =
-              totalLoad > 0 ? ((value / totalLoad) * 100).toFixed(1) : 0;
-            return (
-              <li
-                key={item.key}
-                className="flex justify-between border-b border-gray-200 pb-2"
-              >
-                <span className="font-medium text-gray-700">{item.label}</span>
-                <span className="text-gray-600">
-                  {value.toFixed(2)} kW ({percent}%)
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
+    
       {/* ✅ Detailed Breakdown Section */}
       <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
