@@ -138,52 +138,23 @@ export default function LoadCalculatorPage() {
       </div>
 
     
- {/* Detailed Breakdown */}
+{/* ✅ Simple Breakdown Section */}
 <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
-  <h2 className="text-2xl font-bold text-gray-800 mb-4">Detailed Breakdown</h2>
+  <h2 className="text-2xl font-bold text-gray-800 mb-4">Results</h2>
+  <ul className="mt-2 text-gray-700 space-y-2">
+    {calculators.map(({ id, label }) => (
+      <li key={id} className="transition-all hover:text-blue-600">
+        <span className="font-medium">{label}:</span> {heatValues[id].toFixed(2)}
+      </li>
+    ))}
+  </ul>
 
-  <div className="overflow-x-auto">
-    <table className="min-w-full border border-gray-200 rounded-lg">
-      <thead className="bg-blue-100">
-        <tr>
-          <th className="px-6 py-3 text-left text-gray-800 font-semibold border-b">
-            Component
-          </th>
-          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
-            Heat Load
-          </th>
-          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
-            Contribution (%)
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {breakdown.map(({ label, key }) => {
-          const value = results[key];
-          const percent =
-            totalLoad > 0 ? ((value / totalLoad) * 100).toFixed(2) : "0.00";
-          return (
-            <tr key={key} className="hover:bg-gray-50">
-              <td className="px-6 py-3 border-b font-medium">{label}</td>
-              <td className="px-6 py-3 border-b text-center">{value.toFixed(2)}</td>
-              <td className="px-6 py-3 border-b text-center">{percent}%</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  </div>
-
-  {/* Result */}
-  <div className="mt-6 bg-green-100 p-4 rounded-lg shadow-sm border-l-4 border-green-500">
-    <h3 className="text-xl font-semibold text-green-700">Result</h3>
-    <p className="text-lg font-medium text-gray-700">{getResultMessage()}</p>
-  </div>
-
+  {/* ✅ Simple Total */}
   <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-    Total Cooling Load: {totalLoad.toFixed(2)}
+    Total: {totalAmount}
   </div>
 </div>
+
 
     </div>
   );
