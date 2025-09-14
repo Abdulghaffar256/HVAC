@@ -138,7 +138,7 @@ export default function LoadCalculatorPage() {
       </div>
 
     
-   {/* Detailed Breakdown */}
+  {/* Detailed Breakdown */}
 <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
   <h2 className="text-2xl font-bold text-gray-800 mb-4">Detailed Breakdown</h2>
 
@@ -146,23 +146,32 @@ export default function LoadCalculatorPage() {
     <table className="min-w-full border border-gray-200 rounded-lg">
       <thead className="bg-blue-100">
         <tr>
-          <th className="px-6 py-3 text-left text-gray-800 font-semibold border-b">Component</th>
-          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">Heat Load (BTU/h)</th>
-          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">Contribution (%)</th>
+          <th className="px-6 py-3 text-left text-gray-800 font-semibold border-b">
+            Component
+          </th>
+          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
+            Heat Load (kW)
+          </th>
+          <th className="px-6 py-3 text-center text-gray-800 font-semibold border-b">
+            Contribution (%)
+          </th>
         </tr>
       </thead>
       <tbody>
-        {calculators.map(({ id, label }) => (
-          <tr key={id} className="hover:bg-gray-50">
-            <td className="px-6 py-3 border-b font-medium">{label}</td>
-            <td className="px-6 py-3 border-b text-center">{heatValues[id].toFixed(2)}</td>
-            <td className="px-6 py-3 border-b text-center">
-              {totalCombinedHeat > 0
-                ? ((heatValues[id] / totalCombinedHeat) * 100).toFixed(2) + "%"
-                : "0.00%"}
-            </td>
-          </tr>
-        ))}
+        {breakdown.map(({ label, key }) => {
+          const value = results[key];
+          const percent =
+            totalLoad > 0 ? ((value / totalLoad) * 100).toFixed(2) : "0.00";
+          return (
+            <tr key={key} className="hover:bg-gray-50">
+              <td className="px-6 py-3 border-b font-medium">{label}</td>
+              <td className="px-6 py-3 border-b text-center">
+                {value.toFixed(2)}
+              </td>
+              <td className="px-6 py-3 border-b text-center">{percent}%</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   </div>
@@ -174,10 +183,9 @@ export default function LoadCalculatorPage() {
   </div>
 
   <div className="mt-6 text-center text-2xl font-bold text-blue-700">
-    Total Heat Load: {totalAmount} BTU/h
+    Total Cooling Load: {totalLoad.toFixed(2)} kW ({tons.toFixed(2)} TR)
   </div>
 </div>
-
 
     </div>
   );
