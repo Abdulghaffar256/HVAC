@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 
 // Material options
 const materials = [
@@ -15,46 +16,71 @@ const materials = [
 // Direction options
 const directions = ["North", "South", "East", "West", "Horizontal"];
 
-const HeatTransferCalculator1 = ({ onCalculate }) => {
+const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
   const [inputs, setInputs] = useState({
     length: 0,
     height: 0,
     tempDifference: 0,
     uValue: 0,
-    direction: "", // new field
+    direction: "",
   });
+  const [result, setResult] = useState(null);
 
-  const [result, setResult] = useState(0);
+  // 🔹 Reset when parent changes updateKey
+  useEffect(() => {
+    setInputs({
+      length: 0,
+      height: 0,
+      tempDifference: 0,
+      uValue: 0,
+      direction: "",
+    });
+    setResult(null);
+    if (onCalculate) onCalculate(0); // Reset parent too
+  }, [updateKey]);
 
   // Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: parseFloat(value) || value }));
+    setInputs((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
   };
 
-  // U-Value change handler
+  // Material selection
   const handleMaterialChange = (e) => {
-    const selectedMaterial = materials.find((mat) => mat.label === e.target.value);
+    const selectedMaterial = materials.find(
+      (mat) => mat.label === e.target.value
+    );
     setInputs((prev) => ({ ...prev, uValue: selectedMaterial?.uValue || 0 }));
   };
 
   // Manual calculation
   const calculateHeatTransfer = () => {
-    const { length, height, tempDifference, uValue, direction } = inputs;
+    const { length, height, tempDifference, uValue } = inputs;
+    if (length <= 0 || height <= 0 || tempDifference === 0 || uValue === 0) {
+      alert("Please fill in all values correctly.");
+      return;
+    }
     const area = length * height;
     const heatTransfer = uValue * area * tempDifference;
     setResult(heatTransfer);
-    if (onCalculate) onCalculate({ heatTransfer, direction });
+
+    // 🔥 Send only number to parent (consistent with other children)
+    if (onCalculate) onCalculate(heatTransfer);
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Heat Transfer - Exterior Wall</h2>
+      <h2 className="text-xl font-semibold mb-4">
+        Heat Transfer - Exterior Wall
+      </h2>
 
       {/* Material Selection */}
       <div className="mb-4">
         <label className="block mb-1 font-medium">Select Material:</label>
-        <select onChange={handleMaterialChange} className="w-full p-2 border rounded">
+        <select
+          onChange={handleMaterialChange}
+          className="w-full p-2 border rounded"
+        >
           <option value="">-- Select Material --</option>
           {materials.map((material, index) => (
             <option key={index} value={material.label}>
@@ -108,7 +134,9 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
 
       {/* Temperature Difference */}
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Temperature Difference (°F):</label>
+        <label className="block mb-1 font-medium">
+          Temperature Difference (°F):
+        </label>
         <input
           type="number"
           name="tempDifference"
@@ -131,11 +159,12 @@ const HeatTransferCalculator1 = ({ onCalculate }) => {
       {/* Result */}
       <div className="bg-gray-100 p-4 rounded-lg mt-4">
         <h3 className="text-lg font-semibold">Heat Transfer:</h3>
-        <p className="text-xl font-bold text-blue-600">{result.toFixed(2)} BTU/hr</p>
-        {inputs.direction && (
-          <p className="mt-2 text-gray-700">
-            <span className="font-medium">Direction:</span> {inputs.direction}
+        {result !== null ? (
+          <p className="text-xl font-bold text-blue-600">
+            {result.toFixed(2)} BTU/hr
           </p>
+        ) : (
+          <p className="text-gray-600">Enter values to calculate.</p>
         )}
       </div>
     </div>
