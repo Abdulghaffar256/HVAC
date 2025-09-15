@@ -8,14 +8,14 @@ import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
 import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
-import HeatCalculator5 from "@/components/Load Calculator/people/page"; // ✅ Added
+import HeatCalculator5 from "@/components/Load Calculator/people/page";
 
 export default function LoadCalculatorPage() {
   const [resetKey, setResetKey] = useState(0);
 
-  // ✅ State to store results from all calculators
+  // ✅ State to store results (allow object for exwall)
   const [results, setResults] = useState({
-    exwall: 0,
+    exwall: {}, // per-direction results
     exglass: 0,
     roof: 0,
     intwall: 0,
@@ -29,14 +29,19 @@ export default function LoadCalculatorPage() {
     setResults((prev) => ({ ...prev, [key]: value }));
   };
 
-  // ✅ Calculate total
-  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
+  // ✅ Calculate total (flatten object values if needed)
+  const totalLoad = Object.values(results).reduce((sum, val) => {
+    if (typeof val === "object" && val !== null) {
+      return sum + Object.values(val).reduce((a, b) => a + b, 0);
+    }
+    return sum + val;
+  }, 0);
 
   // ✅ Handle Recalculate
   const handleRecalculate = () => {
     setResetKey((prev) => prev + 1);
     setResults({
-      exwall: 0,
+      exwall: {},
       exglass: 0,
       roof: 0,
       intwall: 0,
@@ -48,16 +53,29 @@ export default function LoadCalculatorPage() {
 
   // ✅ Handle Download
   const handleDownload = () => {
-    const content = `HVAC Load Calculation Report\n
-- Exterior Walls: ${results.exwall} BTU\n
-- Exterior Glass: ${results.exglass} BTU\n
-- Roof Heat Gain: ${results.roof} BTU\n
-- Interior Walls: ${results.intwall} BTU\n
-- Lighting Heat Gain: ${results.light} BTU\n
-- People Heat Gain: ${results.people} BTU\n
-- Electrical Equipment Heat Gain: ${results.ele} BTU\n
----------------------------------------\n
-Total Load: ${totalLoad} BTU\n`;
+    let content = `HVAC Load Calculation Report\n`;
+
+    // Exterior walls breakdown
+    content += `\n- Exterior Walls:\n`;
+    if (Object.keys(results.exwall).length > 0) {
+      for (const [dir, val] of Object.entries(results.exwall)) {
+        content += `   • ${dir}: ${val.toFixed(2)} BTU\n`;
+      }
+    } else {
+      content += `   • 0 BTU\n`;
+    }
+
+    // Other loads
+    content += `
+- Exterior Glass: ${results.exglass} BTU
+- Roof Heat Gain: ${results.roof} BTU
+- Interior Walls: ${results.intwall} BTU
+- Lighting Heat Gain: ${results.light} BTU
+- People Heat Gain: ${results.people} BTU
+- Electrical Equipment Heat Gain: ${results.ele} BTU
+---------------------------------------
+Total Load: ${totalLoad} BTU
+`;
 
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -74,7 +92,7 @@ Total Load: ${totalLoad} BTU\n`;
         HVAC Load Calculators
       </h1>
 
-      {/* ✅ Grid Layout with updateKey passed to children */}
+      {/* ✅ Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <HeatTransferCalculator1
           onResultChange={(v) => handleResultChange("exwall", v)}
@@ -112,13 +130,61 @@ Total Load: ${totalLoad} BTU\n`;
           Load Breakdown
         </h2>
         <ul className="space-y-2 text-gray-800 text-lg">
-          <li>Exterior Walls: <span className="font-semibold">{results.exwall.toLocaleString()} BTU</span></li>
-          <li>Exterior Glass: <span className="font-semibold">{results.exglass.toLocaleString()} BTU</span></li>
-          <li>Roof Heat Gain: <span className="font-semibold">{results.roof.toLocaleString()} BTU</span></li>
-          <li>Interior Walls: <span className="font-semibold">{results.intwall.toLocaleString()} BTU</span></li>
-          <li>Lighting Heat Gain: <span className="font-semibold">{results.light.toLocaleString()} BTU</span></li>
-          <li>People Heat Gain: <span className="font-semibold">{results.people.toLocaleString()} BTU</span></li>
-          <li>Electrical Equipment Heat Gain: <span className="font-semibold">{results.ele.toLocaleString()} BTU</span></li>
+          {/* Exterior Walls */}
+          <li>
+            <span className="font-semibold">Exterior Walls:</span>
+            {Object.keys(results.exwall).length > 0 ? (
+              <ul className="ml-6 list-disc">
+                {Object.entries(results.exwall).map(([dir, val]) => (
+                  <li key={dir}>
+                    {dir}:{" "}
+                    <span className="font-semibold">
+                      {val.toLocaleString()} BTU
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <span className="font-semibold"> 0 BTU</span>
+            )}
+          </li>
+
+          <li>
+            Exterior Glass:{" "}
+            <span className="font-semibold">
+              {results.exglass.toLocaleString()} BTU
+            </span>
+          </li>
+          <li>
+            Roof Heat Gain:{" "}
+            <span className="font-semibold">
+              {results.roof.toLocaleString()} BTU
+            </span>
+          </li>
+          <li>
+            Interior Walls:{" "}
+            <span className="font-semibold">
+              {results.intwall.toLocaleString()} BTU
+            </span>
+          </li>
+          <li>
+            Lighting Heat Gain:{" "}
+            <span className="font-semibold">
+              {results.light.toLocaleString()} BTU
+            </span>
+          </li>
+          <li>
+            People Heat Gain:{" "}
+            <span className="font-semibold">
+              {results.people.toLocaleString()} BTU
+            </span>
+          </li>
+          <li>
+            Electrical Equipment Heat Gain:{" "}
+            <span className="font-semibold">
+              {results.ele.toLocaleString()} BTU
+            </span>
+          </li>
         </ul>
       </div>
 
@@ -127,7 +193,7 @@ Total Load: ${totalLoad} BTU\n`;
         Total Load: {totalLoad.toLocaleString()} BTU
       </div>
 
-      {/* ✅ Action Buttons (moved to bottom) */}
+      {/* ✅ Action Buttons */}
       <div className="flex justify-center gap-4 mt-8">
         <button
           onClick={handleRecalculate}
