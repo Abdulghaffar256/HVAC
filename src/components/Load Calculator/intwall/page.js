@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 
 // Material options with U-values
@@ -11,7 +10,7 @@ const materials = [
   { label: "Frame Wall with Insulation", uValue: 0.178 },
 ];
 
-const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
+const HeatTransferCalculator = ({ onResultChange, updateKey }) => {
   const [inputs, setInputs] = useState({
     length: "",
     height: "",
@@ -30,7 +29,7 @@ const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
       uValue: 0,
     });
     setHeatTransfer(null);
-    if (typeof onCalculate === "function") onCalculate(0); // reset parent too
+    if (typeof onResultChange === "function") onResultChange(0); // reset parent
   }, [updateKey]);
 
   // Handle input changes
@@ -60,12 +59,12 @@ const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
       const calculatedHeat = uValue * area * tempDifference;
       setHeatTransfer(calculatedHeat);
 
-      if (typeof onCalculate === "function") {
-        onCalculate(calculatedHeat); // 🔥 send only number (consistent with others)
+      if (typeof onResultChange === "function") {
+        onResultChange(calculatedHeat); // 🔥 send only number to parent
       }
     } else {
       setHeatTransfer(null);
-      if (typeof onCalculate === "function") onCalculate(0);
+      if (typeof onResultChange === "function") onResultChange(0);
     }
   };
 
@@ -75,6 +74,7 @@ const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
         Heat Transfer Through Partition Wall
       </h1>
 
+      {/* Material Selection */}
       <div className="mb-4">
         <label className="block mb-1 font-medium">Select Material:</label>
         <select
@@ -129,6 +129,7 @@ const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
         />
       </div>
 
+      {/* Calculate Button */}
       <button
         onClick={calculateHeatTransfer}
         className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
@@ -136,6 +137,7 @@ const HeatTransferCalculator = ({ onCalculate, updateKey }) => {
         Calculate Heat Transfer
       </button>
 
+      {/* Result */}
       <div className="mt-6 bg-gray-100 p-4 rounded-lg">
         <h2 className="text-lg font-semibold">Result:</h2>
         {heatTransfer !== null ? (
