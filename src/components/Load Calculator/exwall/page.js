@@ -16,7 +16,7 @@ const materials = [
 // Direction options
 const directions = ["North", "South", "East", "West", "Horizontal"];
 
-const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
+const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
   const [inputs, setInputs] = useState({
     length: 0,
     height: 0,
@@ -36,13 +36,18 @@ const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
       direction: "",
     });
     setResult(null);
-    if (onCalculate) onCalculate(0); // Reset parent too
+    if (onResultChange) onResultChange(0); // Reset parent total
   }, [updateKey]);
 
   // Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    setInputs((prev) => ({
+      ...prev,
+      [name]: name === "length" || name === "height" || name === "tempDifference"
+        ? parseFloat(value) || 0
+        : value,
+    }));
   };
 
   // Material selection
@@ -56,7 +61,7 @@ const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
   // Manual calculation
   const calculateHeatTransfer = () => {
     const { length, height, tempDifference, uValue } = inputs;
-    if (length <= 0 || height <= 0 || tempDifference === 0 || uValue === 0) {
+    if (length <= 0 || height <= 0 || tempDifference <= 0 || uValue <= 0) {
       alert("Please fill in all values correctly.");
       return;
     }
@@ -64,15 +69,12 @@ const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
     const heatTransfer = uValue * area * tempDifference;
     setResult(heatTransfer);
 
-    // 🔥 Send only number to parent (consistent with other children)
-    if (onCalculate) onCalculate(heatTransfer);
+    if (onResultChange) onResultChange(heatTransfer); // Send result to parent
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">
-        Heat Transfer - Exterior Wall
-      </h2>
+      <h2 className="text-xl font-semibold mb-4">Heat Transfer - Exterior Wall</h2>
 
       {/* Material Selection */}
       <div className="mb-4">
@@ -160,9 +162,7 @@ const HeatTransferCalculator1 = ({ onCalculate, updateKey }) => {
       <div className="bg-gray-100 p-4 rounded-lg mt-4">
         <h3 className="text-lg font-semibold">Heat Transfer:</h3>
         {result !== null ? (
-          <p className="text-xl font-bold text-blue-600">
-            {result.toFixed(2)} BTU/hr
-          </p>
+          <p className="text-xl font-bold text-blue-600">{result.toFixed(2)} BTU/hr</p>
         ) : (
           <p className="text-gray-600">Enter values to calculate.</p>
         )}
