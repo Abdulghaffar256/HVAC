@@ -19,37 +19,38 @@ const roofMaterials = [
   { label: "Other", uValue: null },
 ];
 
+const directions = ["North", "South", "East", "West", "Horizontal"];
+
 const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
+  const [entries, setEntries] = useState([]);
   const [inputs, setInputs] = useState({
+    direction: "Horizontal",
     length: 0,
     width: 0,
     tempDifference: 0,
     uValue: 0,
   });
-
   const [isCustomUValue, setIsCustomUValue] = useState(false);
-  const [result, setResult] = useState(null);
 
   // 🔹 Reset when parent triggers updateKey
   useEffect(() => {
-    setInputs({ length: 0, width: 0, tempDifference: 0, uValue: 0 });
+    setEntries([]);
+    setInputs({ direction: "Horizontal", length: 0, width: 0, tempDifference: 0, uValue: 0 });
     setIsCustomUValue(false);
-    setResult(null);
-    if (onResultChange) onResultChange(0); // notify parent reset
+    if (onResultChange) onResultChange({});
   }, [updateKey]);
 
+  // 🔹 Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: parseFloat(value) || 0,
+      [name]: name === "direction" ? value : parseFloat(value) || 0,
     }));
   };
 
   const handleMaterialChange = (e) => {
-    const selectedMaterial = roofMaterials.find(
-      (mat) => mat.label === e.target.value
-    );
+    const selectedMaterial = roofMaterials.find((mat) => mat.label === e.target.value);
     if (selectedMaterial?.label === "Other") {
       setIsCustomUValue(true);
       setInputs((prev) => ({ ...prev, uValue: 0 }));
@@ -59,8 +60,9 @@ const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
     }
   };
 
-  const calculateHeatTransfer = () => {
-    const { length, width, tempDifference, uValue } = inputs;
+  // 🔹 Add entry per direction
+  const addEntry = () => {
+    const { direction, length, width, tempDifference, uValue } = inputs;
 
     if (length <= 0 || width <= 0 || tempDifference <= 0 || uValue <= 0) {
       alert("Please enter valid values for all fields.");
@@ -69,11 +71,12 @@ const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
 
     const area = length * width;
     const heatTransfer = uValue * area * tempDifference;
-    setResult(heatTransfer);
 
-    if (onResultChange) {
-      onResultChange(heatTransfer);
-    }
+    setEntries((prev) => {
+      const updated = { ...prev, [direction]: heatTransfer };
+      if (onResultChange) onResultChange(updated);
+      return updated;
+    });
   };
 
   return (
@@ -82,13 +85,27 @@ const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
         Heat Transfer Through Roof
       </h1>
 
+      {/* Direction Selection */}
+      <div className="mb-4">
+        <label className="block mb-1 font-medium">Select Direction:</label>
+        <select
+          name="direction"
+          value={inputs.direction}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        >
+          {directions.map((dir, index) => (
+            <option key={index} value={dir}>
+              {dir}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Material Selection */}
       <div className="mb-4">
         <label className="block mb-1 font-medium">Select Roof Material:</label>
-        <select
-          onChange={handleMaterialChange}
-          className="w-full p-2 border rounded"
-        >
+        <select onChange={handleMaterialChange} className="w-full p-2 border rounded">
           <option value="">-- Select Material --</option>
           {roofMaterials.map((material, index) => (
             <option key={index} value={material.label}>
@@ -160,22 +177,28 @@ const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
       {/* Button */}
       <div className="flex justify-center mb-6">
         <button
-          onClick={calculateHeatTransfer}
+          onClick={addEntry}
           className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
         >
-          Calculate Heat Transfer
+          Add Direction Heat Transfer
         </button>
       </div>
 
-      {/* Result */}
+      {/* Results */}
       <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Result</h2>
-        {result !== null ? (
-          <p className="text-lg">
-            Heat Transfer (Q): <strong>{result.toFixed(2)} BTU/hr</strong>
-          </p>
+        <h2 className="text-xl font-semibold mb-2">Results</h2>
+        {Object.keys(entries).length > 0 ? (
+          <ul className="list-disc ml-6">
+            {Object.entries(entries).map(([dir, val]) => (
+              <li key={dir}>
+                {dir}: <strong>{val.toFixed(2)} BTU/hr</strong>
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p className="text-gray-600">Enter values to calculate heat transfer.</p>
+          <p className="text-gray-600">
+            Select values and click "Add Direction Heat Transfer".
+          </p>
         )}
       </div>
     </div>
