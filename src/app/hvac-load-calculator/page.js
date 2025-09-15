@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import HeatDissipationCalculator6 from "@/components/Load Calculator/ele/page";
 import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
+import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page"; // ✅ Added
 
 export default function LoadCalculatorPage() {
   const [resetKey, setResetKey] = useState(0);
@@ -11,6 +12,7 @@ export default function LoadCalculatorPage() {
   // ✅ State to store results from all calculators
   const [results, setResults] = useState({
     exwall: 0,
+    exglass: 0, // ✅ New
     ele: 0,
   });
 
@@ -27,6 +29,7 @@ export default function LoadCalculatorPage() {
     setResetKey((prev) => prev + 1);
     setResults({
       exwall: 0,
+      exglass: 0, // ✅ Reset too
       ele: 0,
     });
   };
@@ -35,6 +38,7 @@ export default function LoadCalculatorPage() {
   const handleDownload = () => {
     const content = `HVAC Load Calculation Report\n
 - Exterior Walls: ${results.exwall} BTU\n
+- Exterior Glass: ${results.exglass} BTU\n
 - Electrical Equipment Heat Gain: ${results.ele} BTU\n
 ---------------------------------------\n
 Total Load: ${totalLoad} BTU\n`;
@@ -76,6 +80,10 @@ Total Load: ${totalLoad} BTU\n`;
           onResultChange={(v) => handleResultChange("exwall", v)}
           updateKey={resetKey}
         />
+        <HeatTransferCalculator2
+          onResultChange={(v) => handleResultChange("exglass", v)}
+          updateKey={resetKey}
+        />
         <HeatDissipationCalculator6
           onResultChange={(v) => handleResultChange("ele", v)}
           updateKey={resetKey}
@@ -89,4 +97,3 @@ Total Load: ${totalLoad} BTU\n`;
     </div>
   );
 }
-
