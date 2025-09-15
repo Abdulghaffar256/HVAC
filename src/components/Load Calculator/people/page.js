@@ -50,10 +50,9 @@ const HeatCalculator5 = ({ onResultChange, updateKey }) => {
     }));
   };
 
-  // Calculate heat whenever inputs change
-  useEffect(() => {
+  // 🔹 Calculate heat only when button clicked
+  const handleCalculate = () => {
     const { activity, numPeople, manualHeat } = inputs;
-
     let calculatedHeat = 0;
 
     if (manualHeat > 0) {
@@ -68,7 +67,7 @@ const HeatCalculator5 = ({ onResultChange, updateKey }) => {
     if (typeof onResultChange === "function") {
       onResultChange(calculatedHeat);
     }
-  }, [inputs, onResultChange]);
+  };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
@@ -124,15 +123,23 @@ const HeatCalculator5 = ({ onResultChange, updateKey }) => {
         />
       </div>
 
+      {/* Calculate Button */}
+      <button
+        onClick={handleCalculate}
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        Calculate
+      </button>
+
       {/* Result */}
-      <div className="bg-gray-100 p-4 rounded-lg">
+      <div className="bg-gray-100 p-4 rounded-lg mt-4">
         {totalHeat > 0 ? (
           <p>
             Total Heat Load: <strong>{totalHeat.toFixed(2)} BTU/h</strong>
           </p>
         ) : (
           <p className="text-gray-600">
-            Enter details to calculate heat load.
+            Enter details and click calculate to see result.
           </p>
         )}
       </div>
