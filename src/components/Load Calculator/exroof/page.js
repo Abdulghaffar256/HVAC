@@ -19,7 +19,7 @@ const roofMaterials = [
   { label: "Other", uValue: null },
 ];
 
-const HeatTransferThroughRoof3 = ({ onCalculate, updateKey }) => {
+const HeatTransferThroughRoof3 = ({ onResultChange, updateKey }) => {
   const [inputs, setInputs] = useState({
     length: 0,
     width: 0,
@@ -35,7 +35,7 @@ const HeatTransferThroughRoof3 = ({ onCalculate, updateKey }) => {
     setInputs({ length: 0, width: 0, tempDifference: 0, uValue: 0 });
     setIsCustomUValue(false);
     setResult(null);
-    if (onCalculate) onCalculate(0);
+    if (onResultChange) onResultChange(0); // notify parent reset
   }, [updateKey]);
 
   const handleChange = (e) => {
@@ -71,7 +71,9 @@ const HeatTransferThroughRoof3 = ({ onCalculate, updateKey }) => {
     const heatTransfer = uValue * area * tempDifference;
     setResult(heatTransfer);
 
-    if (onCalculate) onCalculate(heatTransfer);
+    if (onResultChange) {
+      onResultChange(heatTransfer);
+    }
   };
 
   return (
