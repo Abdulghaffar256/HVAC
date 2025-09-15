@@ -3,32 +3,33 @@
 import React, { useState, useEffect } from "react";
 
 const HeatTransferCalculator2 = ({ onResultChange, updateKey }) => {
-  const [glassInputs, setGlassInputs] = useState([
-    {
-      direction: "South",
-      length: 0,
-      height: 0,
-      shgf: "20° N",
-      sc: "Clear Glass Without Shading",
-      clf: "S",
-    },
-  ]);
+  // ✅ Fixed directions like exwall
+  const directions = ["North", "South", "East", "West", "Horizontal"];
 
-  const [results, setResults] = useState([]);
+  const [inputs, setInputs] = useState(
+    directions.reduce(
+      (acc, dir) => ({
+        ...acc,
+        [dir]: { length: 0, height: 0, shgf: "20° N", sc: "Clear Glass Without Shading", clf: "N" },
+      }),
+      {}
+    )
+  );
+
+  const [results, setResults] = useState({});
 
   // 🔹 Reset when parent triggers updateKey
   useEffect(() => {
-    setGlassInputs([
-      {
-        direction: "South",
-        length: 0,
-        height: 0,
-        shgf: "20° N",
-        sc: "Clear Glass Without Shading",
-        clf: "S",
-      },
-    ]);
-    setResults([]);
+    setInputs(
+      directions.reduce(
+        (acc, dir) => ({
+          ...acc,
+          [dir]: { length: 0, height: 0, shgf: "20° N", sc: "Clear Glass Without Shading", clf: "N" },
+        }),
+        {}
+      )
+    );
+    setResults({});
     if (onResultChange) onResultChange(0);
   }, [updateKey]);
 
@@ -62,121 +63,73 @@ const HeatTransferCalculator2 = ({ onResultChange, updateKey }) => {
     H: 0.65, // 🔹 Horizontal (roof windows/skylights)
   };
 
-  const directions = ["North", "South", "East", "West", "Horizontal"];
-
-  const handleChange = (index, e) => {
-    const { name, value } = e.target;
-    setGlassInputs((prev) =>
-      prev.map((item, i) =>
-        i === index
-          ? {
-              ...item,
-              [name]:
-                name === "length" || name === "height"
-                  ? parseFloat(value) || 0
-                  : value,
-            }
-          : item
-      )
-    );
-  };
-
-  const addDirection = () => {
-    setGlassInputs((prev) => [
+  const handleChange = (dir, field, value) => {
+    setInputs((prev) => ({
       ...prev,
-      {
-        direction: "North",
-        length: 0,
-        height: 0,
-        shgf: "20° N",
-        sc: "Clear Glass Without Shading",
-        clf: "N",
+      [dir]: {
+        ...prev[dir],
+        [field]: field === "length" || field === "height" ? parseFloat(value) || 0 : value,
       },
-    ]);
+    }));
   };
 
   const calculateHeatTransfer = () => {
-    const calcResults = glassInputs.map((glass) => {
-      const { length, height, shgf, sc, clf, direction } = glass;
+    const calcResults = {};
+    let total = 0;
 
-      if (length <= 0 || height <= 0) return { direction, value: 0 };
-
-      const area = length * height;
-      const selectedSHGF = shgfValues[shgf] || 0;
-      const selectedSC = shadingCoefficients[sc] || 1;
-      const selectedCLF = clfValues[clf] || 1;
-
-      const heatTransfer = selectedSHGF * area * selectedSC * selectedCLF;
-      return { direction, value: heatTransfer };
+    directions.forEach((dir) => {
+      const { length, height, shgf, sc, clf } = inputs[dir];
+      if (length > 0 && height > 0) {
+        const area = length * height;
+        const q = (shgfValues[shgf] || 0) * area * (shadingCoefficients[sc] || 1) * (clfValues[clf] || 1);
+        calcResults[dir] = q;
+        total += q;
+      } else {
+        calcResults[dir] = 0;
+      }
     });
 
     setResults(calcResults);
-
-    const total = calcResults.reduce((sum, r) => sum + r.value, 0);
     if (onResultChange) onResultChange(total);
   };
+
+  const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
 
   return (
     <div className="p-6 bg-gray-50 rounded-lg shadow-md mb-8">
       <h1 className="text-2xl font-bold text-blue-600 mb-4">
-        Heat Transfer Through Exterior Glass (Multi-Direction)
+        Heat Transfer Through Exterior Glass
       </h1>
 
-      {glassInputs.map((glass, index) => (
-        <div
-          key={index}
-          className="border p-4 mb-4 rounded-lg bg-white shadow-sm"
-        >
-          <h2 className="font-semibold mb-2">
-            Glass Section {index + 1} ({glass.direction})
-          </h2>
+      {directions.map((dir) => (
+        <div key={dir} className="border p-4 mb-4 rounded-lg bg-white shadow-sm">
+          <h2 className="font-semibold mb-2">{dir} Glass</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block mb-1 font-medium">Direction:</label>
-              <select
-                name="direction"
-                value={glass.direction}
-                onChange={(e) => handleChange(index, e)}
-                className="w-full p-2 border rounded"
-              >
-                {directions.map((dir) => (
-                  <option key={dir} value={dir}>
-                    {dir}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             <div>
               <label className="block mb-1 font-medium">Length (ft):</label>
               <input
                 type="number"
-                name="length"
-                value={glass.length}
-                onChange={(e) => handleChange(index, e)}
+                value={inputs[dir].length}
+                onChange={(e) => handleChange(dir, "length", e.target.value)}
                 className="w-full p-2 border rounded"
                 min="0"
               />
             </div>
-
             <div>
               <label className="block mb-1 font-medium">Height (ft):</label>
               <input
                 type="number"
-                name="height"
-                value={glass.height}
-                onChange={(e) => handleChange(index, e)}
+                value={inputs[dir].height}
+                onChange={(e) => handleChange(dir, "height", e.target.value)}
                 className="w-full p-2 border rounded"
                 min="0"
               />
             </div>
-
             <div>
               <label className="block mb-1 font-medium">SHGF Latitude:</label>
               <select
-                name="shgf"
-                value={glass.shgf}
-                onChange={(e) => handleChange(index, e)}
+                value={inputs[dir].shgf}
+                onChange={(e) => handleChange(dir, "shgf", e.target.value)}
                 className="w-full p-2 border rounded"
               >
                 {Object.keys(shgfValues).map((lat) => (
@@ -186,72 +139,53 @@ const HeatTransferCalculator2 = ({ onResultChange, updateKey }) => {
                 ))}
               </select>
             </div>
-
             <div>
-              <label className="block mb-1 font-medium">
-                Shading Coefficient:
-              </label>
+              <label className="block mb-1 font-medium">Shading Coefficient:</label>
               <select
-                name="sc"
-                value={glass.sc}
-                onChange={(e) => handleChange(index, e)}
+                value={inputs[dir].sc}
+                onChange={(e) => handleChange(dir, "sc", e.target.value)}
                 className="w-full p-2 border rounded"
               >
-                {Object.keys(shadingCoefficients).map((type) => (
-                  <option key={type} value={type}>
-                    {type}
+                {Object.keys(shadingCoefficients).map((sc) => (
+                  <option key={sc} value={sc}>
+                    {sc}
                   </option>
                 ))}
               </select>
             </div>
-
             <div>
               <label className="block mb-1 font-medium">Cooling Load Factor (CLF):</label>
               <select
-                name="clf"
-                value={glass.clf}
-                onChange={(e) => handleChange(index, e)}
+                value={inputs[dir].clf}
+                onChange={(e) => handleChange(dir, "clf", e.target.value)}
                 className="w-full p-2 border rounded"
               >
-                {Object.keys(clfValues).map((facing) => (
-                  <option key={facing} value={facing}>
-                    {facing}
+                {Object.keys(clfValues).map((c) => (
+                  <option key={c} value={c}>
+                    {c}
                   </option>
                 ))}
               </select>
             </div>
           </div>
+          {results[dir] !== undefined && (
+            <p className="mt-2 text-blue-600 font-semibold">
+              Result: {results[dir].toFixed(2)} BTU/hr
+            </p>
+          )}
         </div>
       ))}
 
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={addDirection}
-          className="bg-yellow-500 text-white py-2 px-6 rounded hover:bg-yellow-600 transition duration-300"
-        >
-          + Add Another Direction
-        </button>
+      <button
+        onClick={calculateHeatTransfer}
+        className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
+      >
+        Calculate Heat Transfer
+      </button>
 
-        <button
-          onClick={calculateHeatTransfer}
-          className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
-        >
-          Calculate Heat Transfer
-        </button>
-      </div>
-
-      {results.length > 0 && (
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Results Breakdown</h2>
-          {results.map((res, i) => (
-            <p key={i} className="text-lg">
-              {res.direction}: <strong>{res.value.toFixed(2)} BTU/hr</strong>
-            </p>
-          ))}
-          <p className="mt-2 text-xl font-bold text-blue-700">
-            Total:{" "}
-            {results.reduce((sum, r) => sum + r.value, 0).toFixed(2)} BTU/hr
-          </p>
+      {totalLoad > 0 && (
+        <div className="mt-6 p-4 bg-blue-100 border border-blue-300 rounded text-center font-bold text-blue-700">
+          Total Glass Load: {totalLoad.toFixed(2)} BTU/hr
         </div>
       )}
     </div>
