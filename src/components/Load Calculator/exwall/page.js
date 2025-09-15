@@ -24,7 +24,9 @@ const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
     uValue: 0,
     direction: "",
   });
-  const [result, setResult] = useState(null);
+
+  // 🔹 Store multiple results (per direction)
+  const [results, setResults] = useState({});
 
   // 🔹 Reset when parent changes updateKey
   useEffect(() => {
@@ -35,7 +37,7 @@ const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
       uValue: 0,
       direction: "",
     });
-    setResult(null);
+    setResults({});
     if (onResultChange) onResultChange(0); // Reset parent total
   }, [updateKey]);
 
@@ -44,9 +46,10 @@ const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: name === "length" || name === "height" || name === "tempDifference"
-        ? parseFloat(value) || 0
-        : value,
+      [name]:
+        name === "length" || name === "height" || name === "tempDifference"
+          ? parseFloat(value) || 0
+          : value,
     }));
   };
 
@@ -60,21 +63,36 @@ const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
 
   // Manual calculation
   const calculateHeatTransfer = () => {
-    const { length, height, tempDifference, uValue } = inputs;
-    if (length <= 0 || height <= 0 || tempDifference <= 0 || uValue <= 0) {
-      alert("Please fill in all values correctly.");
+    const { length, height, tempDifference, uValue, direction } = inputs;
+    if (
+      length <= 0 ||
+      height <= 0 ||
+      tempDifference <= 0 ||
+      uValue <= 0 ||
+      !direction
+    ) {
+      alert("Please fill in all values correctly, including direction.");
       return;
     }
+
     const area = length * height;
     const heatTransfer = uValue * area * tempDifference;
-    setResult(heatTransfer);
 
-    if (onResultChange) onResultChange(heatTransfer); // Send result to parent
+    // Store result per direction
+    setResults((prev) => {
+      const updated = { ...prev, [direction]: heatTransfer };
+      // Send total of all directions to parent
+      if (onResultChange)
+        onResultChange(Object.values(updated).reduce((a, b) => a + b, 0));
+      return updated;
+    });
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Heat Transfer - Exterior Wall</h2>
+      <h2 className="text-xl font-semibold mb-4 text-blue-600">
+        Heat Transfer - Exterior Wall
+      </h2>
 
       {/* Material Selection */}
       <div className="mb-4">
@@ -154,17 +172,23 @@ const HeatTransferCalculator1 = ({ onResultChange, updateKey }) => {
           onClick={calculateHeatTransfer}
           className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition duration-300"
         >
-          Calculate Heat Transfer
+          Add Heat Transfer
         </button>
       </div>
 
-      {/* Result */}
+      {/* Results */}
       <div className="bg-gray-100 p-4 rounded-lg mt-4">
-        <h3 className="text-lg font-semibold">Heat Transfer:</h3>
-        {result !== null ? (
-          <p className="text-xl font-bold text-blue-600">{result.toFixed(2)} BTU/hr</p>
+        <h3 className="text-lg font-semibold mb-2">Heat Transfer Results:</h3>
+        {Object.keys(results).length > 0 ? (
+          <ul className="space-y-1">
+            {Object.entries(results).map(([dir, value]) => (
+              <li key={dir} className="text-blue-600 font-medium">
+                {dir}: {value.toFixed(2)} BTU/hr
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p className="text-gray-600">Enter values to calculate.</p>
+          <p className="text-gray-600">Enter values and calculate.</p>
         )}
       </div>
     </div>
