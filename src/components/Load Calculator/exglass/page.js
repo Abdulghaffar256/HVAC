@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
+const HeatTransferCalculator2 = ({ onResultChange, updateKey }) => {
   const [inputs, setInputs] = useState({
     length: 0,
     height: 0,
@@ -23,7 +23,7 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
       clf: "N",
     });
     setResult(null);
-    if (onCalculate) onCalculate(0);
+    if (onResultChange) onResultChange(0); // reset parent result too
   }, [updateKey]);
 
   const shgfValues = {
@@ -59,7 +59,10 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: name === "length" || name === "height" ? parseFloat(value) || 0 : value,
+      [name]:
+        name === "length" || name === "height"
+          ? parseFloat(value) || 0
+          : value,
     }));
   };
 
@@ -79,8 +82,8 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
     const heatTransfer = selectedSHGF * area * selectedSC * selectedCLF;
     setResult(heatTransfer);
 
-    if (onCalculate) {
-      onCalculate(heatTransfer);
+    if (onResultChange) {
+      onResultChange(heatTransfer);
     }
   };
 
@@ -92,7 +95,9 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block mb-1 font-medium">Length of Glass (ft):</label>
+          <label className="block mb-1 font-medium">
+            Length of Glass (ft):
+          </label>
           <input
             type="number"
             name="length"
@@ -104,7 +109,9 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Height of Glass (ft):</label>
+          <label className="block mb-1 font-medium">
+            Height of Glass (ft):
+          </label>
           <input
             type="number"
             name="height"
@@ -124,7 +131,9 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
             className="w-full p-2 border rounded"
           >
             {Object.keys(shgfValues).map((lat) => (
-              <option key={lat} value={lat}>{lat}</option>
+              <option key={lat} value={lat}>
+                {lat}
+              </option>
             ))}
           </select>
         </div>
@@ -138,13 +147,17 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
             className="w-full p-2 border rounded"
           >
             {Object.keys(shadingCoefficients).map((type) => (
-              <option key={type} value={type}>{type}</option>
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Cooling Load Factor (CLF):</label>
+          <label className="block mb-1 font-medium">
+            Cooling Load Factor (CLF):
+          </label>
           <select
             name="clf"
             value={inputs.clf}
@@ -152,7 +165,9 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
             className="w-full p-2 border rounded"
           >
             {Object.keys(clfValues).map((facing) => (
-              <option key={facing} value={facing}>{facing}</option>
+              <option key={facing} value={facing}>
+                {facing}
+              </option>
             ))}
           </select>
         </div>
@@ -169,10 +184,13 @@ const HeatTransferCalculator2 = ({ onCalculate, updateKey }) => {
         <h2 className="text-xl font-semibold mb-2">Result</h2>
         {result !== null ? (
           <p className="text-lg">
-            Heat Transfer (Q): <strong>{result.toFixed(2)} BTU/hr</strong>
+            Heat Transfer (Q):{" "}
+            <strong>{result.toFixed(2)} BTU/hr</strong>
           </p>
         ) : (
-          <p className="text-gray-600">Enter values to calculate heat transfer.</p>
+          <p className="text-gray-600">
+            Enter values to calculate heat transfer.
+          </p>
         )}
       </div>
     </div>
