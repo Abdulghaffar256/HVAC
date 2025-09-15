@@ -1,10 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const HeatCalculatorLighting = ({ onCalculate }) => {
+const HeatCalculatorLighting = ({ onResultChange, updateKey }) => {
   const [wattage, setWattage] = useState("");
   const [heatGenerated, setHeatGenerated] = useState(0);
+
+  // 🔹 Reset when parent triggers updateKey
+  useEffect(() => {
+    setWattage("");
+    setHeatGenerated(0);
+    if (typeof onResultChange === "function") onResultChange(0);
+  }, [updateKey]);
 
   // Handle input change
   const handleChange = (e) => {
@@ -16,17 +23,15 @@ const HeatCalculatorLighting = ({ onCalculate }) => {
   const calculateHeat = () => {
     if (wattage === "" || wattage <= 0) {
       setHeatGenerated(0);
-      if (typeof onCalculate === "function") {
-        onCalculate(0);
-      }
+      if (typeof onResultChange === "function") onResultChange(0);
       return;
     }
 
     const calculatedHeat = 3.4 * wattage * 0.8; // Q = 3.4 × WATT × 0.8
     setHeatGenerated(calculatedHeat);
 
-    if (typeof onCalculate === "function") {
-      onCalculate(calculatedHeat);
+    if (typeof onResultChange === "function") {
+      onResultChange(calculatedHeat);
     }
   };
 
