@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
+const HeatDissipationCalculator6 = ({ onResultChange, updateKey }) => {
   const [heatDissipation, setHeatDissipation] = useState(0);
   const [numEquipment, setNumEquipment] = useState(0);
   const [totalHeat, setTotalHeat] = useState(null);
@@ -27,8 +27,8 @@ const HeatDissipationCalculator6 = ({ onCalculate, updateKey }) => {
     setTotalHeat(totalHeatGenerated);
 
     // 🔥 Notify parent ONLY when user calculates
-    if (onCalculate) {
-      onCalculate(totalHeatGenerated);
+    if (onResultChange) {
+      onResultChange(totalHeatGenerated);
     }
   };
 
