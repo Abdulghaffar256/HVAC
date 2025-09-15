@@ -74,22 +74,6 @@ Total Load: ${totalLoad} BTU\n`;
         HVAC Load Calculators
       </h1>
 
-      {/* ✅ Action Buttons */}
-      <div className="flex justify-center gap-4 mb-8">
-        <button
-          onClick={handleRecalculate}
-          className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg shadow"
-        >
-          Recalculate
-        </button>
-        <button
-          onClick={handleDownload}
-          className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow"
-        >
-          Download Report
-        </button>
-      </div>
-
       {/* ✅ Grid Layout with updateKey passed to children */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <HeatTransferCalculator1
@@ -122,13 +106,8 @@ Total Load: ${totalLoad} BTU\n`;
         />
       </div>
 
-      {/* ✅ Total Result Bar */}
-      <div className="mt-10 p-4 bg-blue-100 border border-blue-300 rounded-lg text-center text-xl font-semibold text-blue-700 shadow">
-        Total Load: {totalLoad.toLocaleString()} BTU
-      </div>
-
       {/* ✅ Detailed Breakdown */}
-      <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-inner">
+      <div className="mt-10 p-6 bg-gray-50 rounded-lg shadow-inner">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">
           Load Breakdown
         </h2>
@@ -141,6 +120,27 @@ Total Load: ${totalLoad} BTU\n`;
           <li>People Heat Gain: <span className="font-semibold">{results.people.toLocaleString()} BTU</span></li>
           <li>Electrical Equipment Heat Gain: <span className="font-semibold">{results.ele.toLocaleString()} BTU</span></li>
         </ul>
+      </div>
+
+      {/* ✅ Total Result Bar */}
+      <div className="mt-6 p-4 bg-blue-100 border border-blue-300 rounded-lg text-center text-xl font-semibold text-blue-700 shadow">
+        Total Load: {totalLoad.toLocaleString()} BTU
+      </div>
+
+      {/* ✅ Action Buttons (moved to bottom) */}
+      <div className="flex justify-center gap-4 mt-8">
+        <button
+          onClick={handleRecalculate}
+          className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg shadow"
+        >
+          Recalculate
+        </button>
+        <button
+          onClick={handleDownload}
+          className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow"
+        >
+          Download Report
+        </button>
       </div>
     </div>
   );
