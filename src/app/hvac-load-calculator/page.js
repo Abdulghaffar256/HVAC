@@ -20,7 +20,7 @@ export default function LoadCalculatorPage() {
     roof: 0,
     intwall: 0,
     light: 0,
-    people: 0, // ✅ Added
+    people: 0,
     ele: 0,
   });
 
@@ -32,7 +32,7 @@ export default function LoadCalculatorPage() {
   // ✅ Calculate total
   const totalLoad = Object.values(results).reduce((a, b) => a + b, 0);
 
-  // ✅ Handle Recalculate (bump updateKey + reset results)
+  // ✅ Handle Recalculate
   const handleRecalculate = () => {
     setResetKey((prev) => prev + 1);
     setResults({
@@ -41,7 +41,7 @@ export default function LoadCalculatorPage() {
       roof: 0,
       intwall: 0,
       light: 0,
-      people: 0, // ✅ Reset too
+      people: 0,
       ele: 0,
     });
   };
@@ -125,6 +125,22 @@ Total Load: ${totalLoad} BTU\n`;
       {/* ✅ Total Result Bar */}
       <div className="mt-10 p-4 bg-blue-100 border border-blue-300 rounded-lg text-center text-xl font-semibold text-blue-700 shadow">
         Total Load: {totalLoad.toLocaleString()} BTU
+      </div>
+
+      {/* ✅ Detailed Breakdown */}
+      <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-inner">
+        <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">
+          Load Breakdown
+        </h2>
+        <ul className="space-y-2 text-gray-800 text-lg">
+          <li>Exterior Walls: <span className="font-semibold">{results.exwall.toLocaleString()} BTU</span></li>
+          <li>Exterior Glass: <span className="font-semibold">{results.exglass.toLocaleString()} BTU</span></li>
+          <li>Roof Heat Gain: <span className="font-semibold">{results.roof.toLocaleString()} BTU</span></li>
+          <li>Interior Walls: <span className="font-semibold">{results.intwall.toLocaleString()} BTU</span></li>
+          <li>Lighting Heat Gain: <span className="font-semibold">{results.light.toLocaleString()} BTU</span></li>
+          <li>People Heat Gain: <span className="font-semibold">{results.people.toLocaleString()} BTU</span></li>
+          <li>Electrical Equipment Heat Gain: <span className="font-semibold">{results.ele.toLocaleString()} BTU</span></li>
+        </ul>
       </div>
     </div>
   );
