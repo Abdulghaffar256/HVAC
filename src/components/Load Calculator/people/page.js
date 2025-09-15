@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const HeatCalculator5 = ({ onCalculate }) => {
+const HeatCalculator5 = ({ onResultChange, updateKey }) => {
   // Heat data based on activity levels
   const heatData = {
     "Seated at theater (matinee)": { sensible: 225, latent: 105 },
@@ -22,10 +22,21 @@ const HeatCalculator5 = ({ onCalculate }) => {
   const [inputs, setInputs] = useState({
     activity: "",
     numPeople: "",
-    manualHeat: 0,
+    manualHeat: "",
   });
 
   const [totalHeat, setTotalHeat] = useState(0);
+
+  // 🔹 Reset when parent triggers updateKey
+  useEffect(() => {
+    setInputs({
+      activity: "",
+      numPeople: "",
+      manualHeat: "",
+    });
+    setTotalHeat(0);
+    if (typeof onResultChange === "function") onResultChange(0);
+  }, [updateKey]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -39,7 +50,7 @@ const HeatCalculator5 = ({ onCalculate }) => {
     }));
   };
 
-  // Calculate heat based on activity or manual input
+  // Calculate heat whenever inputs change
   useEffect(() => {
     const { activity, numPeople, manualHeat } = inputs;
 
@@ -54,10 +65,10 @@ const HeatCalculator5 = ({ onCalculate }) => {
 
     setTotalHeat(calculatedHeat);
 
-    if (typeof onCalculate === "function") {
-      onCalculate(calculatedHeat);
+    if (typeof onResultChange === "function") {
+      onResultChange(calculatedHeat);
     }
-  }, [inputs, onCalculate]);
+  }, [inputs, onResultChange]);
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
