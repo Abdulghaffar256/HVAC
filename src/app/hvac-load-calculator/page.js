@@ -7,7 +7,8 @@ import HeatTransferCalculator1 from "@/components/Load Calculator/exwall/page";
 import HeatTransferCalculator2 from "@/components/Load Calculator/exglass/page";
 import HeatTransferThroughRoof3 from "@/components/Load Calculator/exroof/page";
 import HeatTransferCalculator7 from "@/components/Load Calculator/intwall/page";
-import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page"; // ✅ Added
+import HeatGeneratedByLighting4 from "@/components/Load Calculator/light/page";
+import HeatCalculator5 from "@/components/Load Calculator/people/page"; // ✅ Added
 
 export default function LoadCalculatorPage() {
   const [resetKey, setResetKey] = useState(0);
@@ -18,7 +19,8 @@ export default function LoadCalculatorPage() {
     exglass: 0,
     roof: 0,
     intwall: 0,
-    light: 0, // ✅ Added
+    light: 0,
+    people: 0, // ✅ Added
     ele: 0,
   });
 
@@ -38,7 +40,8 @@ export default function LoadCalculatorPage() {
       exglass: 0,
       roof: 0,
       intwall: 0,
-      light: 0, // ✅ Reset too
+      light: 0,
+      people: 0, // ✅ Reset too
       ele: 0,
     });
   };
@@ -51,6 +54,7 @@ export default function LoadCalculatorPage() {
 - Roof Heat Gain: ${results.roof} BTU\n
 - Interior Walls: ${results.intwall} BTU\n
 - Lighting Heat Gain: ${results.light} BTU\n
+- People Heat Gain: ${results.people} BTU\n
 - Electrical Equipment Heat Gain: ${results.ele} BTU\n
 ---------------------------------------\n
 Total Load: ${totalLoad} BTU\n`;
@@ -106,6 +110,10 @@ Total Load: ${totalLoad} BTU\n`;
         />
         <HeatGeneratedByLighting4
           onResultChange={(v) => handleResultChange("light", v)}
+          updateKey={resetKey}
+        />
+        <HeatCalculator5
+          onResultChange={(v) => handleResultChange("people", v)}
           updateKey={resetKey}
         />
         <HeatDissipationCalculator6
