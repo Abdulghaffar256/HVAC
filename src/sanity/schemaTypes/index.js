@@ -11,3 +11,4 @@ import { AIType } from "../AIType";
 export const schema = {
   types: [blogType, equipmentType, coursesType, engType, devType, projectType, AIType],
 };
+
