@@ -34,7 +34,7 @@ const Header = () => {
     if (e.key === "Enter" && searchQuery.trim() !== "") {
       try {
         const results = await client.fetch(
-          `*[_type in ["AI", "Eng", "equipment", "development", "dev","project"] && title match $query]{
+          `*[_type in ["AI", "Eng", "equipment", "development", "dev","project", "AI In HVAC"] && title match $query]{
             _id,
             title,
             "slug": slug.current
@@ -87,9 +87,13 @@ const Header = () => {
                  <Link href="/project" className="hover:text-pink-600 transition">
               Projects
             </Link>
+                
                 <Link href="/Tools" className="block hover:text-pink-600">
-  Tools
-</Link>
+              Tools
+            </Link>
+                  <Link href="/HVAC" className="block hover:text-pink-600">
+               HVAC AI
+            </Link>
 
 
             <div className="relative">
@@ -155,6 +159,9 @@ const Header = () => {
             </Link>
            <Link href="/project" className="hover:text-pink-600 transition">
               Projects
+            </Link>
+           <Link href="/HVAC" className="block hover:text-pink-600">
+               HVAC AI
             </Link>
 
             <div>
