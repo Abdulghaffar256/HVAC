@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity';
 
 export const AIType = defineType({
-  name: 'AI',
+  name: 'AI In HVAC',
   title: 'AI In HVAC',
   type: 'document',
   fields: [
