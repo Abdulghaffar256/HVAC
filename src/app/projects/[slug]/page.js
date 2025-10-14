@@ -29,7 +29,7 @@ function slugify(text) {
 
 export default async function BlogPage({ params }) {
   const { slug } = params;
-  const query = `*[_type in ["Project", "project"] && slug.current == $slug][0]{
+  const query = `*[_type in ["Project", "project","AI In HVAC"] && slug.current == $slug][0]{
     title,
     description,
     "slug": slug.current,
