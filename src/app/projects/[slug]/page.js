@@ -222,6 +222,78 @@ export default async function BlogPage({ params }) {
                       </div>
                     );
                   },
+
+                  // ⬇️ ADDED: promptBlock renderer for copyable prompts
+                  promptBlock: ({ value }) => {
+                    if (!value?.promptText) return null;
+                    const title = value.title || "Prompt";
+                    const vars = Array.isArray(value.variables) ? value.variables : [];
+                    const tags = Array.isArray(value.tags) ? value.tags : [];
+                    const label = value.copyButtonLabel || "Copy";
+                    const showBorder = value.showBorder !== false;
+
+                    const handleCopy = (e) => {
+                      const btn = e.currentTarget;
+                      const text = value.promptText || "";
+                      const fallback = () => {
+                        const ta = document.createElement("textarea");
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(ta);
+                      };
+                      if (navigator?.clipboard?.writeText) {
+                        navigator.clipboard.writeText(text).catch(fallback);
+                      } else {
+                        fallback();
+                      }
+                      const original = btn.textContent;
+                      btn.textContent = "✓ Copied";
+                      setTimeout(() => (btn.textContent = original), 1500);
+                    };
+
+                    return (
+                      <div className={`my-6 rounded-xl ${showBorder ? "border" : ""} p-4 md:p-6 bg-white`}>
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-lg font-semibold">{title}</h3>
+                            {!!vars.length && (
+                              <p className="text-xs text-gray-500 mt-1">
+                                Vars: {vars.join(", ")}
+                              </p>
+                            )}
+                          </div>
+                          <button
+                            onClick={handleCopy}
+                            className="inline-flex items-center rounded-lg border px-3 py-1.5 text-sm hover:bg-gray-50"
+                            type="button"
+                            aria-label="Copy prompt"
+                          >
+                            {label}
+                          </button>
+                        </div>
+                        <pre className="mt-4 whitespace-pre-wrap break-words text-sm bg-gray-50 border rounded-lg p-3">
+                          {value.promptText}
+                        </pre>
+                        {!!tags.length && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {tags.map((t, i) => (
+                              <span key={i} className="text-xs bg-gray-100 border rounded-full px-2 py-0.5">
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {Array.isArray(value.notes) && value.notes.length > 0 && (
+                          <div className="mt-4 prose prose-sm max-w-none">
+                            <PortableText value={value.notes} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  },
+                  // ⬆️ END promptBlock
                 },
                 marks: {
                   link: ({ value, children }) => (
