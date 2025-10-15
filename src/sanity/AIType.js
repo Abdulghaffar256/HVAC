@@ -305,3 +305,107 @@ export const AIType = defineType({
     }),
   ],
 });
+
+/* -------------------------------------------------------------------------- */
+/*                          ADDED: Prompt document type                        */
+/* -------------------------------------------------------------------------- */
+
+export const PromptType = defineType({
+  name: 'prompt',
+  title: 'Prompt',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'summary',
+      title: 'Short Summary',
+      type: 'text',
+      rows: 3,
+      description: 'One-line context for the prompt card.',
+    }),
+    defineField({
+      name: 'promptText',
+      title: 'Prompt Text',
+      type: 'text',
+      rows: 12,
+      description: 'Exact text users will copy. Keep variables in {curly_braces}.',
+      validation: (Rule) => Rule.required().min(10),
+    }),
+    defineField({
+      name: 'variables',
+      title: 'Variables (optional)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+      description: 'e.g., name, Az, Pz, Rp, Ra, ACH',
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Revit', value: 'revit' },
+          { title: 'HVAC', value: 'hvac' },
+          { title: 'ASHRAE', value: 'ashrae' },
+          { title: 'General', value: 'general' },
+        ],
+        layout: 'dropdown',
+      },
+    }),
+    defineField({
+      name: 'usageNotes',
+      title: 'Usage Notes (optional)',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Tips, disclaimers, or how to fill variables.',
+    }),
+    defineField({
+      name: 'relatedStandards',
+      title: 'Related Standards (optional)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+      description: 'e.g., ASHRAE 62.1, ASHRAE 170, ASHRAE Fundamentals.',
+    }),
+    defineField({
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+    }),
+    /* Helper field to make a pre-filled copy safe payload if you ever need it */
+    defineField({
+      name: 'copyPayload',
+      title: 'Copy Payload (optional)',
+      type: 'object',
+      fields: [
+        defineField({ name: 'text', type: 'text', title: 'Override Text', rows: 8 }),
+        defineField({ name: 'appendSignature', type: 'boolean', title: 'Append Site Signature', initialValue: false }),
+      ],
+      options: { collapsible: true, collapsed: true },
+    }),
+  ],
+  preview: {
+    select: { title: 'title', subtitle: 'summary' },
+  },
+});
