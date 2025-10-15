@@ -13,7 +13,7 @@ const Hvac = () => {
 
   useEffect(() => {
     const query = `
-      *[_type in [ "AIHVAC","AI In HVAC]] | order(publishedAt desc) {
+      *[_type in [ "AIHVAC","AI In HVAC"]] | order(publishedAt desc) {
         description,
         "slug": slug.current,
         image,
