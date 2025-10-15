@@ -232,26 +232,7 @@ export default async function BlogPage({ params }) {
                     const label = value.copyButtonLabel || "Copy";
                     const showBorder = value.showBorder !== false;
 
-                    const handleCopy = (e) => {
-                      const btn = e.currentTarget;
-                      const text = value.promptText || "";
-                      const fallback = () => {
-                        const ta = document.createElement("textarea");
-                        ta.value = text;
-                        document.body.appendChild(ta);
-                        ta.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(ta);
-                      };
-                      if (navigator?.clipboard?.writeText) {
-                        navigator.clipboard.writeText(text).catch(fallback);
-                      } else {
-                        fallback();
-                      }
-                      const original = btn.textContent;
-                      btn.textContent = "✓ Copied";
-                      setTimeout(() => (btn.textContent = original), 1500);
-                    };
+                    // NOTE: Removed client-only clipboard logic to keep this Server Component safe.
 
                     return (
                       <div className={`my-6 rounded-xl ${showBorder ? "border" : ""} p-4 md:p-6 bg-white`}>
@@ -265,7 +246,6 @@ export default async function BlogPage({ params }) {
                             )}
                           </div>
                           <button
-                            onClick={handleCopy}
                             className="inline-flex items-center rounded-lg border px-3 py-1.5 text-sm hover:bg-gray-50"
                             type="button"
                             aria-label="Copy prompt"
