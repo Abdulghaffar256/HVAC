@@ -35,14 +35,16 @@ const Footer = () => {
                 className="w-10 h-10 object-contain"
               />
             </span>
-            EPICS SOLUTION
-          </h2>
-          <p className="mt-4 text-base leading-relaxed">
-            Epic Solutions is a leading software house specializing in custom
-            software, web & mobile app development, and AI-driven solutions. We
-            turn ideas into powerful digital products with innovation and
-            expertise.
-          </p>
+           HVAC DESIGNING
+</h2>
+<p className="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300">
+  HVAC Designing involves creating efficient heating, ventilation, and air conditioning systems 
+  that ensure comfort, air quality, and energy efficiency in residential, commercial, and 
+  industrial buildings. Our approach focuses on accurate load calculations, optimized duct 
+  layouts, and sustainable design practices. Using advanced tools and engineering principles, 
+  we design systems that deliver consistent performance, meet industry standards, and reduce 
+  operational costs through smart energy management.
+</p>
         </div>
 
         {/* Center Section - Useful Links */}
