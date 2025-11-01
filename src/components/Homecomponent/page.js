@@ -84,8 +84,7 @@ const HomeComponent = () => {
       </section>
 
       {/* About Us Section */}
-     
-     {/* Intro Section */}
+ {/* Intro Section */}
 <section className="relative max-w-6xl mx-auto px-6 py-16 text-center bg-gradient-to-r from-orange-50 via-orange-100 to-orange-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-3xl shadow-lg overflow-hidden">
   {/* Decorative overlay for style */}
   <div className="absolute inset-0 bg-white/20 dark:bg-black/30 backdrop-blur-sm"></div>
@@ -102,36 +101,43 @@ const HomeComponent = () => {
       our resources are designed to help you grow, learn, and excel.
     </p>
 
-    <div className="mt-10">
+    <div className="mt-10 flex justify-center">
       <Image
         src="/about/team-photo.jpg"
         alt="HVAC Team"
-        width={650}
-        height={380}
-        className="mx-auto rounded-xl shadow-2xl border-4 border-orange-200 dark:border-orange-500 hover:scale-105 transform transition duration-300"
+        width={300}
+        height={300}
+        className="rounded-full shadow-2xl border-4 border-orange-300 dark:border-orange-500 hover:scale-105 transform transition duration-300 object-cover"
       />
     </div>
   </div>
 </section>
 
-      {/* Mission Section */}
-      <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center bg-white dark:bg-gray-900">
-        <div>
-          <Image
-            src="/about/grow-better.jpg"
-            alt="Grow Better"
-            width={500}
-            height={350}
-            className="rounded-lg shadow border-4 border-blue-100 dark:border-blue-500"
-          />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">Our Mission</h2>
-          <p>
-          Our mission is to revolutionize HVAC design with AI-driven tools that create energy-efficient HVAC systems. We aim to provide students with advanced HVAC design courses and certifications, offering practical learning experiences to enhance their skills. By developing cutting-edge tools and systems, we strive to empower the next generation of HVAC professionals to create sustainable, high-performance designs.
-          </p>
-        </div>
-      </section>
+{/* Mission Section */}
+<section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center bg-white dark:bg-gray-900 rounded-3xl shadow-md">
+  <div className="flex justify-center">
+    <Image
+      src="/about/grow-better.jpg"
+      alt="Grow Better"
+      width={300}
+      height={300}
+      className="rounded-full shadow-2xl border-4 border-blue-200 dark:border-blue-500 hover:scale-105 transform transition duration-300 object-cover"
+    />
+  </div>
+
+  <div className="text-center md:text-left">
+    <h2 className="text-3xl font-bold text-blue-800 dark:text-blue-400 mb-4">
+      Our Mission
+    </h2>
+    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+      Our mission is to revolutionize HVAC design with AI-driven tools that create energy-efficient 
+      HVAC systems. We aim to provide students with advanced HVAC design courses and certifications, 
+      offering practical learning experiences to enhance their skills. By developing cutting-edge 
+      tools and systems, we strive to empower the next generation of HVAC professionals to create 
+      sustainable, high-performance designs.
+    </p>
+  </div>
+</section>
 
      
 
