@@ -143,8 +143,8 @@ const HomeComponent = () => {
 </section>
 
 
-  {/* Call to Action */}
-<section className="relative max-w-6xl mx-auto px-6 py-20 text-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-3xl shadow-lg overflow-hidden">
+{/* Call to Action */}
+<section className="relative max-w-6xl mx-auto px-6 py-20 text-center bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-3xl shadow-lg overflow-hidden">
   {/* Overlay for dark mode */}
   <div className="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
 
@@ -152,13 +152,13 @@ const HomeComponent = () => {
     <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-md">
       Ready to Shape the Future of HVAC Design?
     </h2>
-    <p className="mb-8 text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
+    <p className="mb-8 text-lg text-orange-100 max-w-2xl mx-auto leading-relaxed">
       Join our growing HVAC community and take your design skills to the next level. 
       Explore modern tools, resources, and expert insights to master HVAC system design.
     </p>
     <Link
       href="/signup"
-      className="inline-block px-8 py-3 text-lg font-semibold text-blue-900 bg-white rounded-full shadow-md hover:shadow-lg hover:scale-105 transform transition duration-300 ease-in-out"
+      className="inline-block px-8 py-3 text-lg font-semibold text-white bg-orange-700 rounded-full shadow-md hover:bg-orange-800 hover:shadow-lg hover:scale-105 transform transition duration-300 ease-in-out"
     >
       Get Started Today
     </Link>
