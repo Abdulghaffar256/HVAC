@@ -38,12 +38,9 @@ const Footer = () => {
            HVAC DESIGNING
 </h2>
 <p className="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300">
-  HVAC Designing involves creating efficient heating, ventilation, and air conditioning systems 
-  that ensure comfort, air quality, and energy efficiency in residential, commercial, and 
-  industrial buildings. Our approach focuses on accurate load calculations, optimized duct 
-  layouts, and sustainable design practices. Using advanced tools and engineering principles, 
-  we design systems that deliver consistent performance, meet industry standards, and reduce 
-  operational costs through smart energy management.
+ HVAC Designing focuses on creating efficient heating, ventilation, and air conditioning systems 
+  that ensure comfort, energy efficiency, and optimal air quality. Our designs combine precise 
+  load calculations with modern engineering tools to deliver reliable and sustainable performance.
 </p>
         </div>
 
