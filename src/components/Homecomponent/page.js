@@ -85,24 +85,34 @@ const HomeComponent = () => {
 
       {/* About Us Section */}
      
-      {/* Intro Section */}
-      <section className="max-w-6xl mx-auto px-6 py-12 text-center bg-blue-50 dark:bg-gray-800">
-        <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300 mb-4">Our Story
+     {/* Intro Section */}
+<section className="relative max-w-6xl mx-auto px-6 py-16 text-center bg-gradient-to-r from-orange-50 via-orange-100 to-orange-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-3xl shadow-lg overflow-hidden">
+  {/* Decorative overlay for style */}
+  <div className="absolute inset-0 bg-white/20 dark:bg-black/30 backdrop-blur-sm"></div>
 
-</h1>
-        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-        At the heart of our platform lies a commitment to sharing knowledge and expertise in HVAC design. We believe that learning should be an engaging and enriching experience. Our unique approach to HVAC education is designed to offer you not only the technical skills needed but also an understanding of the intricacies of Revit MEP HVAC systems and beyond. Crafted with care, our content is tailored to inspire both professionals and newcomers alike. Join us and dive into a world of practical and informative HVAC insights.
-        </p>
-        <div className="mt-6">
-          <Image
-            src="/about/team-photo.jpg"
-            alt="HVAC Team"
-            width={600}
-            height={350}
-            className="mx-auto rounded-lg shadow border-4 border-blue-200 dark:border-blue-500"
-          />
-        </div>
-      </section>
+  <div className="relative z-10">
+    <h1 className="text-4xl sm:text-5xl font-extrabold text-orange-800 dark:text-orange-300 mb-6 drop-shadow-sm">
+      Our Story
+    </h1>
+    <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      At the heart of our platform lies a passion for sharing knowledge and innovation in HVAC design. 
+      We believe in making learning an inspiring and practical experience. Our educational approach 
+      goes beyond theory — focusing on real-world HVAC design practices, Revit MEP applications, and 
+      energy-efficient system planning. Whether you're a seasoned engineer or just beginning your HVAC journey, 
+      our resources are designed to help you grow, learn, and excel.
+    </p>
+
+    <div className="mt-10">
+      <Image
+        src="/about/team-photo.jpg"
+        alt="HVAC Team"
+        width={650}
+        height={380}
+        className="mx-auto rounded-xl shadow-2xl border-4 border-orange-200 dark:border-orange-500 hover:scale-105 transform transition duration-300"
+      />
+    </div>
+  </div>
+</section>
 
       {/* Mission Section */}
       <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center bg-white dark:bg-gray-900">
