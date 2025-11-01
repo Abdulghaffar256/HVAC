@@ -82,51 +82,41 @@ const HomeComponent = () => {
           </div>
         </div>
       </section>
+{/* About Us Section */}
 
-      {/* About Us Section */}
- {/* Intro Section */}
-<section className="relative max-w-6xl mx-auto px-6 py-16 text-center bg-gradient-to-r from-orange-50 via-orange-100 to-orange-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-3xl shadow-lg overflow-hidden">
-  {/* Decorative overlay for style */}
-  <div className="absolute inset-0 bg-white/20 dark:bg-black/30 backdrop-blur-sm"></div>
+{/* Intro Section */}
+<section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center bg-gradient-to-r from-orange-50 via-orange-100 to-orange-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-3xl shadow-lg overflow-hidden">
+  {/* Image Left */}
+  <div className="flex justify-center order-1 md:order-none">
+    <Image
+      src="/about/team-photo.jpg"
+      alt="HVAC Team"
+      width={320}
+      height={320}
+      className="rounded-full shadow-2xl border-4 border-orange-300 dark:border-orange-500 hover:scale-105 transform transition duration-300 object-cover"
+    />
+  </div>
 
-  <div className="relative z-10">
+  {/* Text Right */}
+  <div className="relative z-10 text-center md:text-left">
     <h1 className="text-4xl sm:text-5xl font-extrabold text-orange-800 dark:text-orange-300 mb-6 drop-shadow-sm">
       Our Story
     </h1>
-    <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
       At the heart of our platform lies a passion for sharing knowledge and innovation in HVAC design. 
       We believe in making learning an inspiring and practical experience. Our educational approach 
       goes beyond theory — focusing on real-world HVAC design practices, Revit MEP applications, and 
       energy-efficient system planning. Whether you're a seasoned engineer or just beginning your HVAC journey, 
       our resources are designed to help you grow, learn, and excel.
     </p>
-
-    <div className="mt-10 flex justify-center">
-      <Image
-        src="/about/team-photo.jpg"
-        alt="HVAC Team"
-        width={300}
-        height={300}
-        className="rounded-full shadow-2xl border-4 border-orange-300 dark:border-orange-500 hover:scale-105 transform transition duration-300 object-cover"
-      />
-    </div>
   </div>
 </section>
 
 {/* Mission Section */}
-<section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center bg-white dark:bg-gray-900 rounded-3xl shadow-md">
-  <div className="flex justify-center">
-    <Image
-      src="/about/grow-better.jpg"
-      alt="Grow Better"
-      width={300}
-      height={300}
-      className="rounded-full shadow-2xl border-4 border-blue-200 dark:border-blue-500 hover:scale-105 transform transition duration-300 object-cover"
-    />
-  </div>
-
+<section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center bg-white dark:bg-gray-900 rounded-3xl shadow-md mt-12">
+  {/* Text Left */}
   <div className="text-center md:text-left">
-    <h2 className="text-3xl font-bold text-blue-800 dark:text-blue-400 mb-4">
+    <h2 className="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
       Our Mission
     </h2>
     <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -137,9 +127,20 @@ const HomeComponent = () => {
       sustainable, high-performance designs.
     </p>
   </div>
-</section>
 
-     
+  {/* Image Right */}
+  <div className="flex justify-center">
+    <div className="p-2 rounded-full bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 dark:from-pink-500 dark:to-pink-700">
+      <Image
+        src="/about/grow-better.jpg"
+        alt="Grow Better"
+        width={300}
+        height={300}
+        className="rounded-full shadow-2xl border-4 border-white dark:border-gray-900 hover:scale-105 transform transition duration-300 object-cover"
+      />
+    </div>
+  </div>
+</section>
 
   {/* Call to Action */}
 <section className="relative max-w-6xl mx-auto px-6 py-20 text-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-3xl shadow-lg overflow-hidden">
