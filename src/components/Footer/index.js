@@ -28,7 +28,7 @@ const Footer = () => {
           <h2 className="text-3xl font-extrabold text-red-500 dark:text-red-300 flex items-center">
             <span className="mr-3">
               <Image
-                src="/epics.jpg"
+                src="/profile-img.png"
                 width={40}
                 height={40}
                 alt="EPICS SOLUTION Logo"
