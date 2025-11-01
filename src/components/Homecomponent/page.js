@@ -113,13 +113,26 @@ const HomeComponent = () => {
 </section>
 
 {/* Mission Section */}
-<section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center bg-white dark:bg-gray-900 rounded-3xl shadow-md mt-12">
-  {/* Text Left */}
-  <div className="text-center md:text-left">
-    <h2 className="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-      Our Mission
-    </h2>
-    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+<section className="max-w-6xl mx-auto px-6 py-16 bg-white dark:bg-gray-900 rounded-3xl shadow-md text-center">
+  <div className="flex flex-col items-center justify-center relative">
+    {/* Centered Round Image */}
+    <div className="relative">
+      <Image
+        src="/about/grow-better.jpg"
+        alt="Grow Better"
+        width={300}
+        height={300}
+        className="rounded-full shadow-2xl border-4 border-pink-400 dark:border-pink-500 hover:scale-105 transform transition duration-300 object-cover"
+      />
+
+      {/* Text Overlay on Bottom Center */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-pink-500/80 dark:bg-pink-600/80 text-white text-lg font-semibold px-5 py-2 rounded-b-full backdrop-blur-sm">
+        Our Mission
+      </div>
+    </div>
+
+    {/* Mission Description */}
+    <p className="mt-8 text-lg text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed">
       Our mission is to revolutionize HVAC design with AI-driven tools that create energy-efficient 
       HVAC systems. We aim to provide students with advanced HVAC design courses and certifications, 
       offering practical learning experiences to enhance their skills. By developing cutting-edge 
@@ -127,20 +140,8 @@ const HomeComponent = () => {
       sustainable, high-performance designs.
     </p>
   </div>
-
-  {/* Image Right */}
-  <div className="flex justify-center">
-    <div className="p-2 rounded-full bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 dark:from-pink-500 dark:to-pink-700">
-      <Image
-        src="/about/grow-better.jpg"
-        alt="Grow Better"
-        width={300}
-        height={300}
-        className="rounded-full shadow-2xl border-4 border-white dark:border-gray-900 hover:scale-105 transform transition duration-300 object-cover"
-      />
-    </div>
-  </div>
 </section>
+
 
   {/* Call to Action */}
 <section className="relative max-w-6xl mx-auto px-6 py-20 text-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-3xl shadow-lg overflow-hidden">
